@@ -1,0 +1,83 @@
+table Alias_de_alndomine_Usage
+	lineageTag: b7d922a1-79d3-4d8e-a8e9-fcdcf92a6b0a
+
+	column domainid
+		dataType: string
+		lineageTag: 80794bb4-7594-4a66-8d57-3c6373b5c85d
+		summarizeBy: none
+		sourceColumn: domainid
+
+		annotation SummarizationSetBy = Automatic
+
+	column value
+		dataType: string
+		lineageTag: 486dc7ec-f21f-4aa5-9e0e-f53ced364660
+		summarizeBy: none
+		sourceColumn: value
+
+		annotation SummarizationSetBy = Automatic
+
+	column description
+		dataType: string
+		lineageTag: 9f4dd244-8ac6-49ea-919f-90fe01b2e3f8
+		summarizeBy: none
+		sourceColumn: description
+
+		annotation SummarizationSetBy = Automatic
+
+	column siteid
+		dataType: string
+		lineageTag: 67c8d9f3-558b-40b3-a1d4-b4bfa4f38817
+		summarizeBy: none
+		sourceColumn: siteid
+
+		annotation SummarizationSetBy = Automatic
+
+	column orgid
+		dataType: string
+		lineageTag: 557dabb0-5538-4681-81a0-d05890853623
+		summarizeBy: none
+		sourceColumn: orgid
+
+		annotation SummarizationSetBy = Automatic
+
+	column alndomainid
+		dataType: int64
+		formatString: 0
+		lineageTag: cdd2cd51-16b3-4fb5-b90c-5fd98c410c9f
+		summarizeBy: none
+		sourceColumn: alndomainid
+
+		annotation SummarizationSetBy = Automatic
+
+	column valueid
+		dataType: string
+		lineageTag: d483e674-ef55-48aa-b939-c007f4e28c4f
+		summarizeBy: none
+		sourceColumn: valueid
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sub = Alias_de_alndomine_Usage[description]
+		lineageTag: 8ce6c13d-3836-439f-b8a8-93509fcc1a89
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Alias_de_alndomine_Usage = m
+		mode: import
+		source =
+				let
+				   Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    alndomain_Table = dbo_Schema{[Name="alndomain",Kind="Table"]}[Data],
+				    #"Filas filtradas" = Table.SelectRows(alndomain_Table, each ([domainid] = "USAGE")),
+				    #"Poner En Mayúsculas Cada Palabra" = Table.TransformColumns(#"Filas filtradas",{{"value", Text.Proper, type text}})
+				in
+				    #"Poner En Mayúsculas Cada Palabra"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

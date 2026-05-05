@@ -1,0 +1,693 @@
+table person
+	lineageTag: a6466ca2-02a2-42ed-a68a-7bd547065989
+
+	/// Identificador del registro de la persona.
+	/// El valor de este campo debe ser único.
+	/// Cuando guarda un registro de persona,
+	/// este campo se convierte en un campo de sólo lectura.
+	column Persona
+		dataType: string
+		lineageTag: 80349ca6-372e-48ec-8fa9-96581bdb7420
+		summarizeBy: none
+		sourceColumn: Persona
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// El estado actual de la persona. Al especificar un nuevo registro, este campo toma de forma predeterminada el valor de un estado activo.
+	column Estado
+		dataType: string
+		lineageTag: 0c3b1d1d-18e0-41ed-b920-c97109846e3c
+		summarizeBy: none
+		sourceColumn: Estado
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Un apodo o un sobrenombre con el que esta persona se puede identificar. Este campo se llena automáticamente cuando se entran los valores en los campos Nombre y/o Apellido.
+	column Nombre
+		dataType: string
+		lineageTag: 62a396d8-1bb0-4cd0-bc0c-14bced545f3b
+		summarizeBy: none
+		sourceColumn: Nombre
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column firstname
+		dataType: string
+		lineageTag: 72bcbe0e-994d-4f05-8d74-174f8ea8397b
+		summarizeBy: none
+		sourceColumn: firstname
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column lastname
+		dataType: string
+		lineageTag: 50f90adc-7389-447c-8273-2ed6fc27fe4f
+		summarizeBy: none
+		sourceColumn: lastname
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column department
+		dataType: string
+		lineageTag: 731495aa-3109-4ba3-877f-370ec8cd93a9
+		summarizeBy: none
+		sourceColumn: department
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column title
+		dataType: string
+		lineageTag: f339fc06-b62f-4f99-a52c-c37773d037ab
+		summarizeBy: none
+		sourceColumn: title
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column employeetype
+		dataType: string
+		lineageTag: 84d5ff96-fa32-4ec4-b99d-748663fd9f72
+		summarizeBy: none
+		sourceColumn: employeetype
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column jobcode
+		dataType: string
+		lineageTag: 71a18a3f-dc32-4ff8-89bc-9ecbf0b342c2
+		summarizeBy: none
+		sourceColumn: jobcode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column supervisor
+		dataType: string
+		lineageTag: fd96bc4e-2c61-4c43-94af-1f17f49d1f2b
+		summarizeBy: none
+		sourceColumn: supervisor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column birthdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f9c708ea-d08f-45cb-9a75-89796dfc08fe
+		summarizeBy: none
+		sourceColumn: birthdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column lastevaldate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 753ac19c-6d97-48f9-9fbe-a9f4f966db2a
+		summarizeBy: none
+		sourceColumn: lastevaldate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nextevaldate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 08b7bcae-2289-43b3-96f6-46842272d5da
+		summarizeBy: none
+		sourceColumn: nextevaldate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column hiredate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 323466cf-9b1c-40ce-9d62-1e5467a7a3ba
+		summarizeBy: none
+		sourceColumn: hiredate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column terminationdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: abd0e6b7-0b23-45d6-9909-2b900b87756a
+		summarizeBy: none
+		sourceColumn: terminationdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column location
+		dataType: string
+		lineageTag: a4c910d3-99de-4e52-accb-12cfc6b0c853
+		summarizeBy: none
+		sourceColumn: location
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Campus al que pertenece esta persona.
+	column CampusPersona
+		dataType: string
+		lineageTag: 5e6fb6ce-3c66-4bc1-aea4-d0d00aaa0433
+		summarizeBy: none
+		sourceColumn: CampusPersona
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Organización de la ubicación
+	column Organización
+		dataType: string
+		lineageTag: eedf21bc-e6cb-4b56-bd2d-82e1599b4975
+		summarizeBy: none
+		sourceColumn: Organización
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column shiptoaddress
+		dataType: string
+		lineageTag: f3a44ae2-8232-4271-8655-87270996bf90
+		summarizeBy: none
+		sourceColumn: shiptoaddress
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column billtoaddress
+		dataType: string
+		lineageTag: 936f5aac-d238-41bc-a6ab-53707748f6e2
+		summarizeBy: none
+		sourceColumn: billtoaddress
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column droppoint
+		dataType: string
+		lineageTag: af539ace-32a2-429f-9ecc-260b5acd5467
+		summarizeBy: none
+		sourceColumn: droppoint
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wfmailelection
+		dataType: string
+		lineageTag: 7ddff4e0-0424-4334-b6a9-f443ef51ba51
+		summarizeBy: none
+		sourceColumn: wfmailelection
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column transemailelection
+		dataType: string
+		lineageTag: 59b71268-8076-4032-99c1-bed043bff714
+		summarizeBy: none
+		sourceColumn: transemailelection
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column delegate
+		dataType: string
+		lineageTag: 9dc2ce7a-e083-47cb-9207-5f66158e4dd8
+		summarizeBy: none
+		sourceColumn: delegate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column delegatefromdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c6379d49-e672-42cf-b78f-609bdaa369a2
+		summarizeBy: none
+		sourceColumn: delegatefromdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column delegatetodate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e85456a7-4e8c-4037-bf1d-4deb04925003
+		summarizeBy: none
+		sourceColumn: delegatetodate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcardnum
+		dataType: string
+		lineageTag: c389f177-cf9b-4401-9f7e-4d4102843845
+		summarizeBy: none
+		sourceColumn: pcardnum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcardtype
+		dataType: string
+		lineageTag: 755c6153-bc3a-44d2-a037-b687aee683bf
+		summarizeBy: none
+		sourceColumn: pcardtype
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcardexpdate
+		dataType: string
+		lineageTag: 63ceaddc-8415-4788-8dfc-d8b8236872e5
+		summarizeBy: none
+		sourceColumn: pcardexpdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcardverification
+		dataType: string
+		lineageTag: 589f0ad6-2bb6-4b57-aae1-b8cd933e5ada
+		summarizeBy: none
+		sourceColumn: pcardverification
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column addressline1
+		dataType: string
+		lineageTag: a8b7c18c-d7a2-4507-bf98-dc53a437b6d2
+		summarizeBy: none
+		sourceColumn: addressline1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column addressline2
+		dataType: string
+		lineageTag: 9db127fb-0e36-4ce2-a23a-8583e63d0545
+		summarizeBy: none
+		sourceColumn: addressline2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column addressline3
+		dataType: string
+		lineageTag: bc68113d-5834-4643-a36a-ec4bd0c65ea7
+		summarizeBy: none
+		sourceColumn: addressline3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: ccd53adc-0901-451d-85b1-e6416d998fe6
+		summarizeBy: none
+		sourceColumn: city
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column regiondistrict
+		dataType: string
+		lineageTag: dbad7ac7-bc4c-4c14-b7a3-97fb1ac07884
+		summarizeBy: none
+		sourceColumn: regiondistrict
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column county
+		dataType: string
+		lineageTag: 7c8c8c13-2b30-4246-8706-364175b7e15f
+		summarizeBy: none
+		sourceColumn: county
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column stateprovince
+		dataType: string
+		lineageTag: 7b843e38-1c79-4e25-98c7-fe3f85c4a045
+		summarizeBy: none
+		sourceColumn: stateprovince
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		lineageTag: 8a76d0bb-da00-4a86-8e6d-b0359aae2de3
+		summarizeBy: none
+		sourceColumn: country
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column postalcode
+		dataType: string
+		lineageTag: 9ff39efc-401c-4881-944c-03d0bfb78b1f
+		summarizeBy: none
+		sourceColumn: postalcode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column vip
+		dataType: int64
+		formatString: 0
+		lineageTag: 5e62bd00-02db-4965-9a95-145e873ccdba
+		summarizeBy: sum
+		sourceColumn: vip
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column statusdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f4b0503f-70be-498c-87f3-cf4ff2bb1455
+		summarizeBy: none
+		sourceColumn: statusdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column acceptingwfmail
+		dataType: int64
+		formatString: 0
+		lineageTag: 9abc3f13-b9c0-4248-a948-16b16aab0f7c
+		summarizeBy: sum
+		sourceColumn: acceptingwfmail
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wopriority
+		dataType: int64
+		formatString: 0
+		lineageTag: 2461417c-02c6-41ac-900d-2221077fb45a
+		summarizeBy: sum
+		sourceColumn: wopriority
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column loctoservreq
+		dataType: int64
+		formatString: 0
+		lineageTag: 2db566e1-0261-44ab-a7a7-3ae002bf41ae
+		summarizeBy: sum
+		sourceColumn: loctoservreq
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column personuid
+		dataType: int64
+		formatString: 0
+		lineageTag: 00e2f3f4-91c2-4c40-933f-64a2070202b1
+		summarizeBy: sum
+		sourceColumn: personuid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column langcode
+		dataType: string
+		lineageTag: 96a0b677-4417-4fe3-a57c-2159dceee14c
+		summarizeBy: none
+		sourceColumn: langcode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column sendersysid
+		dataType: string
+		lineageTag: 945e67f6-4bfb-4994-bd2b-f30bde7179c7
+		summarizeBy: none
+		sourceColumn: sendersysid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column sourcesysid
+		dataType: string
+		lineageTag: 0892f958-0ccc-4206-ac1e-2566e82bcfd0
+		summarizeBy: none
+		sourceColumn: sourcesysid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ownersysid
+		dataType: string
+		lineageTag: adbe6a50-ad6b-4037-8081-436ebd140055
+		summarizeBy: none
+		sourceColumn: ownersysid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column externalrefid
+		dataType: string
+		lineageTag: ed8d131d-5dad-4a30-a4e5-764ce7fad0e3
+		summarizeBy: none
+		sourceColumn: externalrefid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column language
+		dataType: string
+		lineageTag: a4b062d1-e166-4ade-bda9-5ca97d8dcf31
+		summarizeBy: none
+		sourceColumn: language
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column locale
+		dataType: string
+		lineageTag: af48d8fe-8ee8-48c7-83dc-c1221244f120
+		summarizeBy: none
+		sourceColumn: locale
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column timezone
+		dataType: string
+		lineageTag: 9d0595f6-cad2-4dd0-b711-8878055109ea
+		summarizeBy: none
+		sourceColumn: timezone
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column hasld
+		dataType: int64
+		formatString: 0
+		lineageTag: 54549b80-02bc-497b-8448-f47c09ce6300
+		summarizeBy: sum
+		sourceColumn: hasld
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column primarysms
+		dataType: string
+		lineageTag: b001427d-bcac-4ba7-b12a-e41db492be83
+		summarizeBy: none
+		sourceColumn: primarysms
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ownergroup
+		dataType: string
+		lineageTag: 6b84f0c8-3bae-49c3-bdc8-367316221f8b
+		summarizeBy: none
+		sourceColumn: ownergroup
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column im_id
+		dataType: string
+		lineageTag: 7d3b3965-a72d-4a75-b14c-7ab000160e53
+		summarizeBy: none
+		sourceColumn: im_id
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column caltype
+		dataType: string
+		lineageTag: b1d6cf25-bb99-47aa-9e10-a7f16fd89d1a
+		summarizeBy: none
+		sourceColumn: caltype
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dfltapp
+		dataType: string
+		lineageTag: 63761d64-4afb-40a8-8f70-18ca03e51827
+		summarizeBy: none
+		sourceColumn: dfltapp
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column deviceclass
+		dataType: int64
+		formatString: 0
+		lineageTag: 630f0b96-f01d-4575-9d9b-23a1a33dedcd
+		summarizeBy: sum
+		sourceColumn: deviceclass
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_clasificacion
+		dataType: string
+		lineageTag: 3e830bfe-0978-4be8-bf36-7150ee0439a7
+		summarizeBy: none
+		sourceColumn: tm_clasificacion
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column usernotftype
+		dataType: string
+		lineageTag: 36bd945e-f7e6-41c2-81ae-d5bb8afd3043
+		summarizeBy: none
+		sourceColumn: usernotftype
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column classstructureid
+		dataType: string
+		lineageTag: 763e1728-8fbe-4073-b287-c177f921740b
+		summarizeBy: none
+		sourceColumn: classstructureid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column saddresscode
+		dataType: string
+		lineageTag: 14d88887-8141-48d6-bb45-ef38494f356a
+		summarizeBy: none
+		sourceColumn: saddresscode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PersonidLocationorgKey
+		dataType: string
+		lineageTag: f0106435-46a1-4adb-a990-f3c5c68db8b9
+		summarizeBy: none
+		sourceColumn: PersonidLocationorgKey
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition person = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    person_Table = dbo_Schema{[Name="person",Kind="Table"]}[Data],
+				    #"Inserted Merged Column" = Table.AddColumn(person_Table, "PersonidLocationorgKey", each Text.Combine({[personid], [locationorg]}, ":"), type text),
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Merged Column",{{"personid", "Persona"}, {"status", "Estado"}, {"displayname", "Nombre"}, {"locationsite", "CampusPersona"}, {"locationorg", "Organización"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

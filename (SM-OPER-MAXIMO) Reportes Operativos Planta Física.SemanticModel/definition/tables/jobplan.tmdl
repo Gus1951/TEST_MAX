@@ -1,0 +1,84 @@
+table jobplan
+	lineageTag: c9750fc0-d798-41e0-8295-9727e5bcba4a
+
+	/// Identificador de organización
+	column Organización
+		dataType: string
+		lineageTag: 18dfc4a2-178c-46a4-8d17-18aba274ccf9
+		summarizeBy: none
+		sourceColumn: Organización
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador único del plan de trabajo
+	column 'Plan Trabajo'
+		dataType: string
+		lineageTag: 033740dc-0074-4e19-99a6-6db820971df4
+		summarizeBy: none
+		sourceColumn: Plan Trabajo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Tipo de trabajo
+	column 'Tipo Trabajo'
+		dataType: string
+		lineageTag: 1bfd8b98-2ac4-4492-bd06-2f5f5b94da18
+		summarizeBy: none
+		sourceColumn: Tipo Trabajo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Clasificación
+	column Clasificación
+		dataType: string
+		lineageTag: dfd8957e-5095-411c-b079-784a2c17fff5
+		summarizeBy: none
+		sourceColumn: Clasificación
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Subclasificación
+	column Subclasificación
+		dataType: string
+		lineageTag: 99f98b39-db33-43d1-a96a-d6f40f379a76
+		summarizeBy: none
+		sourceColumn: Subclasificación
+
+		annotation SummarizationSetBy = Automatic
+
+	column Descripción
+		dataType: string
+		lineageTag: 0f3e93df-cfc9-4146-8817-110c5031f669
+		summarizeBy: none
+		sourceColumn: Descripción
+
+		annotation SummarizationSetBy = Automatic
+
+	column JobPlanKey
+		dataType: string
+		lineageTag: e75fef50-11fe-4177-a408-2d9a603ff4d7
+		summarizeBy: none
+		sourceColumn: JobPlanKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition jobplan = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    jobplan_Table = dbo_Schema{[Name="jobplan",Kind="Table"]}[Data],
+				     #"Removed Other Columns" = Table.SelectColumns(jobplan_Table,{"orgid", "jpnum", "tm_worktype", "tm_clasificacion", "tm_subclasificacion","description"}),
+				
+				     #"Inserted Merged Column1" = Table.AddColumn(#"Removed Other Columns", "JobPlanKey", each Text.Combine({[orgid], [jpnum], [tm_worktype],[tm_clasificacion], [tm_subclasificacion] }, ":"), type text),
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Merged Column1",{{"orgid", "Organización"}, {"jpnum", "Plan Trabajo"}, {"tm_worktype", "Tipo Trabajo"}, {"tm_clasificacion", "Clasificación"}, {"tm_subclasificacion", "Subclasificación"}, {"description", "Descripción"}})
+				
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

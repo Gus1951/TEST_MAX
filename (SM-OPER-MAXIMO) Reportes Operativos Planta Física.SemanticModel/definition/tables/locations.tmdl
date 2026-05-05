@@ -1,0 +1,931 @@
+table locations
+	lineageTag: 70a577b7-bd72-47c7-81f2-9e5c10c69d8a
+
+	/// Almacén en el que está almacenada la parte.
+	/// 
+	column Ubicacion
+		dataType: string
+		lineageTag: 421d5deb-05ee-44ca-b94a-944a666b5daf
+		summarizeBy: none
+		sourceColumn: Ubicacion
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Describe la ubicación del almacén. Para especificar o ver información adicional, haga clic en el botón Descripción detallada.
+	column Descripción
+		dataType: string
+		lineageTag: 46f6ccd3-8677-43c8-9461-c4f2537d1224
+		summarizeBy: none
+		sourceColumn: Descripción
+
+		changedProperty = IsHidden
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column type
+		dataType: string
+		lineageTag: 27149bbd-cca2-4b0e-a444-b70f808d75b6
+		summarizeBy: none
+		sourceColumn: type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column controlacc
+		dataType: string
+		lineageTag: f6303101-00ae-4614-8877-3a147c89cb85
+		summarizeBy: none
+		sourceColumn: controlacc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column glaccount
+		dataType: string
+		lineageTag: 4cf5c45d-d104-4e4e-95ba-0b723775b558
+		summarizeBy: none
+		sourceColumn: glaccount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column purchvaracc
+		dataType: string
+		lineageTag: 5a9600e7-2b15-4d4c-9a63-a9f3db150636
+		summarizeBy: none
+		sourceColumn: purchvaracc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoicevaracc
+		dataType: string
+		lineageTag: 27d14239-4abd-41fc-a902-a6f4fc668085
+		summarizeBy: none
+		sourceColumn: invoicevaracc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column curvaracc
+		dataType: string
+		lineageTag: 5e509b0a-a437-4c0b-b8f9-883bc556544c
+		summarizeBy: none
+		sourceColumn: curvaracc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column shrinkageacc
+		dataType: string
+		lineageTag: 664c6429-42d8-4872-a369-078fca97e15b
+		summarizeBy: none
+		sourceColumn: shrinkageacc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column invcostadjacc
+		dataType: string
+		lineageTag: 2bf90ee4-843d-42d2-be7d-cf04c656285a
+		summarizeBy: none
+		sourceColumn: invcostadjacc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column receiptvaracc
+		dataType: string
+		lineageTag: cebc7629-e06e-416e-bf4e-bf6ab49a2fde
+		summarizeBy: none
+		sourceColumn: receiptvaracc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column changeby
+		dataType: string
+		lineageTag: 35f7b14b-fd25-4bd4-9f74-71b9729d8a55
+		summarizeBy: none
+		sourceColumn: changeby
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column changedate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1e510460-0d98-4957-81d9-a5a8533a27d7
+		summarizeBy: none
+		sourceColumn: changedate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column disabled
+		dataType: int64
+		formatString: 0
+		lineageTag: 1e4a48e4-0593-40ba-8503-073926a92ccf
+		summarizeBy: sum
+		sourceColumn: disabled
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column oldcontrolacc
+		dataType: string
+		lineageTag: 9c45af07-e8f6-4b83-bb71-8defb01af5b3
+		summarizeBy: none
+		sourceColumn: oldcontrolacc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column oldshrinkageacc
+		dataType: string
+		lineageTag: c95c0208-4f61-492c-810f-16186f50611e
+		summarizeBy: none
+		sourceColumn: oldshrinkageacc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column oldinvcostadjacc
+		dataType: string
+		lineageTag: 3364c5ce-dfce-4317-905a-037d83f21304
+		summarizeBy: none
+		sourceColumn: oldinvcostadjacc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column classstructureid
+		dataType: string
+		lineageTag: 00381501-42a6-48c8-a572-4db43402e080
+		summarizeBy: none
+		sourceColumn: classstructureid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column gisparam1
+		dataType: string
+		lineageTag: 9131095f-b8dc-4c09-83be-1ad57203c5c8
+		summarizeBy: none
+		sourceColumn: gisparam1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column gisparam2
+		dataType: string
+		lineageTag: b438c8af-180f-4ef3-a6bf-7eb83a824f60
+		summarizeBy: none
+		sourceColumn: gisparam2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column gisparam3
+		dataType: string
+		lineageTag: 4171e504-fe45-4753-b422-7812a570061d
+		summarizeBy: none
+		sourceColumn: gisparam3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column sourcesysid
+		dataType: string
+		lineageTag: b5a47642-20e2-4afe-8986-33244da1e3cf
+		summarizeBy: none
+		sourceColumn: sourcesysid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ownersysid
+		dataType: string
+		lineageTag: 8d37299f-9ee4-47e1-a145-3b2e7fa473e2
+		summarizeBy: none
+		sourceColumn: ownersysid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column externalrefid
+		dataType: string
+		lineageTag: 52fe1c5e-6e2f-4f2a-a3b3-81cb14e3a740
+		summarizeBy: none
+		sourceColumn: externalrefid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column sendersysid
+		dataType: string
+		lineageTag: b235dd00-5b8c-4c73-b43b-aab6e768c285
+		summarizeBy: none
+		sourceColumn: sendersysid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Especifica el campus donde reside esta ubicación o almacén
+	column Campus
+		dataType: string
+		lineageTag: 07af53f9-33ce-4e48-8be1-720d9ddb9dc9
+		summarizeBy: none
+		sourceColumn: Campus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador de organización
+	column Organización
+		dataType: string
+		lineageTag: 24bdd799-65e6-4608-8cd0-64930479843a
+		summarizeBy: none
+		sourceColumn: Organización
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column intlabrec
+		dataType: string
+		lineageTag: e9f18db7-071a-4646-8c04-d4a754a162b1
+		summarizeBy: none
+		sourceColumn: intlabrec
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column isdefault
+		dataType: int64
+		formatString: 0
+		lineageTag: 4b31b106-59d7-40a6-8e06-0dcd24e233a8
+		summarizeBy: sum
+		sourceColumn: isdefault
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column shiptoaddresscode
+		dataType: string
+		lineageTag: 0f7d30f0-ec1c-4681-9591-6a3471bcb148
+		summarizeBy: none
+		sourceColumn: shiptoaddresscode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column shiptolaborcode
+		dataType: string
+		lineageTag: 51d016c4-a8cd-45cc-a703-634c08db5fa3
+		summarizeBy: none
+		sourceColumn: shiptolaborcode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column billtoaddresscode
+		dataType: string
+		lineageTag: 1d851dd8-7902-457b-a283-2e380d77b85b
+		summarizeBy: none
+		sourceColumn: billtoaddresscode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column billtolaborcode
+		dataType: string
+		lineageTag: be75d949-87ef-4c2c-a3fa-818aa82316eb
+		summarizeBy: none
+		sourceColumn: billtolaborcode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: 76a871ac-4da0-4799-ae1f-e75365c70db1
+		summarizeBy: none
+		sourceColumn: status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column serviceaddresscode
+		dataType: string
+		lineageTag: e234bf7c-7916-4e1f-9b11-02a26577cef6
+		summarizeBy: none
+		sourceColumn: serviceaddresscode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column locationsid
+		dataType: int64
+		formatString: 0
+		lineageTag: 62e5c91b-5bc5-418f-aeb8-6067cf3bfa97
+		summarizeBy: sum
+		sourceColumn: locationsid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column useinpopr
+		dataType: int64
+		formatString: 0
+		lineageTag: 3d4605eb-731e-41f3-98c8-f0b4b4891fb6
+		summarizeBy: sum
+		sourceColumn: useinpopr
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column toolcontrolacc
+		dataType: string
+		lineageTag: 47d2ce76-350d-49e3-876d-1bdd1f4585c4
+		summarizeBy: none
+		sourceColumn: toolcontrolacc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column langcode
+		dataType: string
+		lineageTag: db22f4c0-1e2a-40dd-a79c-6374bccd1ee8
+		summarizeBy: none
+		sourceColumn: langcode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column hasld
+		dataType: int64
+		formatString: 0
+		lineageTag: 338cd5fd-7eb5-4c3c-b242-0ec0cd8da035
+		summarizeBy: sum
+		sourceColumn: hasld
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column autowogen
+		dataType: int64
+		formatString: 0
+		lineageTag: 3e21e102-cc8e-418a-8b7d-55924290e4ae
+		summarizeBy: sum
+		sourceColumn: autowogen
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column statusdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: bf63a7e9-68f8-44da-9fba-59b2684f9cd3
+		summarizeBy: none
+		sourceColumn: statusdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column invowner
+		dataType: string
+		lineageTag: 5465ac29-9bf9-4e75-b0ed-b137cfa90695
+		summarizeBy: none
+		sourceColumn: invowner
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column isrepairfacility
+		dataType: int64
+		formatString: 0
+		lineageTag: 357b0764-807f-40b4-ba18-56f0ed55f8a2
+		summarizeBy: sum
+		sourceColumn: isrepairfacility
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscduedate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6f97ea16-1e83-4dd3-93f4-8df506f0056d
+		summarizeBy: none
+		sourceColumn: pluscduedate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscloop
+		dataType: int64
+		formatString: 0
+		lineageTag: bfce3829-7479-4993-85c1-6c38921577cc
+		summarizeBy: sum
+		sourceColumn: pluscloop
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscpmextdate
+		dataType: int64
+		formatString: 0
+		lineageTag: c41f8d53-2b36-4a2d-8abe-9205db5ff228
+		summarizeBy: sum
+		sourceColumn: pluscpmextdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column saddresscode
+		dataType: string
+		lineageTag: d42da81b-3b5a-4573-b61c-fa31a333133f
+		summarizeBy: none
+		sourceColumn: saddresscode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Tm_appa
+	column Tm_appa
+		dataType: string
+		lineageTag: ce86ed2e-42e1-4443-b3eb-1311990cb547
+		summarizeBy: none
+		sourceColumn: Tm_appa
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_area
+		dataType: double
+		lineageTag: 8d49e4ac-93b8-4b18-9f77-f0f53b41d895
+		summarizeBy: sum
+		sourceColumn: tm_area
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tm_capacidad
+		dataType: int64
+		formatString: 0
+		lineageTag: e9db816b-ee77-4611-8b27-322028daf43a
+		summarizeBy: sum
+		sourceColumn: tm_capacidad
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Tm_sacs
+	column Tm_sacs
+		dataType: string
+		lineageTag: 6701dddb-f197-4ef6-8877-8b93fdcb1e15
+		summarizeBy: none
+		sourceColumn: Tm_sacs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_depto
+		dataType: string
+		lineageTag: 89ec6c3b-b3ec-4790-8e07-51f68f821bf1
+		summarizeBy: none
+		sourceColumn: tm_depto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_no_plano
+		dataType: string
+		lineageTag: aa204260-eecb-4e34-a25f-2a7c73f484a5
+		summarizeBy: none
+		sourceColumn: tm_no_plano
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_nva_ubic
+		dataType: string
+		lineageTag: a99db6d5-8c0c-4112-b0f8-799521200c15
+		summarizeBy: none
+		sourceColumn: tm_nva_ubic
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_orden
+		dataType: int64
+		formatString: 0
+		lineageTag: 2b5ac5c5-e90b-4a23-b19f-736f45bff0a8
+		summarizeBy: sum
+		sourceColumn: tm_orden
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_edificio
+		dataType: int64
+		formatString: 0
+		lineageTag: 6ea80141-3297-49ba-8cdd-c46ca1b5076a
+		summarizeBy: sum
+		sourceColumn: tm_edificio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_salon
+		dataType: int64
+		formatString: 0
+		lineageTag: cd625e25-7379-49cd-94f1-b301383242bd
+		summarizeBy: sum
+		sourceColumn: tm_salon
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_edcampus
+		dataType: string
+		lineageTag: cd85208c-2f7a-4626-bc71-f23d36504fcd
+		summarizeBy: none
+		sourceColumn: tm_edcampus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_edificiogral
+		dataType: int64
+		formatString: 0
+		lineageTag: c25e71c6-2463-4505-bc05-1ff917e5b7a8
+		summarizeBy: sum
+		sourceColumn: tm_edificiogral
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_nivcampus
+		dataType: string
+		lineageTag: 5a29d739-64e1-4fed-9cea-c88b99554d26
+		summarizeBy: none
+		sourceColumn: tm_nivcampus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nivel del Edificio
+	/// 
+	column 'Nivel Edificio'
+		dataType: string
+		lineageTag: 0ea3ccac-c364-4596-a2af-130fa17f743e
+		summarizeBy: none
+		sourceColumn: Nivel Edificio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nombre del Edificio
+	column 'Nombre Edificio'
+		dataType: string
+		lineageTag: ebce4011-a788-474a-8838-146684439701
+		summarizeBy: none
+		sourceColumn: Nombre Edificio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_cambioloc
+		dataType: string
+		lineageTag: e123c935-5102-4d0c-a2c7-c6479434bc59
+		summarizeBy: none
+		sourceColumn: tm_cambioloc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_comentario
+		dataType: string
+		lineageTag: d8d163bd-c87c-4c4f-8ba0-af25b5f6be0d
+		summarizeBy: none
+		sourceColumn: tm_comentario
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_gpofinot
+		dataType: int64
+		formatString: 0
+		lineageTag: 5740ffa0-4d81-4740-be1f-1ce21e0f1885
+		summarizeBy: sum
+		sourceColumn: tm_gpofinot
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_prepa
+		dataType: int64
+		formatString: 0
+		lineageTag: 1ab47567-7c96-4214-ad5f-ece26c3331ba
+		summarizeBy: sum
+		sourceColumn: tm_prepa
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column health
+		dataType: int64
+		formatString: 0
+		lineageTag: 3bfcfb50-c4e5-4062-a0cf-7d1798195bc5
+		summarizeBy: sum
+		sourceColumn: health
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column estendoflife
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a8f73e5f-e715-401b-bc31-84667138fe6a
+		summarizeBy: none
+		sourceColumn: estendoflife
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column expectedlife
+		dataType: int64
+		formatString: 0
+		lineageTag: 13ecf542-92c3-4945-b9da-2e6685f11bde
+		summarizeBy: sum
+		sourceColumn: expectedlife
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column expectedlifedate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 884bd5fb-e2d3-435a-8367-d661c5ef69a7
+		summarizeBy: none
+		sourceColumn: expectedlifedate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column installdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 86a8a5f8-4231-4d22-a3a3-8baee66fb0f3
+		summarizeBy: none
+		sourceColumn: installdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column replacecost
+		dataType: double
+		lineageTag: da9c5b4d-929c-40ee-a122-25af8b7a2089
+		summarizeBy: sum
+		sourceColumn: replacecost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column modelid
+		dataType: string
+		lineageTag: e76cf274-83ba-4d5a-8317-24bf2a537d87
+		summarizeBy: none
+		sourceColumn: modelid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column bimimportsrc
+		dataType: string
+		lineageTag: 21d7f37a-5bed-4c70-b7af-2df6b919f1ac
+		summarizeBy: none
+		sourceColumn: bimimportsrc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column bimusage
+		dataType: string
+		lineageTag: 56f3f08e-83e3-442f-942f-4f6186623dd7
+		summarizeBy: none
+		sourceColumn: bimusage
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column bimroomname
+		dataType: string
+		lineageTag: 74d8fcfe-129e-4561-b777-19762cf40558
+		summarizeBy: none
+		sourceColumn: bimroomname
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_auditorio
+		dataType: int64
+		formatString: 0
+		lineageTag: 3f2106c7-715e-4e22-89aa-b48621eb3fb1
+		summarizeBy: sum
+		sourceColumn: tm_auditorio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_escuela
+		dataType: int64
+		formatString: 0
+		lineageTag: a1d0099e-ce84-400f-b06f-0245d5fe5827
+		summarizeBy: sum
+		sourceColumn: tm_escuela
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_herradura
+		dataType: int64
+		formatString: 0
+		lineageTag: 034ce7dd-dd88-4667-aa7a-a8acd0ba6f3d
+		summarizeBy: sum
+		sourceColumn: tm_herradura
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_banquete
+		dataType: int64
+		formatString: 0
+		lineageTag: f164eefc-ab7e-4563-aa98-a1774bca919f
+		summarizeBy: sum
+		sourceColumn: tm_banquete
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_evento
+		dataType: int64
+		formatString: 0
+		lineageTag: c6a025ed-d21b-4775-b75c-b6bc8f38d3e6
+		summarizeBy: sum
+		sourceColumn: tm_evento
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_poligono
+		dataType: string
+		lineageTag: a6aa12e6-c763-4d97-8517-1edaef66150c
+		summarizeBy: none
+		sourceColumn: tm_poligono
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_descripcion_api
+		dataType: string
+		lineageTag: adc5062f-3663-40dc-9749-c2046cdf82f9
+		summarizeBy: none
+		sourceColumn: tm_descripcion_api
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrgidSiteidLocationKey
+		dataType: string
+		lineageTag: 3995c16a-1ccf-4f2c-9e1e-724223cbf30f
+		summarizeBy: none
+		sourceColumn: OrgidSiteidLocationKey
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Ubicación = ```
+			if( ISBLANK(locations[Ubicacion]), locations[Nivel Edificio], locations[Ubicacion]) 
+			```
+		lineageTag: 99bce54c-7855-4514-a9b7-529db08fe49a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition locations = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    locations_Table = dbo_Schema{[Name="locations",Kind="Table"]}[Data],
+				    #"Inserted Merged Column" = Table.AddColumn(locations_Table, "OrgidSiteidLocationKey", each Text.Combine({[orgid], [siteid], [location]}, ":"), type text),
+				   // #"Renamed Columns" = Table.RenameColumns(#"Inserted Merged Column",{{"location", "Ubicacion"}})
+				
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Merged Column",{{"location", "Ubicacion"}, {"description", "Descripción"}, {"siteid", "Campus"}, {"orgid", "Organización"}, {"tm_appa", "Tm_appa"}, {"tm_sacs", "Tm_sacs"}, {"tm_nivel", "Nivel Edificio"}, {"tm_nom_edif", "Nombre Edificio"}}),
+				    #"Poner En Mayúsculas Cada Palabra" = Table.TransformColumns(#"Renamed Columns",{{"Tm_appa", Text.Proper, type text}, {"Tm_sacs", Text.Proper, type text}})
+				
+				
+				
+				  //  #"Merged Queries" = Table.NestedJoin(#"Inserted Merged Column", {"tm_appa"}, Alias_de_alndomain_Appa, {"value"}, "Alias_de_alndomain_Appa", JoinKind.LeftOuter),
+				  //  #"Expanded Alias_de_alndomain_Appa" = Table.ExpandTableColumn(#"Merged Queries", "Alias_de_alndomain_Appa", {"value"}, {"Alias_de_alndomain_Appa.value"})
+				in
+				    #"Poner En Mayúsculas Cada Palabra"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

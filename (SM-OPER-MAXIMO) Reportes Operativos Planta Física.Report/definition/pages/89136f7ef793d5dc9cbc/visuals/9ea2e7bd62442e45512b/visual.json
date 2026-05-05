@@ -1,0 +1,299 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "9ea2e7bd62442e45512b",
+  "position": {
+    "x": 38.980169971671394,
+    "y": 339.03682719546742,
+    "z": 0,
+    "height": 233.88101983002835,
+    "width": 1144.929178470255,
+    "tabOrder": 3000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MAXIMO_08"
+                    }
+                  },
+                  "Property": "pm_Organización"
+                }
+              },
+              "queryRef": "MAXIMO_08.pm_Organización",
+              "nativeQueryRef": "pm_Organización",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MAXIMO_08"
+                    }
+                  },
+                  "Property": "site_Tm_region"
+                }
+              },
+              "queryRef": "MAXIMO_08.site_Tm_region",
+              "nativeQueryRef": "site_Tm_region",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MAXIMO_08"
+                    }
+                  },
+                  "Property": "site_Descripción"
+                }
+              },
+              "queryRef": "MAXIMO_08.site_Descripción",
+              "nativeQueryRef": "site_Descripción",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "MAXIMO_08"
+                        }
+                      },
+                      "Property": "MP_Pendientes_Vencida"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(MAXIMO_08.MP_Pendientes_Vencida)",
+              "nativeQueryRef": "Suma de MP_Pendientes_Vencida"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "MAXIMO_08"
+                        }
+                      },
+                      "Property": "MP_Pendientes_Tiempo"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(MAXIMO_08.MP_Pendientes_Tiempo)",
+              "nativeQueryRef": "Suma de MP_Pendientes_Tiempo"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "MAXIMO_08"
+                        }
+                      },
+                      "Property": "MP_Atender_Tiempo"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(MAXIMO_08.MP_Atender_Tiempo)",
+              "nativeQueryRef": "Suma de MP_Atender_Tiempo"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "MAXIMO_08"
+                        }
+                      },
+                      "Property": "MP_Atender_Vencido"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(MAXIMO_08.MP_Atender_Vencido)",
+              "nativeQueryRef": "Suma de MP_Atender_Vencido"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "MAXIMO_08"
+                        }
+                      },
+                      "Property": "wo_Coste Real Mano Obra"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(MAXIMO_08.wo_Coste Real Mano Obra)",
+              "nativeQueryRef": "Suma de wo_Coste Real Mano Obra"
+            }
+          ]
+        }
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "MAXIMO_08.pm_Organización"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "MAXIMO_08.site_Tm_region"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "MAXIMO_08.site_Descripción"
+            ],
+            "isPinned": true
+          }
+        ],
+        "root": {}
+      }
+    ],
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "layout": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Tabular'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Matriz1'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "bd3f6eb0598aa9272cc2",
+        "ordinal": 0,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "pm"
+              }
+            },
+            "Property": "nextdate"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User"
+      },
+      {
+        "name": "e6f057393979e39591d5",
+        "ordinal": 1,
+        "field": {
+          "Column": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "pm"
+              }
+            },
+            "Property": "Organización"
+          }
+        },
+        "type": "Categorical",
+        "howCreated": "User",
+        "objects": {
+          "general": [
+            {
+              "properties": {
+                "isInvertedSelectionMode": {
+                  "expr": {
+                    "Literal": {
+                      "Value": "true"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      },
+      {
+        "name": "d44ed7f5ab5695c3dc03",
+        "ordinal": 2,
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "workorder"
+                  }
+                },
+                "Property": "Coste Real Mano de Obra"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "howCreated": "User"
+      }
+    ],
+    "filterSortOrder": "Custom"
+  }
+}

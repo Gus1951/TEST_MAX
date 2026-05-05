@@ -1,0 +1,569 @@
+table Alias_de_Person
+	lineageTag: b2c88d55-6054-4555-a62b-db5955648c30
+
+	measure Conteo =
+			
+			SUMMARIZE(
+			    MAXIMO_08,
+			    MAXIMO_08[pm_Organización],
+			    MAXIMO_08[site_Tm_region],
+			    MAXIMO_08[site_Descripción],
+			    MAXIMO_08[asset_Tipo],
+			    MAXIMO_08[asset_Uso],
+			    MAXIMO_08[pm_MP],
+			    "MO", CALCULATE(MAX(MAXIMO_08[workorder_Coste Real Mano de Obra]))
+			)
+		lineageTag: ac9f1da2-33a1-4a62-a455-6ee362dfb1f1
+
+	column Persona
+		dataType: string
+		lineageTag: e699b3a3-ae5b-4081-9f0f-e2693af1e16d
+		summarizeBy: none
+		sourceColumn: Persona
+
+		annotation SummarizationSetBy = Automatic
+
+	column Estado
+		dataType: string
+		lineageTag: d91b6d27-78c8-44e2-976e-19ee49030b2f
+		summarizeBy: none
+		sourceColumn: Estado
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nombre
+		dataType: string
+		lineageTag: 61229b45-95b5-47c8-8369-64a1a0145b8c
+		summarizeBy: none
+		sourceColumn: Nombre
+
+		annotation SummarizationSetBy = Automatic
+
+	column firstname
+		dataType: string
+		lineageTag: c87b89d1-c977-43e4-b241-eefd6873e2b1
+		summarizeBy: none
+		sourceColumn: firstname
+
+		annotation SummarizationSetBy = Automatic
+
+	column lastname
+		dataType: string
+		lineageTag: 4c9ed8c6-cd27-4df4-85a8-0805efde53bf
+		summarizeBy: none
+		sourceColumn: lastname
+
+		annotation SummarizationSetBy = Automatic
+
+	column department
+		dataType: string
+		lineageTag: 2b393160-31fb-48cf-bd64-ae6b302114b8
+		summarizeBy: none
+		sourceColumn: department
+
+		annotation SummarizationSetBy = Automatic
+
+	column title
+		dataType: string
+		lineageTag: 12eb9566-564c-49ac-90e1-c548e8a5c172
+		summarizeBy: none
+		sourceColumn: title
+
+		annotation SummarizationSetBy = Automatic
+
+	column employeetype
+		dataType: string
+		lineageTag: 953ac27e-8802-4de5-9538-dcbbf883af16
+		summarizeBy: none
+		sourceColumn: employeetype
+
+		annotation SummarizationSetBy = Automatic
+
+	column jobcode
+		dataType: string
+		lineageTag: 72a22a16-0b76-48e7-9e1b-89d1bcecb22c
+		summarizeBy: none
+		sourceColumn: jobcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column supervisor
+		dataType: string
+		lineageTag: 22ab01c4-d6a8-4842-8c4d-5b88dea2f699
+		summarizeBy: none
+		sourceColumn: supervisor
+
+		annotation SummarizationSetBy = Automatic
+
+	column birthdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 563ad11d-5107-442e-9471-3ce502196852
+		summarizeBy: none
+		sourceColumn: birthdate
+
+		annotation SummarizationSetBy = Automatic
+
+	column lastevaldate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 163f9d94-f589-4a64-ac97-19e1b534a67f
+		summarizeBy: none
+		sourceColumn: lastevaldate
+
+		annotation SummarizationSetBy = Automatic
+
+	column nextevaldate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d2fa2e96-eba7-454a-a693-a794cddd1eea
+		summarizeBy: none
+		sourceColumn: nextevaldate
+
+		annotation SummarizationSetBy = Automatic
+
+	column hiredate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0dd924e4-cbc2-459c-a0d3-0bb8af9de4c8
+		summarizeBy: none
+		sourceColumn: hiredate
+
+		annotation SummarizationSetBy = Automatic
+
+	column terminationdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: c9267a57-f8e9-4135-bf7b-d1ff9869ae2c
+		summarizeBy: none
+		sourceColumn: terminationdate
+
+		annotation SummarizationSetBy = Automatic
+
+	column location
+		dataType: string
+		lineageTag: ad02e2e7-1aba-4e18-a7df-6138a17b2471
+		summarizeBy: none
+		sourceColumn: location
+
+		annotation SummarizationSetBy = Automatic
+
+	column CampusPersona
+		dataType: string
+		lineageTag: 590be38b-c9b4-442e-bb5e-150fc11f043f
+		summarizeBy: none
+		sourceColumn: CampusPersona
+
+		annotation SummarizationSetBy = Automatic
+
+	column Organización
+		dataType: string
+		lineageTag: 8840c49e-2c90-4fb2-8fca-aaca72a6e74a
+		summarizeBy: none
+		sourceColumn: Organización
+
+		annotation SummarizationSetBy = Automatic
+
+	column shiptoaddress
+		dataType: string
+		lineageTag: 0c6a9f1a-545f-4a5a-a577-2de994312027
+		summarizeBy: none
+		sourceColumn: shiptoaddress
+
+		annotation SummarizationSetBy = Automatic
+
+	column billtoaddress
+		dataType: string
+		lineageTag: a0b41319-b80d-47a7-bcea-7d79c77b78a0
+		summarizeBy: none
+		sourceColumn: billtoaddress
+
+		annotation SummarizationSetBy = Automatic
+
+	column droppoint
+		dataType: string
+		lineageTag: 27784089-3eb8-4fc3-94c5-0eca634c7a52
+		summarizeBy: none
+		sourceColumn: droppoint
+
+		annotation SummarizationSetBy = Automatic
+
+	column wfmailelection
+		dataType: string
+		lineageTag: b61ad875-cbb8-4a8c-9f96-c6d7749d97f1
+		summarizeBy: none
+		sourceColumn: wfmailelection
+
+		annotation SummarizationSetBy = Automatic
+
+	column transemailelection
+		dataType: string
+		lineageTag: c5067738-86b7-4a3b-8696-6b9fd67a4887
+		summarizeBy: none
+		sourceColumn: transemailelection
+
+		annotation SummarizationSetBy = Automatic
+
+	column delegate
+		dataType: string
+		lineageTag: f81d972d-4152-408c-82b9-e249156dd12e
+		summarizeBy: none
+		sourceColumn: delegate
+
+		annotation SummarizationSetBy = Automatic
+
+	column delegatefromdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: dac09a5e-1640-4617-b082-ac09ff9721f7
+		summarizeBy: none
+		sourceColumn: delegatefromdate
+
+		annotation SummarizationSetBy = Automatic
+
+	column delegatetodate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 82682039-1f64-4cc6-b9a6-20944be20019
+		summarizeBy: none
+		sourceColumn: delegatetodate
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcardnum
+		dataType: string
+		lineageTag: f462da90-90e9-4b33-8c70-5f89fb6630d0
+		summarizeBy: none
+		sourceColumn: pcardnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcardtype
+		dataType: string
+		lineageTag: a78b4da1-d593-4a96-b623-6e9a59ca1d80
+		summarizeBy: none
+		sourceColumn: pcardtype
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcardexpdate
+		dataType: string
+		lineageTag: 57b8380e-63cf-4064-8b9b-10f6ab8c7ca8
+		summarizeBy: none
+		sourceColumn: pcardexpdate
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcardverification
+		dataType: string
+		lineageTag: 9b71c5e3-15e5-441f-8e5a-67e880831290
+		summarizeBy: none
+		sourceColumn: pcardverification
+
+		annotation SummarizationSetBy = Automatic
+
+	column addressline1
+		dataType: string
+		lineageTag: 9189daf2-b4be-4121-b366-fe503541ed3f
+		summarizeBy: none
+		sourceColumn: addressline1
+
+		annotation SummarizationSetBy = Automatic
+
+	column addressline2
+		dataType: string
+		lineageTag: 68369207-26e3-4b6d-8736-afa1c74123ef
+		summarizeBy: none
+		sourceColumn: addressline2
+
+		annotation SummarizationSetBy = Automatic
+
+	column addressline3
+		dataType: string
+		lineageTag: f7268926-2a86-4554-a44a-f06f80502e3f
+		summarizeBy: none
+		sourceColumn: addressline3
+
+		annotation SummarizationSetBy = Automatic
+
+	column city
+		dataType: string
+		lineageTag: 125c5236-93c1-460d-afa5-a681b4ba440b
+		summarizeBy: none
+		sourceColumn: city
+
+		annotation SummarizationSetBy = Automatic
+
+	column regiondistrict
+		dataType: string
+		lineageTag: a9bca342-04ee-4f1f-9957-02cbcb1b7145
+		summarizeBy: none
+		sourceColumn: regiondistrict
+
+		annotation SummarizationSetBy = Automatic
+
+	column county
+		dataType: string
+		lineageTag: a88ea8c8-2adf-48f9-9029-d1d4cfaca54c
+		summarizeBy: none
+		sourceColumn: county
+
+		annotation SummarizationSetBy = Automatic
+
+	column stateprovince
+		dataType: string
+		lineageTag: 7a875a9e-4911-4d89-8395-da02ee672607
+		summarizeBy: none
+		sourceColumn: stateprovince
+
+		annotation SummarizationSetBy = Automatic
+
+	column country
+		dataType: string
+		lineageTag: 0ec3fdfc-13d1-4735-9d91-df11f9f0d4e9
+		summarizeBy: none
+		sourceColumn: country
+
+		annotation SummarizationSetBy = Automatic
+
+	column postalcode
+		dataType: string
+		lineageTag: df0591b8-d214-4ebd-8d32-fce244e3f3b8
+		summarizeBy: none
+		sourceColumn: postalcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column vip
+		dataType: int64
+		formatString: 0
+		lineageTag: 639074e1-994b-47b5-99b2-029d43000099
+		summarizeBy: none
+		sourceColumn: vip
+
+		annotation SummarizationSetBy = Automatic
+
+	column statusdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 68ee133e-7bb5-4f82-a640-25bea469891b
+		summarizeBy: none
+		sourceColumn: statusdate
+
+		annotation SummarizationSetBy = Automatic
+
+	column acceptingwfmail
+		dataType: int64
+		formatString: 0
+		lineageTag: 2f49a367-7c1c-4dcf-b14f-96ec47923b3a
+		summarizeBy: none
+		sourceColumn: acceptingwfmail
+
+		annotation SummarizationSetBy = Automatic
+
+	column wopriority
+		dataType: int64
+		formatString: 0
+		lineageTag: 83503465-3fd5-4cfe-86c9-463c4c0da947
+		summarizeBy: none
+		sourceColumn: wopriority
+
+		annotation SummarizationSetBy = Automatic
+
+	column loctoservreq
+		dataType: int64
+		formatString: 0
+		lineageTag: 5bf412a3-b2dc-4710-b0f6-4abce796a8a4
+		summarizeBy: none
+		sourceColumn: loctoservreq
+
+		annotation SummarizationSetBy = Automatic
+
+	column personuid
+		dataType: int64
+		formatString: 0
+		lineageTag: cb116943-bf02-4fce-a06e-e97eac622769
+		summarizeBy: none
+		sourceColumn: personuid
+
+		annotation SummarizationSetBy = Automatic
+
+	column langcode
+		dataType: string
+		lineageTag: a8984714-144e-4f20-a381-2a7dedd7cac9
+		summarizeBy: none
+		sourceColumn: langcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column sendersysid
+		dataType: string
+		lineageTag: 4969e827-8c39-4135-83dd-48cd6c3d2c6f
+		summarizeBy: none
+		sourceColumn: sendersysid
+
+		annotation SummarizationSetBy = Automatic
+
+	column sourcesysid
+		dataType: string
+		lineageTag: a66c1488-716b-4d69-b69f-198cfe37d106
+		summarizeBy: none
+		sourceColumn: sourcesysid
+
+		annotation SummarizationSetBy = Automatic
+
+	column ownersysid
+		dataType: string
+		lineageTag: 00114f5c-41a6-4aa8-be0c-b054429c7a81
+		summarizeBy: none
+		sourceColumn: ownersysid
+
+		annotation SummarizationSetBy = Automatic
+
+	column externalrefid
+		dataType: string
+		lineageTag: 938d06a1-3638-4695-bfa5-9583abec5552
+		summarizeBy: none
+		sourceColumn: externalrefid
+
+		annotation SummarizationSetBy = Automatic
+
+	column language
+		dataType: string
+		lineageTag: 09ba29f2-f53d-4a7a-bbc3-5f561cdf6280
+		summarizeBy: none
+		sourceColumn: language
+
+		annotation SummarizationSetBy = Automatic
+
+	column locale
+		dataType: string
+		lineageTag: 3a805253-46f3-4ca2-8d48-6ccc8639eb8c
+		summarizeBy: none
+		sourceColumn: locale
+
+		annotation SummarizationSetBy = Automatic
+
+	column timezone
+		dataType: string
+		lineageTag: 86cf0ebf-0a81-451f-8378-7c547f50083d
+		summarizeBy: none
+		sourceColumn: timezone
+
+		annotation SummarizationSetBy = Automatic
+
+	column hasld
+		dataType: int64
+		formatString: 0
+		lineageTag: b2cd39d5-72f8-4b7c-bf34-d0594fccaea9
+		summarizeBy: none
+		sourceColumn: hasld
+
+		annotation SummarizationSetBy = Automatic
+
+	column primarysms
+		dataType: string
+		lineageTag: d5b468c1-1dff-48b8-a107-e05f3faa3f7d
+		summarizeBy: none
+		sourceColumn: primarysms
+
+		annotation SummarizationSetBy = Automatic
+
+	column ownergroup
+		dataType: string
+		lineageTag: aacc43bf-0cc2-483a-a875-a846535e815c
+		summarizeBy: none
+		sourceColumn: ownergroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column im_id
+		dataType: string
+		lineageTag: 31723b5d-7afe-4fe4-82b5-43a8a9d18afe
+		summarizeBy: none
+		sourceColumn: im_id
+
+		annotation SummarizationSetBy = Automatic
+
+	column caltype
+		dataType: string
+		lineageTag: e14006ac-eb50-43b2-b78a-9879bdadbede
+		summarizeBy: none
+		sourceColumn: caltype
+
+		annotation SummarizationSetBy = Automatic
+
+	column dfltapp
+		dataType: string
+		lineageTag: eb0d1a60-9d8a-4746-be2e-7c40b394ba2d
+		summarizeBy: none
+		sourceColumn: dfltapp
+
+		annotation SummarizationSetBy = Automatic
+
+	column deviceclass
+		dataType: int64
+		formatString: 0
+		lineageTag: a855c34a-d646-4bc5-9314-01d449c587f9
+		summarizeBy: none
+		sourceColumn: deviceclass
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_clasificacion
+		dataType: string
+		lineageTag: 30be817c-9d08-4396-abad-0994423187b4
+		summarizeBy: none
+		sourceColumn: tm_clasificacion
+
+		annotation SummarizationSetBy = Automatic
+
+	column usernotftype
+		dataType: string
+		lineageTag: 1efc3329-8317-4a26-a6b4-2929531b5420
+		summarizeBy: none
+		sourceColumn: usernotftype
+
+		annotation SummarizationSetBy = Automatic
+
+	column classstructureid
+		dataType: string
+		lineageTag: 7b19e64a-0691-4b15-b243-4e15cbea0463
+		summarizeBy: none
+		sourceColumn: classstructureid
+
+		annotation SummarizationSetBy = Automatic
+
+	column saddresscode
+		dataType: string
+		lineageTag: 40da0015-9b45-459d-a60e-d026f13ff772
+		summarizeBy: none
+		sourceColumn: saddresscode
+
+		annotation SummarizationSetBy = Automatic
+
+	column PersonidLocationorgKey
+		dataType: string
+		lineageTag: 87493032-9ac2-4ec2-8684-cefd85a57896
+		summarizeBy: none
+		sourceColumn: PersonidLocationorgKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Alias_de_Person = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    person_Table = dbo_Schema{[Name="person",Kind="Table"]}[Data],
+				    #"Inserted Merged Column" = Table.AddColumn(person_Table, "PersonidLocationorgKey", each Text.Combine({[personid], [locationorg]}, ":"), type text),
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Merged Column",{{"personid", "Persona"}, {"status", "Estado"}, {"displayname", "Nombre"}, {"locationsite", "CampusPersona"}, {"locationorg", "Organización"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

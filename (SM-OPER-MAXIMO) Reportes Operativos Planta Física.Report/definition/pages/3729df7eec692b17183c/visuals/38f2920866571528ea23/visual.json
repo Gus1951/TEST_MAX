@@ -1,0 +1,41 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "38f2920866571528ea23",
+  "position": {
+    "x": 579.29539295392954,
+    "y": 175.7542908762421,
+    "z": 8000,
+    "height": 68.2204155374887,
+    "width": 224.31797651309847,
+    "tabOrder": 5000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "Total_Wonum_Etiqueta"
+                }
+              },
+              "queryRef": "DAX_Metricas.Total_Wonum_Etiqueta",
+              "nativeQueryRef": "Total_Wonum_Etiqueta"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

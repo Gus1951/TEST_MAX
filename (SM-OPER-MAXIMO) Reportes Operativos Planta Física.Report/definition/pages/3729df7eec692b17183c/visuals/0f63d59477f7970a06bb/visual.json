@@ -1,0 +1,287 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "0f63d59477f7970a06bb",
+  "position": {
+    "x": 0,
+    "y": 321.91616766467064,
+    "z": 0,
+    "height": 367.90419161676647,
+    "width": 1261.3857998289136,
+    "tabOrder": 8000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "workorder"
+                    }
+                  },
+                  "Property": "Orden de Trabajo"
+                }
+              },
+              "queryRef": "workorder.Orden de Trabajo",
+              "nativeQueryRef": "Orden de Trabajo"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "workorder"
+                    }
+                  },
+                  "Property": "Estado"
+                }
+              },
+              "queryRef": "workorder.Estado",
+              "nativeQueryRef": "Estado"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "workorder"
+                    }
+                  },
+                  "Property": "Descripción"
+                }
+              },
+              "queryRef": "workorder.Descripción",
+              "nativeQueryRef": "Descripción"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "workorder"
+                    }
+                  },
+                  "Property": "Usuario"
+                }
+              },
+              "queryRef": "workorder.Usuario",
+              "nativeQueryRef": "Usuario"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "workorder"
+                    }
+                  },
+                  "Property": "Ubicación"
+                }
+              },
+              "queryRef": "workorder.Ubicación",
+              "nativeQueryRef": "Ubicación"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "workorder"
+                    }
+                  },
+                  "Property": "schedstart"
+                }
+              },
+              "queryRef": "workorder.schedstart",
+              "nativeQueryRef": "schedstart"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "workorder"
+                    }
+                  },
+                  "Property": "schedfinish"
+                }
+              },
+              "queryRef": "workorder.schedfinish",
+              "nativeQueryRef": "schedfinish"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "Días_Vencidos_MAX.01"
+                }
+              },
+              "queryRef": "DAX_Metricas.Días_Vencidos_MAX.01",
+              "nativeQueryRef": "Días_Vencidos_MAX.01"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "Días_A_FAVOR_MAX.01"
+                }
+              },
+              "queryRef": "DAX_Metricas.Días_A_FAVOR_MAX.01",
+              "nativeQueryRef": "Días_A_FAVOR_MAX.01"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DAX_Metricas"
+                  }
+                },
+                "Property": "Días_Vencidos_MAX.01"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "8D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {}
+        }
+      ],
+      "columnWidth": [
+        {
+          "properties": {
+            "value": {
+              "expr": {
+                "Literal": {
+                  "Value": "242.70640908480448D"
+                }
+              }
+            }
+          },
+          "selector": {
+            "metadata": "workorder.Descripción"
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "visualTooltip": [
+        {
+          "properties": {
+            "show": {
+              "expr": {
+                "Literal": {
+                  "Value": "false"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "a3a7cad067be0eb2a0ab",
+        "field": {
+          "Measure": {
+            "Expression": {
+              "SourceRef": {
+                "Entity": "DAX_Metricas"
+              }
+            },
+            "Property": "Días_Vencidos_MAX.01"
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "d",
+              "Entity": "DAX_Metricas",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Not": {
+                  "Expression": {
+                    "Comparison": {
+                      "ComparisonKind": 0,
+                      "Left": {
+                        "Measure": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Source": "d"
+                            }
+                          },
+                          "Property": "Días_Vencidos_MAX.01"
+                        }
+                      },
+                      "Right": {
+                        "Literal": {
+                          "Value": "0L"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

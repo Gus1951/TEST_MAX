@@ -1,0 +1,116 @@
+relationship AutoDetected_67dd0de3-6296-4444-9e38-2f3651d754d7
+	fromColumn: workorder.OrgidSiteidKey
+	toColumn: site.OrgidSiteidKey
+
+relationship 11f1f115-fbee-4967-4ecf-6406180b6c8c
+	fromColumn: workorder.OrgidTmasignadoKey
+	toColumn: labor.OrgidLaborcodeKey
+
+relationship 2ec74c26-1f94-b9db-fd65-b3923887c5bc
+	fromColumn: workorder.Clasificación
+	toColumn: alndomain.'Valor Dominio'
+
+relationship 09496d5d-7db3-8272-614d-4f358abb453d
+	fromColumn: workorder.Subclasificación
+	toColumn: alndomainClass.value
+
+relationship f59c767d-66cc-1384-0162-67d15f950f5f
+	fromColumn: workorder.'Tipo de Trabajo'
+	toColumn: worktype.TipoTrabajo
+
+relationship 49de9dd3-4c9f-aae1-bb50-4303d9d51cb1
+	toCardinality: many
+	fromColumn: workorder.AliasJobPlanKey
+	toColumn: Alias_de_jobplan_Reincidencias.AliasJobPlanKey
+
+relationship b7463ead-7c71-519b-b818-811ee9ab56e9
+	fromColumn: workorder.OrgidSiteidLocationKey
+	toColumn: lochierarchy.LochiKey
+
+relationship 4c9e8461-a889-ced6-c23b-5cfa3b595891
+	fromColumn: workorder.Departamento
+	toColumn: Alias_de_alndomain_CeCo.value
+
+relationship 6b80ffac-fef9-9284-0677-36a7c794a107
+	fromColumn: workorder.OrgidSiteidLocationKey
+	toColumn: locations.OrgidSiteidLocationKey
+
+relationship 0a0a47e9-25d9-c325-c511-fbdb83865bac
+	crossFilteringBehavior: bothDirections
+	securityFilteringBehavior: bothDirections
+	fromColumn: locations.Tm_appa
+	toColumn: Alias_de_alndomain_Appa.value
+
+relationship AutoDetected_11be2bde-dfca-4698-94b6-084a14e513b0
+	fromColumn: modavail.Persona
+	toColumn: person.Persona
+
+relationship AutoDetected_3ea4e504-7c13-462f-a1ca-5dedc5b79ffd
+	isActive: false
+	fromColumn: modavail.Persona
+	toColumn: labor.Persona
+
+relationship AutoDetected_12ae8146-2f7b-47d2-a25d-0f11c9770786
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: personcal.Persona
+	toColumn: person.Persona
+
+relationship AutoDetected_8b69ff6b-e87a-4843-b112-60f902e7d093
+	isActive: false
+	crossFilteringBehavior: bothDirections
+	fromCardinality: one
+	fromColumn: personcal.Persona
+	toColumn: labor.Persona
+
+relationship eff06229-1591-b018-0abc-a30d7c9da899
+	fromColumn: labor.PersonidOrgidKey
+	toColumn: person.PersonidLocationorgKey
+
+relationship 1e91b26a-f0c7-c7e8-8819-8030fd42cb2a
+	fromColumn: matusetrans.Personaid_OrigKey
+	toColumn: Alias_de_Person.PersonidLocationorgKey
+
+relationship 6c02824a-be5b-5bf5-e520-858f3fdfc8ef
+	fromColumn: matusetrans.matusetransKey
+	toColumn: workorder.matusetransKey
+
+relationship f5451923-c7c9-b057-daba-e20afeebaa94
+	fromColumn: locations.Tm_sacs
+	toColumn: Alias_de_alndomain_Sacs.value
+
+relationship cddacb2b-3ec2-78d3-ab5b-4ab12ad7fbfb
+	toCardinality: many
+	fromColumn: asset.Tipo
+	toColumn: synonymdomain.'Valor Dominio'
+
+relationship AutoDetected_b3a589f0-80c2-4693-be91-a1853dd4acd3
+	fromColumn: asset.OrgidSiteidLocationKey
+	toColumn: locations.OrgidSiteidLocationKey
+
+relationship 344eab56-3969-1d69-e14a-10a160e5395b
+	fromColumn: asset.Uso
+	toColumn: Alias_de_alndomine_Usage.value
+
+relationship 9af6554b-f8ae-7f9d-260f-0891ec0aeaeb
+	fromColumn: asset.OrgidSiteidKey
+	toColumn: site.OrgidSiteidKey
+
+relationship f6a0d74c-6518-e64c-bcf2-1bd010df26f3
+	toCardinality: many
+	fromColumn: pm.workorder_pm_KEY
+	toColumn: workorder.workorder_pm_KEY
+
+relationship 6954bc5c-65aa-1a61-0fe9-dcdac49030ea
+	fromColumn: labtrans.Work_Lab_key
+	toColumn: workorder.Work_Lab_key
+
+relationship 169a2f6c-3371-b8ed-7046-890722bfc226
+	toCardinality: many
+	fromColumn: labtrans.Labtrans_Labcraf_KEY
+	toColumn: laborcraftrate.Labtrans_Labcraf_KEY
+
+relationship 43a21539-a417-afe1-183a-13efd704cbbe
+	fromColumn: laborcraftrate.craft_KEY
+	toColumn: craft.craft_KEY
+

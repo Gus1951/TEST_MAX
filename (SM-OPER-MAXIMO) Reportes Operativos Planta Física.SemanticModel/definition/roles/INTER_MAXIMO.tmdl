@@ -1,0 +1,239 @@
+role INTER_MAXIMO
+	modelPermission: read
+
+	tablePermission matusetrans = ```
+			VAR _CLAVE_SERVICIO = "OPER_PLANTA_FISICA"
+			VAR _REFERENCIA = "INTERMEDIO"
+			VAR _FILTRAR_REGLAS =
+			    FILTER(
+			        'TEC PERFIL USUARIO',
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Correo Electrónico] = USERPRINCIPALNAME() &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Clave Servicio] = _CLAVE_SERVICIO &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Referencia] = _REFERENCIA
+			    )
+			VAR _VALOR_REFERENCIA =
+			    MAXX(_FILTRAR_REGLAS, 'TEC PERFIL USUARIO'[PERFIL USUARIO - Valor Referencia])    
+			RETURN
+			    IF(
+			       NOT ISEMPTY(_FILTRAR_REGLAS),
+			       TRUE()
+			    )
+			```
+
+	tablePermission workorder = ```
+			VAR _CLAVE_SERVICIO = "OPER_PLANTA_FISICA"
+			VAR _REFERENCIA = "INTERMEDIO"
+			VAR _FILTRAR_REGLAS =
+			    FILTER(
+			        'TEC PERFIL USUARIO',
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Correo Electrónico] = USERPRINCIPALNAME() &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Clave Servicio] = _CLAVE_SERVICIO &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Referencia] = _REFERENCIA
+			    )
+			VAR _VALOR_REFERENCIA =
+			    MAXX(_FILTRAR_REGLAS, 'TEC PERFIL USUARIO'[PERFIL USUARIO - Valor Referencia])    
+			RETURN
+			    IF(
+			       NOT ISEMPTY(_FILTRAR_REGLAS),
+			       TRUE()
+			    )
+			```
+
+	tablePermission alndomain = ```
+			VAR _CLAVE_SERVICIO = "OPER_PLANTA_FISICA"
+			VAR _REFERENCIA = "INTERMEDIO"
+			VAR _FILTRAR_REGLAS =
+			    FILTER(
+			        'TEC PERFIL USUARIO',
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Correo Electrónico] = USERPRINCIPALNAME() &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Clave Servicio] = _CLAVE_SERVICIO &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Referencia] = _REFERENCIA
+			    )
+			VAR _VALOR_REFERENCIA =
+			    MAXX(_FILTRAR_REGLAS, 'TEC PERFIL USUARIO'[PERFIL USUARIO - Valor Referencia])    
+			RETURN
+			    IF(
+			       NOT ISEMPTY(_FILTRAR_REGLAS),
+			       TRUE()
+			    )
+			```
+
+	tablePermission alndomainClass = ```
+			VAR _CLAVE_SERVICIO = "OPER_PLANTA_FISICA"
+			VAR _REFERENCIA = "INTERMEDIO"
+			VAR _FILTRAR_REGLAS =
+			    FILTER(
+			        'TEC PERFIL USUARIO',
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Correo Electrónico] = USERPRINCIPALNAME() &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Clave Servicio] = _CLAVE_SERVICIO &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Referencia] = _REFERENCIA
+			    )
+			VAR _VALOR_REFERENCIA =
+			    MAXX(_FILTRAR_REGLAS, 'TEC PERFIL USUARIO'[PERFIL USUARIO - Valor Referencia])    
+			RETURN
+			    IF(
+			       NOT ISEMPTY(_FILTRAR_REGLAS),
+			       TRUE()
+			    )
+			```
+
+	tablePermission locations = ```
+			VAR _CLAVE_SERVICIO = "OPER_PLANTA_FISICA"
+			VAR _REFERENCIA = "INTERMEDIO"
+			VAR _FILTRAR_REGLAS =
+			    FILTER(
+			        'TEC PERFIL USUARIO',
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Correo Electrónico] = USERPRINCIPALNAME() &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Clave Servicio] = _CLAVE_SERVICIO &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Referencia] = _REFERENCIA
+			    )
+			VAR _VALOR_REFERENCIA =
+			    MAXX(_FILTRAR_REGLAS, 'TEC PERFIL USUARIO'[PERFIL USUARIO - Valor Referencia])    
+			RETURN
+			    IF(
+			       NOT ISEMPTY(_FILTRAR_REGLAS),
+			       TRUE()
+			    )
+			```
+
+	tablePermission person = ```
+			VAR _CLAVE_SERVICIO = "OPER_PLANTA_FISICA"
+			VAR _REFERENCIA = "INTERMEDIO"
+			VAR _FILTRAR_REGLAS =
+			    FILTER(
+			        'TEC PERFIL USUARIO',
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Correo Electrónico] = USERPRINCIPALNAME() &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Clave Servicio] = _CLAVE_SERVICIO &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Referencia] = _REFERENCIA
+			    )
+			VAR _VALOR_REFERENCIA =
+			    MAXX(_FILTRAR_REGLAS, 'TEC PERFIL USUARIO'[PERFIL USUARIO - Valor Referencia])    
+			RETURN
+			    IF(
+			       NOT ISEMPTY(_FILTRAR_REGLAS),
+			       TRUE()
+			    )
+			```
+
+	tablePermission site =
+			VAR _CLAVE_SERVICIO = "OPER_PLANTA_FISICA"
+			VAR _REFERENCIA = "INTERMEDIO"
+			
+			RETURN
+			    site[Campus] IN
+			        SELECTCOLUMNS(
+			            FILTER(
+			                'TEC PERFIL USUARIO',
+			                'TEC PERFIL USUARIO'[PERFIL USUARIO - Correo Electrónico] = USERPRINCIPALNAME() &&
+			                'TEC PERFIL USUARIO'[PERFIL USUARIO - Clave Servicio] = _CLAVE_SERVICIO &&
+			                'TEC PERFIL USUARIO'[PERFIL USUARIO - Referencia] = _REFERENCIA
+			            ),
+			            "CAMPUS", 'TEC PERFIL USUARIO'[PERFIL USUARIO - Valor Referencia]
+			        )
+
+	tablePermission worktype = ```
+			VAR _CLAVE_SERVICIO = "OPER_PLANTA_FISICA"
+			VAR _REFERENCIA = "INTERMEDIO"
+			VAR _FILTRAR_REGLAS =
+			    FILTER(
+			        'TEC PERFIL USUARIO',
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Correo Electrónico] = USERPRINCIPALNAME() &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Clave Servicio] = _CLAVE_SERVICIO &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Referencia] = _REFERENCIA
+			    )
+			VAR _VALOR_REFERENCIA =
+			    MAXX(_FILTRAR_REGLAS, 'TEC PERFIL USUARIO'[PERFIL USUARIO - Valor Referencia])    
+			RETURN
+			    IF(
+			       NOT ISEMPTY(_FILTRAR_REGLAS),
+			       TRUE()
+			    )
+			```
+
+	tablePermission Alias_de_Person = ```
+			VAR _CLAVE_SERVICIO = "OPER_PLANTA_FISICA"
+			VAR _REFERENCIA = "INTERMEDIO"
+			VAR _FILTRAR_REGLAS =
+			    FILTER(
+			        'TEC PERFIL USUARIO',
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Correo Electrónico] = USERPRINCIPALNAME() &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Clave Servicio] = _CLAVE_SERVICIO &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Referencia] = _REFERENCIA
+			    )
+			VAR _VALOR_REFERENCIA =
+			    MAXX(_FILTRAR_REGLAS, 'TEC PERFIL USUARIO'[PERFIL USUARIO - Valor Referencia])    
+			RETURN
+			    IF(
+			       NOT ISEMPTY(_FILTRAR_REGLAS),
+			       TRUE()
+			    )
+			```
+
+	tablePermission asset = ```
+			VAR _CLAVE_SERVICIO = "OPER_PLANTA_FISICA"
+			VAR _REFERENCIA = "INTERMEDIO"
+			VAR _FILTRAR_REGLAS =
+			    FILTER(
+			        'TEC PERFIL USUARIO',
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Correo Electrónico] = USERPRINCIPALNAME() &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Clave Servicio] = _CLAVE_SERVICIO &&
+			        'TEC PERFIL USUARIO'[PERFIL USUARIO - Referencia] = _REFERENCIA
+			    )
+			VAR _VALOR_REFERENCIA =
+			    MAXX(_FILTRAR_REGLAS, 'TEC PERFIL USUARIO'[PERFIL USUARIO - Valor Referencia])    
+			RETURN
+			    IF(
+			       NOT ISEMPTY(_FILTRAR_REGLAS),
+			       TRUE()
+			    )
+			```
+
+	tablePermission MAXIMO_08 =
+			VAR _CLAVE_SERVICIO = "OPER_PLANTA_FISICA"
+			VAR _REFERENCIA = "INTERMEDIO"
+			
+			RETURN
+			    MAXIMO_08[site_Campus] IN
+			        SELECTCOLUMNS(
+			            FILTER(
+			                'TEC PERFIL USUARIO',
+			                'TEC PERFIL USUARIO'[PERFIL USUARIO - Correo Electrónico] = USERPRINCIPALNAME() &&
+			                'TEC PERFIL USUARIO'[PERFIL USUARIO - Clave Servicio] = _CLAVE_SERVICIO &&
+			                'TEC PERFIL USUARIO'[PERFIL USUARIO - Referencia] = _REFERENCIA
+			            ),
+			            "CAMPUS", 'TEC PERFIL USUARIO'[PERFIL USUARIO - Valor Referencia]
+			        )
+
+	tablePermission MAXIMO_10 =
+			VAR _CLAVE_SERVICIO = "OPER_PLANTA_FISICA"
+			VAR _REFERENCIA = "INTERMEDIO"
+			
+			RETURN
+			    MAXIMO_10[siteid] IN
+			        SELECTCOLUMNS(
+			            FILTER(
+			                'TEC PERFIL USUARIO',
+			                'TEC PERFIL USUARIO'[PERFIL USUARIO - Correo Electrónico] = USERPRINCIPALNAME() &&
+			                'TEC PERFIL USUARIO'[PERFIL USUARIO - Clave Servicio] = _CLAVE_SERVICIO &&
+			                'TEC PERFIL USUARIO'[PERFIL USUARIO - Referencia] = _REFERENCIA
+			            ),
+			            "CAMPUS", 'TEC PERFIL USUARIO'[PERFIL USUARIO - Valor Referencia]
+			        )
+
+	tablePermission MAXIMO_09 =
+			VAR _CLAVE_SERVICIO = "OPER_PLANTA_FISICA"
+			VAR _REFERENCIA = "INTERMEDIO"
+			RETURN
+			    MAXIMO_09[Wo_Campus] IN
+			    CALCULATETABLE(
+			        VALUES('TEC PERFIL USUARIO'[PERFIL USUARIO - Valor Referencia]),
+			        FILTER(
+			            'TEC PERFIL USUARIO',
+			            'TEC PERFIL USUARIO'[PERFIL USUARIO - Correo Electrónico] = USERPRINCIPALNAME() &&
+			            'TEC PERFIL USUARIO'[PERFIL USUARIO - Clave Servicio] = _CLAVE_SERVICIO &&
+			            'TEC PERFIL USUARIO'[PERFIL USUARIO - Referencia] = _REFERENCIA
+			        )
+			    )
+
+	annotation PBI_Id = cacc428da39a4d2e80c35481720aeb9f
+

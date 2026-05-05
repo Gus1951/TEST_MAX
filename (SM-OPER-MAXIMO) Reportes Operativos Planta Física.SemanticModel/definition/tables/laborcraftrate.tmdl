@@ -1,0 +1,139 @@
+table laborcraftrate
+	lineageTag: a167c520-e78a-4eb5-ad05-4fac532778a3
+
+	column craft
+		dataType: string
+		lineageTag: 7d57134d-5050-4eff-996b-4d43cc3952a6
+		summarizeBy: none
+		sourceColumn: craft
+
+		annotation SummarizationSetBy = Automatic
+
+	column skilllevel
+		dataType: string
+		lineageTag: 39469ceb-1191-43ca-95eb-eae71153665c
+		summarizeBy: none
+		sourceColumn: skilllevel
+
+		annotation SummarizationSetBy = Automatic
+
+	column laborcode
+		dataType: string
+		lineageTag: 366e20f4-f6a1-4745-b9c0-28c539e80102
+		summarizeBy: none
+		sourceColumn: laborcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column orgid
+		dataType: string
+		lineageTag: a46e02de-20fc-4bdc-bb10-6efc2d6d9287
+		summarizeBy: none
+		sourceColumn: orgid
+
+		annotation SummarizationSetBy = Automatic
+
+	column contractnum
+		dataType: string
+		lineageTag: 6c8e8491-ff7b-47b2-9e16-764d3f978b60
+		summarizeBy: none
+		sourceColumn: contractnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column inherit
+		dataType: int64
+		formatString: 0
+		lineageTag: be690ee5-2af0-41b7-badf-4727a9702b20
+		summarizeBy: sum
+		sourceColumn: inherit
+
+		annotation SummarizationSetBy = Automatic
+
+	column defaultcraft
+		dataType: int64
+		formatString: 0
+		lineageTag: 86bfe05e-2639-439c-ab53-56a235dfa059
+		summarizeBy: sum
+		sourceColumn: defaultcraft
+
+		annotation SummarizationSetBy = Automatic
+
+	column rate
+		dataType: double
+		lineageTag: 2eb032f8-43b3-4b87-ae0e-8e0d167ee542
+		summarizeBy: sum
+		sourceColumn: rate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column glaccount
+		dataType: string
+		lineageTag: 68e9adfe-10a6-4d9e-bc31-5e435070c4df
+		summarizeBy: none
+		sourceColumn: glaccount
+
+		annotation SummarizationSetBy = Automatic
+
+	column controlaccount
+		dataType: string
+		lineageTag: 1ab6a9ee-881f-4899-ac8a-f7714a905e80
+		summarizeBy: none
+		sourceColumn: controlaccount
+
+		annotation SummarizationSetBy = Automatic
+
+	column laborcraftrateid
+		dataType: int64
+		formatString: 0
+		lineageTag: 5b15a1e6-db05-47ef-8d26-4c9f4cd842f3
+		summarizeBy: sum
+		sourceColumn: laborcraftrateid
+
+		annotation SummarizationSetBy = Automatic
+
+	column defaultticketglacc
+		dataType: string
+		lineageTag: da6d816c-83c0-4dea-9d9c-56bef7a809b0
+		summarizeBy: none
+		sourceColumn: defaultticketglacc
+
+		annotation SummarizationSetBy = Automatic
+
+	column vendor
+		dataType: string
+		lineageTag: 60ffcdc5-1055-4cda-9c13-d9a4be2b4481
+		summarizeBy: none
+		sourceColumn: vendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column Labtrans_Labcraf_KEY = laborcraftrate[laborcode]&laborcraftrate[orgid]
+		lineageTag: aa45cb39-e3f4-4811-9b15-b0e5c67be8f4
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column craft_KEY = laborcraftrate[craft]&laborcraftrate[orgid]
+		lineageTag: 5435cc49-e919-4248-9788-eb04c04d7d17
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition laborcraftrate = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    laborcraftrate_Table = dbo_Schema{[Name="laborcraftrate",Kind="Table"]}[Data]
+				in
+				    laborcraftrate_Table
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

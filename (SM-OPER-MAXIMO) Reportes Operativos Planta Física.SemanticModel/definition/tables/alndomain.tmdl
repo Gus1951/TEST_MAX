@@ -1,0 +1,97 @@
+table alndomain
+	lineageTag: 59406ca8-df9c-400d-8ed0-04e717007f9b
+
+	/// ID de dominio
+	column 'ID Dominio'
+		dataType: string
+		lineageTag: fdafd6b6-b111-41de-92a7-70f15312e0d6
+		summarizeBy: none
+		sourceColumn: ID Dominio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Valor de Dominio
+	column 'Valor Dominio'
+		dataType: string
+		lineageTag: d1307a42-6d2f-4b61-8890-c82fa0a9fd72
+		summarizeBy: none
+		sourceColumn: Valor Dominio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Describe la planta
+	column Descripción
+		dataType: string
+		lineageTag: 4a589beb-aed0-4ea7-ae69-461f484e033a
+		summarizeBy: none
+		sourceColumn: Descripción
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identifica la planta con un código abreviado, por ejemplo, TORONTO, para la planta en Toronto, Canadá, de  una empresa. Este valor debe ser único para todas las plantas.
+	column Campus
+		dataType: string
+		lineageTag: fcb46e9d-5b5c-4454-ac39-2e16a6d61e4d
+		summarizeBy: none
+		sourceColumn: Campus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador de organización
+	column Organización
+		dataType: string
+		lineageTag: 2453f34b-3aab-4930-ae7b-4579c11e438c
+		summarizeBy: none
+		sourceColumn: Organización
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nombre de Dominio
+	column 'Nombre Dominio'
+		dataType: int64
+		formatString: 0
+		lineageTag: b7eaecf3-ed13-447b-8735-743b65182d88
+		summarizeBy: none
+		sourceColumn: Nombre Dominio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column valueid
+		dataType: string
+		lineageTag: 9f504e11-485e-4e07-beaa-c2b61d21cd89
+		summarizeBy: none
+		sourceColumn: valueid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition alndomain = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    alndomain_Table = dbo_Schema{[Name="alndomain",Kind="Table"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(alndomain_Table, each [domainid] = "TM_CLASIFICACION"),
+				    #"Renamed Columns" = Table.RenameColumns(#"Filtered Rows",{{"domainid", "ID Dominio"}, {"value", "Valor Dominio"}, {"description", "Descripción"}, {"siteid", "Campus"}, {"orgid", "Organización"}, {"alndomainid", "Nombre Dominio"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

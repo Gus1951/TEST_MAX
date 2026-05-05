@@ -1,0 +1,77 @@
+table Alias_de_alndomain_Sacs
+	lineageTag: 544aae4f-df94-4c3c-9e00-deccb3284b6c
+
+	column domainid
+		dataType: string
+		lineageTag: 45da5325-0f7a-4a98-8153-f515ccde5d39
+		summarizeBy: none
+		sourceColumn: domainid
+
+		annotation SummarizationSetBy = Automatic
+
+	column value
+		dataType: string
+		lineageTag: ba11b9da-4788-4c92-83de-6dbdb640c055
+		summarizeBy: none
+		sourceColumn: value
+
+		annotation SummarizationSetBy = Automatic
+
+	column description
+		dataType: string
+		lineageTag: da45c631-57c0-45a8-bd84-850e8934ffc2
+		summarizeBy: none
+		sourceColumn: description
+
+		annotation SummarizationSetBy = Automatic
+
+	column siteid
+		dataType: string
+		lineageTag: 1bdc26db-a3ae-4dab-b03f-b0e88b4f28f4
+		summarizeBy: none
+		sourceColumn: siteid
+
+		annotation SummarizationSetBy = Automatic
+
+	column orgid
+		dataType: string
+		lineageTag: 01e34f24-4cfa-4dfd-8e4b-fb9a644274b7
+		summarizeBy: none
+		sourceColumn: orgid
+
+		annotation SummarizationSetBy = Automatic
+
+	column alndomainid
+		dataType: int64
+		formatString: 0
+		lineageTag: 99ad898d-ff30-41a1-bbd9-be1bd8734f6d
+		summarizeBy: none
+		sourceColumn: alndomainid
+
+		annotation SummarizationSetBy = Automatic
+
+	column valueid
+		dataType: string
+		lineageTag: 88db1fdc-291d-4db1-ba6a-d6c0baa20da3
+		summarizeBy: none
+		sourceColumn: valueid
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Alias_de_alndomain_Sacs = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    alndomain_Table = dbo_Schema{[Name="alndomain",Kind="Table"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(alndomain_Table, each ([domainid] = "TM_SACS")),
+				    #"Poner En Mayúsculas Cada Palabra" = Table.TransformColumns(#"Filtered Rows",{{"value", Text.Proper, type text}})
+				in
+				    #"Poner En Mayúsculas Cada Palabra"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

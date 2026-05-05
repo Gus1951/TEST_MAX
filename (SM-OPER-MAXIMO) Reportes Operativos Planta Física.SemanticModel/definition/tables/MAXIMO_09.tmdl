@@ -1,0 +1,498 @@
+table MAXIMO_09
+	lineageTag: cad541f8-fc52-45e2-bd67-ef4ff99036c9
+
+	column 'labor_mano de obra'
+		lineageTag: 1b639ddb-b9f6-4efd-8624-d259bd3512ac
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [labor_mano de obra]
+
+		annotation SummarizationSetBy = Automatic
+
+	column labor_persona
+		lineageTag: 5e98a7ea-9056-40d3-ba40-2a7ebf735eed
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [labor_persona]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_Persona
+		lineageTag: f8435e99-4ccb-4738-8b57-934875f822af
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Key_Persona]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nombre_Persona
+		lineageTag: 000d2951-08f7-4ead-a722-f9a918915f91
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Nombre_Persona]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Person_Id
+		lineageTag: e11c8854-611f-41c7-9144-92cd09032ec0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Person_Id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_Labor_Persona
+		lineageTag: fd7eaecf-798b-4e06-ba06-ec2fb1f89509
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Key_Labor_Persona]
+
+		annotation SummarizationSetBy = Automatic
+
+	column organizacion
+		lineageTag: a8aaf2cb-2dea-4f80-9333-8e02bb976d01
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [organizacion]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Wo_organización
+		lineageTag: a6e27f68-3d18-4431-8816-94c905af5db5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Wo_organización]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Wo_Campus
+		lineageTag: 3cfd9273-1672-4723-9082-2eb9a3a8030d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Wo_Campus]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Wo_Mano de Obra'
+		lineageTag: 04a4e84c-56b3-4d52-a35f-0821cfd35a37
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Wo_Mano de Obra]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Wo_Clasificación
+		lineageTag: e34594cb-eeb8-484c-b84e-ca4f3df2c105
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Wo_Clasificación]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Wo_subcla
+		lineageTag: 84981499-6afe-4363-b3f7-5cb34d7c1827
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Wo_subcla]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'wo_Plan Trabajo'
+		lineageTag: 17e69d15-f8c7-40f2-ac84-4d02ca1a4f27
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_Plan Trabajo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Wo_Ubicación
+		lineageTag: 5b8a1769-1cb6-449c-8c7f-0856cfebbb70
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Wo_Ubicación]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'wo_Orden Trabajo'
+		lineageTag: 3ea99d1b-5703-4df2-870b-833fc9c38fc0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_Orden Trabajo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_Estado
+		lineageTag: f6210f51-7836-471b-9156-5ee7a3c906f0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_Estado]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_Descripcion
+		lineageTag: 90f9b1e8-7312-4f98-a282-c398a85d667c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_Descripcion]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_nombre
+		lineageTag: b4662bf3-c6af-4e09-a9e8-533aafcf7ed5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_nombre]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_actstart
+		formatString: General Date
+		lineageTag: 8b9e0d84-a9d0-455a-b09a-3f309b87a4c9
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_actstart]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_actfinish
+		formatString: General Date
+		lineageTag: 97900253-de8d-4a36-935d-9c9abc6c796c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_actfinish]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_schedstart
+		formatString: General Date
+		lineageTag: 2a65e869-1480-45e9-93ed-5e51bb9b3663
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_schedstart]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_schedfinish
+		formatString: General Date
+		lineageTag: 0ab6320c-4909-4494-b40e-a75faa8c8340
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_schedfinish]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_schedfinish2
+		formatString: General Date
+		lineageTag: 74a68d7c-8e74-4d27-99bf-26dfab9b1fef
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_schedfinish2]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'wo_Tipo Trabajo'
+		lineageTag: 74ec9642-3ecc-48c7-834a-4076a8637653
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_Tipo Trabajo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column key_Sub
+		lineageTag: 3d117dc4-7c81-4c03-a495-89eae7616797
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [key_Sub]
+
+		annotation SummarizationSetBy = Automatic
+
+	column key_cla
+		lineageTag: 735f1a30-4dd5-4442-aa04-fce516c81052
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [key_cla]
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyOS
+		lineageTag: cbdf4ff1-f2fa-4d88-b60a-731757bd8b89
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyOS]
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyWT
+		lineageTag: e405d469-f2af-49ba-8d81-48d2df02fdfa
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyWT]
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyOSL
+		lineageTag: eccef07c-018d-4472-a39a-40372ef20fcf
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyOSL]
+
+		annotation SummarizationSetBy = Automatic
+
+	column KeyJOB
+		lineageTag: afd406c3-949c-48d0-bf95-a5756461c0e1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [KeyJOB]
+
+		annotation SummarizationSetBy = Automatic
+
+	column KeyJOB2
+		lineageTag: 7efff94d-ebfb-47eb-b8e5-609af3a6a5c9
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [KeyJOB2]
+
+		annotation SummarizationSetBy = Automatic
+
+	column KeyLabor
+		lineageTag: 45d15cd2-3600-4cee-af27-adb84923fdc5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [KeyLabor]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Key_loc
+		lineageTag: 4fc5f11c-c0af-468e-989a-710486467475
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Key_loc]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Concat_Reincidencia
+		lineageTag: 0ef37eb0-130d-4176-938b-6d353100ec7d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Concat_Reincidencia]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Subclasificacion
+		lineageTag: 06d194f5-a0da-47e9-8fc8-7f4a81a65bd5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Subclasificacion]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Edificio
+		lineageTag: e929990f-1aa6-4d87-8ed9-677b788238ff
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Edificio]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nivel
+		lineageTag: f5ebde2c-2d96-4620-a0ec-85f5a768b069
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Nivel]
+
+		annotation SummarizationSetBy = Automatic
+
+	column ubicacion_edif
+		lineageTag: c71c49da-75c2-485e-a4b5-a824ddd7b27e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [ubicacion_edif]
+
+		annotation SummarizationSetBy = Automatic
+
+	column alias_description
+		lineageTag: 01199feb-fb8a-477e-9ffe-ec29d6fa10e5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [alias_description]
+
+		annotation SummarizationSetBy = Automatic
+
+	column jobplan_description
+		lineageTag: f90f4aba-782c-4001-8c6d-5f610cf8d39a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [jobplan_description]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Site_Campus
+		lineageTag: e75daf50-4303-4e24-82fb-437f184dc014
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Site_Campus]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo Trabajo_desc'
+		lineageTag: 9fb7779e-3d05-47fd-a18b-87d10277b2f8
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Tipo Trabajo_desc]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent
+		lineageTag: 675ca2f1-d740-4e5d-a8aa-5d240ad2baa5
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Parent]
+
+		annotation SummarizationSetBy = Automatic
+
+	column clasificacion
+		lineageTag: 372d4091-d077-47cd-bc48-6acc7001b813
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [clasificacion]
+
+		annotation SummarizationSetBy = Automatic
+
+	column ConcatJPNUM =
+			
+			VAR _MEDIDA = CALCULATE(DISTINCTCOUNT(MAXIMO_09[Concat_Reincidencia]))
+			RETURN
+			IF(
+			    _MEDIDA>2,1,_MEDIDA
+			)
+		formatString: 0
+		lineageTag: 211ae72a-e534-4f38-8e64-d782c5d565c5
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MAXIMO_09 = calculated
+		mode: import
+		source = ```
+				
+				VAR tblWorkorder = 
+				    SELECTCOLUMNS(
+				        FILTER(
+				            workorder,
+				            workorder[Estado] IN {"CERR","APROB","EMAT"} && 
+				            workorder[Es Tarea] = 0 && 
+				            workorder[Tipo de Trabajo] IN {"MC-SAI","MC-PROG"}
+				        ),
+				        "Wo_organización", workorder[Organización],
+				        "Wo_Campus", workorder[Campus],
+				        "Wo_Mano de Obra", workorder[Mano de Obra Asignada],
+				        "Wo_Clasificación", workorder[Clasificación],
+				        "Wo_subcla", workorder[Subclasificación],
+				        "wo_Plan Trabajo", workorder[Plan de Trabajo],
+				        "Wo_Ubicación", workorder[Ubicación],
+				        "wo_Orden Trabajo", workorder[Orden de Trabajo],
+				        "wo_Estado", workorder[Estado],
+				        "wo_Descripcion", workorder[Descripción],
+				        "wo_nombre", workorder[Usuario],
+				        "wo_actstart", workorder[actstart],
+				        "wo_actfinish", workorder[actfinish],
+				        "wo_schedstart", workorder[schedstart],
+				        "wo_schedfinish", workorder[schedfinish],
+				        "wo_schedfinish2", workorder[schedfinish2],
+				        "wo_Tipo Trabajo", workorder[Tipo de Trabajo],
+				        "key_Sub", workorder[Subclasificación] & "",
+				        "key_cla",workorder[Clasificación]&"",
+				        "keyOS",workorder[Organización]&workorder[Campus],
+				        "keyWT",workorder[Tipo de Trabajo]&"",
+				        "keyOSL", workorder[Organización] & workorder[Campus] & workorder[Ubicación],
+				         "KeyJOB",workorder[Organización] & workorder[Plan de Trabajo] & workorder[Clasificación],
+				         "KeyJOB2",workorder[Organización]&workorder[Plan de Trabajo]&workorder[Tipo de Trabajo]&workorder[Clasificación]&workorder[Subclasificación],
+				         "KeyLabor",workorder[Organización]&workorder[Mano de Obra Asignada],
+				         "Key_loc",workorder[Organización]&workorder[Campus]&workorder[Ubicación],
+				         "Key_Labor_Persona",workorder[Organización]&workorder[Mano de Obra Asignada],
+				        "Concat_Reincidencia", 
+				            IF(
+				                NOT(ISBLANK(workorder[Plan de Trabajo])), 
+				                workorder[Plan de Trabajo], 
+				                "S/CodTarea"
+				            ) & "_" & 
+				            IF(
+				                NOT(ISBLANK(workorder[Ubicación])), 
+				                workorder[Ubicación], 
+				                "S/Ubicación"
+				            )
+				    )
+				
+				
+				            
+				
+				    var tblAlias_de_alndomain_Class =
+														CALCULATETABLE(
+				 										SELECTCOLUMNS(alndomainClass, "Subclasificacion",alndomainClass[description],
+																		"key_Sub", alndomainClass[value]&"" ),
+																		alndomainClass[domainid]="TM_SUBCLASIFICACIO"
+																		)
+				    
+				                                                        
+				   var tblLocations = SELECTCOLUMNS( locations, 
+				                    "keyOSL", locations[Organización]&locations[Campus]&locations[Ubicacion],
+				                     "Edificio",locations[Nombre Edificio],"Nivel",locations[Nivel Edificio],"ubicacion_edif",locations[Ubicacion] )
+				
+				   var tbl_Alias_de_jobplan_Reincidencias = SELECTCOLUMNS( jobplan, "alias_description",jobplan[Descripción],
+				                     "KeyJOB",jobplan[Organización]&jobplan[Plan Trabajo]&jobplan[Clasificación]
+				   )
+				
+				   var tbl_jobplan = SELECTCOLUMNS( jobplan, "jobplan_description",jobplan[Descripción],
+				                     "KeyJOB2",jobplan[Organización]&jobplan[Plan Trabajo]&jobplan[Tipo Trabajo]&jobplan[Clasificación]&jobplan[Subclasificación]
+				   )
+				
+				   var tblSite = SELECTCOLUMNS(site, "Site_Campus",site[Descripción], "keyOS",site[Organización]&site[Campus])	
+				
+				   var tblWorktype = SELECTCOLUMNS(worktype, "Tipo Trabajo_desc",worktype[TipoTrabajo]& ":" & worktype[Descripción], "keyWT",worktype[TipoTrabajo]&"")	
+				
+				   var tblLabor = SELECTCOLUMNS(labor,"labor_mano de obra",labor[Mano de Obra],"labor_persona",labor[Persona],"organizacion",labor[Organización],"Key_Persona",labor[Persona]&labor[Organización])
+				
+				   var tblPerson = SELECTCOLUMNS(person,"Nombre_Persona",person[Nombre],"Person_Id",person[Persona],"Key_Persona",person[Persona]&person[Organización])
+				
+				   var _Labor_Person = NATURALLEFTOUTERJOIN(tblLabor,tblPerson)
+				
+				   
+				   var tblLoc = SELECTCOLUMNS(lochierarchy,"Parent",lochierarchy[Nivel Superior],"Key_loc",lochierarchy[Organización]&lochierarchy[Campus]&lochierarchy[Ubicación])
+				
+				   var tbl_labor_person = 
+				   ADDCOLUMNS(
+				   NATURALLEFTOUTERJOIN(tblLabor,tblPerson),
+				   "Key_Labor_Persona",[organizacion]&[labor_mano de obra]
+				   )
+				
+				
+				   var tblAlias_de_alndomain =
+														CALCULATETABLE(
+				 										SELECTCOLUMNS(alndomain, "clasificacion",alndomain[Descripción],
+																		"key_cla", alndomain[Valor Dominio]&"" ),
+																		alndomain[ID Dominio]="TM_CLASIFICACION"
+																		)
+				RETURN
+				NATURALLEFTOUTERJOIN(
+				NATURALLEFTOUTERJOIN(
+				NATURALLEFTOUTERJOIN(
+				NATURALLEFTOUTERJOIN(
+				NATURALLEFTOUTERJOIN(
+				NATURALLEFTOUTERJOIN(
+				NATURALLEFTOUTERJOIN(
+				NATURALLEFTOUTERJOIN(
+				NATURALLEFTOUTERJOIN(tblWorkorder, tblAlias_de_alndomain_Class), tblLocations
+				),  tbl_Alias_de_jobplan_Reincidencias
+				),tbl_jobplan
+				),
+				tblSite
+				),
+				tblWorktype
+				),tblLoc
+				),tblAlias_de_alndomain
+				),tbl_labor_person
+				)
+				```
+
+	annotation PBI_Id = 7799c8230def416ead4c0536696de360
+

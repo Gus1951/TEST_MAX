@@ -1,0 +1,371 @@
+table labor
+	lineageTag: eab90b80-36aa-491a-9d60-c6191fe8f2a8
+
+	column 'Mano de Obra'
+		dataType: string
+		lineageTag: 4002323a-e0de-4b88-bc46-c7f8d58051a0
+		summarizeBy: none
+		sourceColumn: Mano de Obra
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column reportedhrs
+		dataType: double
+		lineageTag: 2278c7ba-5a85-4914-b6bc-ba0636095cbd
+		summarizeBy: sum
+		sourceColumn: reportedhrs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ytdothrs
+		dataType: double
+		lineageTag: 554ced85-45ee-4cdf-87b6-48209bb621f1
+		summarizeBy: sum
+		sourceColumn: ytdothrs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ytdhrsrefused
+		dataType: double
+		lineageTag: 9db325c9-7dfb-41ab-b4f1-48dd0d640834
+		summarizeBy: sum
+		sourceColumn: ytdhrsrefused
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column availfactor
+		dataType: double
+		lineageTag: 178e0960-e6bb-4bc5-b711-dc16fc231ebe
+		summarizeBy: sum
+		sourceColumn: availfactor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column crewid
+		dataType: string
+		lineageTag: acb559ad-203e-4e41-b214-fcc9706e135e
+		summarizeBy: none
+		sourceColumn: crewid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column type
+		dataType: string
+		lineageTag: 6d3aab33-c1ed-4e30-a2f6-1ef2639c63cb
+		summarizeBy: none
+		sourceColumn: type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column worklocation
+		dataType: string
+		lineageTag: a52d0a03-446a-47fc-a761-6526274c3781
+		summarizeBy: none
+		sourceColumn: worklocation
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column sourcesysid
+		dataType: string
+		lineageTag: 272caffc-0a43-455b-9e82-71d176fe0886
+		summarizeBy: none
+		sourceColumn: sourcesysid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ownersysid
+		dataType: string
+		lineageTag: 85e39df2-a472-45bb-aac9-279ea7ec08f6
+		summarizeBy: none
+		sourceColumn: ownersysid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column externalrefid
+		dataType: string
+		lineageTag: 931aa4a7-255f-4a7a-b3df-6fc6786df42f
+		summarizeBy: none
+		sourceColumn: externalrefid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Organización
+		dataType: string
+		lineageTag: 6e0d4737-56ef-4028-b401-15304a725ce0
+		summarizeBy: none
+		sourceColumn: Organización
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Persona
+		dataType: string
+		lineageTag: d83b7d55-0d60-4e76-b2e4-b4e152066ff9
+		summarizeBy: none
+		sourceColumn: Persona
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: c9aacc35-19c7-4539-bf26-4da901f0deae
+		summarizeBy: none
+		sourceColumn: status
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Campus de Trabajo'
+		dataType: string
+		lineageTag: 7db4fa35-da26-46ce-aa9a-0052676d4fa4
+		summarizeBy: none
+		sourceColumn: Campus de Trabajo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column labinventorysite
+		dataType: string
+		lineageTag: b9a15760-b3d0-478f-8401-59f29bd640e7
+		summarizeBy: none
+		sourceColumn: labinventorysite
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column labinventoryloc
+		dataType: string
+		lineageTag: 1f5fb0a5-97d3-430a-8eae-a9fdf77f8bcb
+		summarizeBy: none
+		sourceColumn: labinventoryloc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column laborid
+		dataType: int64
+		formatString: 0
+		lineageTag: 7711ee8c-50fa-4ba4-80fe-d40de0d1594d
+		summarizeBy: sum
+		sourceColumn: laborid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column sendersysid
+		dataType: string
+		lineageTag: 0e3afab7-9b52-4bc9-8583-73dd2f45976c
+		summarizeBy: none
+		sourceColumn: sendersysid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column crewworkgroup
+		dataType: string
+		lineageTag: d8b3b897-549d-4f78-bf6f-8272aaa79867
+		summarizeBy: none
+		sourceColumn: crewworkgroup
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column lbsdatafromwo
+		dataType: int64
+		formatString: 0
+		lineageTag: d66a8944-cc8f-48b8-9d0a-9d51e893a344
+		summarizeBy: sum
+		sourceColumn: lbsdatafromwo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column lbsinterval
+		dataType: int64
+		formatString: 0
+		lineageTag: 218aa51b-33c9-42e9-b0bf-f538ec53b4f9
+		summarizeBy: sum
+		sourceColumn: lbsinterval
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column startlocation
+		dataType: string
+		lineageTag: 1af39e72-02db-4107-8a57-67d702a986f1
+		summarizeBy: none
+		sourceColumn: startlocation
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column startlocsiteid
+		dataType: string
+		lineageTag: c3f9f715-e2f3-4576-88fb-0400835ee6d4
+		summarizeBy: none
+		sourceColumn: startlocsiteid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column endlocation
+		dataType: string
+		lineageTag: 38056690-f0d3-4f87-a441-10267e1477eb
+		summarizeBy: none
+		sourceColumn: endlocation
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column endlocsiteid
+		dataType: string
+		lineageTag: b1c1f3b8-277e-4f91-85fb-35a9ebf7b2c8
+		summarizeBy: none
+		sourceColumn: endlocsiteid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_tipo
+		dataType: string
+		lineageTag: ff3b3f56-4ef2-42ed-a51e-11d9c2ba4d90
+		summarizeBy: none
+		sourceColumn: tm_tipo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_fecha_baja
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f60d299c-1f27-4fd2-a021-14dbd86aeca2
+		summarizeBy: none
+		sourceColumn: tm_fecha_baja
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_fecha_ingreso
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: cc46112e-af02-4c70-b1de-e70ddac43933
+		summarizeBy: none
+		sourceColumn: tm_fecha_ingreso
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_nomina
+		dataType: string
+		lineageTag: 62aa0ae1-bb94-4bf2-93bf-776c4e2908ce
+		summarizeBy: none
+		sourceColumn: tm_nomina
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_totalmo
+		dataType: int64
+		formatString: 0
+		lineageTag: 28d93a5f-bb2f-4cd3-9e9b-e08effa1b827
+		summarizeBy: sum
+		sourceColumn: tm_totalmo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrgidLaborcodeKey
+		dataType: string
+		lineageTag: fa919b69-1bf3-40b4-9e36-16b4d91045f8
+		summarizeBy: none
+		sourceColumn: OrgidLaborcodeKey
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column PersonidOrgidKey
+		dataType: string
+		lineageTag: caa700ff-fad0-4a44-8ce7-2a04eb497e16
+		summarizeBy: none
+		sourceColumn: PersonidOrgidKey
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Displayname = RELATED(person[Nombre])
+		lineageTag: f8594b9f-9e8e-4be6-902e-ddc807efeb9b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition labor = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    labor_Table = dbo_Schema{[Name="labor",Kind="Table"]}[Data],
+				    #"Inserted Merged Column" = Table.AddColumn(labor_Table, "OrgidLaborcodeKey", each Text.Combine({[orgid], [laborcode]}, ":"), type text),
+				    #"Inserted Merged Column1" = Table.AddColumn(#"Inserted Merged Column", "PersonidOrgidKey", each Text.Combine({[personid], [orgid]}, ":"), type text),
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Merged Column1",{{"laborcode", "Mano de Obra"}, {"orgid", "Organización"}, {"personid", "Persona"}, {"worksite", "Campus de Trabajo"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

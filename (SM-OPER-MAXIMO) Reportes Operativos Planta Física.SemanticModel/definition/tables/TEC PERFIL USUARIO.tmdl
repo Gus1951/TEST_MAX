@@ -1,0 +1,108 @@
+table 'TEC PERFIL USUARIO'
+	lineageTag: 7c61413f-82cf-4205-9c75-30ac2f2a5139
+
+	column 'PERFIL USUARIO - Clave Servicio'
+		dataType: string
+		isNullable: false
+		sourceProviderType: Varchar2
+		lineageTag: ff7a59e1-2456-469f-bf03-e345d31f48c9
+		summarizeBy: none
+		sourceColumn: PERFIL USUARIO - Clave Servicio
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PERFIL USUARIO - Correo Electrónico'
+		dataType: string
+		isNullable: false
+		sourceProviderType: Varchar2
+		lineageTag: 5295b93a-5721-4b64-805c-a0aa34cdb4a2
+		summarizeBy: none
+		sourceColumn: PERFIL USUARIO - Correo Electrónico
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PERFIL USUARIO - Referencia'
+		dataType: string
+		isNullable: false
+		sourceProviderType: Varchar2
+		lineageTag: 8c22e0cd-e14d-41bf-8695-cba8a4b99a64
+		summarizeBy: none
+		sourceColumn: PERFIL USUARIO - Referencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PERFIL USUARIO - Valor Referencia'
+		dataType: string
+		isNullable: false
+		sourceProviderType: Varchar2
+		lineageTag: a56caada-38c4-4aef-934a-63038f339c6c
+		summarizeBy: none
+		sourceColumn: PERFIL USUARIO - Valor Referencia
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PERFIL USUARIO - Referencia 2'
+		dataType: string
+		isNullable: false
+		sourceProviderType: Varchar2
+		lineageTag: 890cc3db-4a4c-4fcb-b6ae-2e53fadae9a4
+		summarizeBy: none
+		sourceColumn: PERFIL USUARIO - Referencia 2
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PERFIL USUARIO - Valor Referencia 2'
+		dataType: string
+		isNullable: false
+		sourceProviderType: Varchar2
+		lineageTag: ad2e29eb-4905-459b-ac11-d2a77b7b0f0a
+		summarizeBy: none
+		sourceColumn: PERFIL USUARIO - Valor Referencia 2
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PERFIL USUARIO - Nómina'
+		dataType: string
+		isNullable: false
+		sourceProviderType: Varchar2
+		lineageTag: f54e5410-5efb-4b00-9ff1-a05189816202
+		summarizeBy: none
+		sourceColumn: PERFIL USUARIO - Nómina
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PERFIL USUARIO - Perfil Usuario'
+		dataType: string
+		isNullable: false
+		sourceProviderType: Varchar2
+		lineageTag: 86e3fa95-0532-4bde-a123-3748b6f431e6
+		summarizeBy: none
+		sourceColumn: PERFIL USUARIO - Perfil Usuario
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'PERFIL USUARIO - Fecha Última Modificación'
+		dataType: dateTime
+		isNullable: false
+		formatString: General Date
+		sourceProviderType: Date
+		lineageTag: 22a11c8d-80e7-46ae-9f31-0a4617f53501
+		summarizeBy: none
+		sourceColumn: PERFIL USUARIO - Fecha Última Modificación
+
+		annotation SummarizationSetBy = Automatic
+
+	partition 'TEC PERFIL USUARIO' = m
+		mode: directQuery
+		source =
+				let
+				    Origen = Oracle.Database(#"Parámetro de Cadena de Conexión Oracle", [HierarchicalNavigation=true]),
+				    DMMISC = Origen{[Schema="DMMISC"]}[Data],
+				    #"TEC PERFIL USUARIO1" = DMMISC{[Name="TEC PERFIL USUARIO"]}[Data]
+				in
+				    #"TEC PERFIL USUARIO1"
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Exception
+

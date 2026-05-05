@@ -1,0 +1,137 @@
+table Cal
+	lineageTag: 462880c9-3f5c-4bf5-aee7-b0868a70b35b
+
+	column Orgid_cal
+		lineageTag: 767a505b-0b0f-47e2-b536-c32f49bd8144
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Orgid_cal]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Fecha_Rendimiento
+		formatString: General Date
+		lineageTag: bf605de2-7440-4a0b-89e7-25f597318014
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Fecha_Rendimiento]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sunday
+		formatString: 0
+		lineageTag: 1b1d35bf-22ea-434b-9862-187cf6aa9e6b
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Sunday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Monday
+		formatString: 0
+		lineageTag: 787b66cb-fc6a-4cc7-b686-e6fa23b0da73
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Monday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tuesday
+		formatString: 0
+		lineageTag: e84be599-fab4-4593-8c57-ccb29ee2ab2f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Tuesday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Wednesday
+		formatString: 0
+		lineageTag: fe30096e-8e3c-48d5-9ae0-2d269e92f48d
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Wednesday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Thursday
+		formatString: 0
+		lineageTag: 42030b44-1df8-49ff-a7ef-a3d030770bd2
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Thursday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Friday
+		formatString: 0
+		lineageTag: 4782895a-a36f-44a0-9232-04d12ce37552
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Friday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Saturday
+		formatString: 0
+		lineageTag: c3cf5f77-1771-444a-b33f-a47a9cb64cc6
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Saturday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column KeyL
+		lineageTag: 4445e1a8-45b7-4b11-91df-9ad97f6428f0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [KeyL]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Estatus_Cal
+		lineageTag: a31ae133-e279-41bd-aac4-5adf3abb287d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Estatus_Cal]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tarea_Cal
+		formatString: 0
+		lineageTag: e085f167-a388-4d6e-9bd1-a77e23d3a070
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Tarea_Cal]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Cal = calculated
+		mode: import
+		source = ```
+				
+				ADDCOLUMNS (
+				    DISTINCT (
+				        SELECTCOLUMNS (
+				            'workorder',
+				            "Estatus_Cal",workorder[Estado],
+				            "Tarea_Cal",workorder[Es Tarea],
+				            "Fecha_Rendimiento", 'workorder'[Fecha de Notificación],
+				            "Orgid_cal", 'workorder'[Organización],
+				            "KeyL",workorder[Organización]&""
+				        )
+				    ),
+				    "Sunday", IF(WEEKDAY([Fecha_Rendimiento], 1) = 1, 1, 0),
+				    "Monday", IF(WEEKDAY([Fecha_Rendimiento], 1) = 2, 1, 0),
+				    "Tuesday", IF(WEEKDAY([Fecha_Rendimiento], 1) = 3, 1, 0),
+				    "Wednesday", IF(WEEKDAY([Fecha_Rendimiento], 1) = 4, 1, 0),
+				    "Thursday", IF(WEEKDAY([Fecha_Rendimiento], 1) = 5, 1, 0),
+				    "Friday", IF(WEEKDAY([Fecha_Rendimiento], 1) = 6, 1, 0),
+				    "Saturday", IF(WEEKDAY([Fecha_Rendimiento], 1) = 7, 1, 0)
+				)
+				
+				
+				```
+
+	annotation PBI_Id = de42f673dcdb4550a6e71c7c40dee74d
+

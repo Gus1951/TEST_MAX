@@ -1,0 +1,67 @@
+table lochierarchy
+	lineageTag: f9a565bf-6b9a-4f4d-b5c0-475a0f7ea008
+
+	/// Identificador de organización
+	column Organización
+		dataType: string
+		lineageTag: 570e8148-20c7-4f60-beb1-43393214398d
+		summarizeBy: none
+		sourceColumn: Organización
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador de planta
+	column Campus
+		dataType: string
+		lineageTag: aea5db1f-f2f3-49b3-a26e-ffbad169d85e
+		summarizeBy: none
+		sourceColumn: Campus
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador de ubicación
+	column Ubicación
+		dataType: string
+		lineageTag: 1e693792-2405-4b10-8e18-ea897bf64c08
+		summarizeBy: none
+		sourceColumn: Ubicación
+
+		annotation SummarizationSetBy = Automatic
+
+	/// El nivel superior de esta ubicación
+	column 'Nivel Superior'
+		dataType: string
+		lineageTag: b0d97c41-3ce3-4f69-b0fa-191028835a2b
+		summarizeBy: none
+		sourceColumn: Nivel Superior
+
+		annotation SummarizationSetBy = Automatic
+
+	column LochiKey
+		dataType: string
+		lineageTag: 6190a72e-b93f-4fc0-8ae3-e2ca52ed8d2d
+		summarizeBy: none
+		sourceColumn: LochiKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition lochierarchy = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    lochierarchy_Table = dbo_Schema{[Name="lochierarchy",Kind="Table"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(lochierarchy_Table,{"orgid", "siteid", "location", "parent"}),
+				
+				    #"Inserted Merged Column1" = Table.AddColumn(#"Removed Other Columns", "LochiKey", each Text.Combine({[orgid], [siteid], [location] }, ":"), type text),
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Merged Column1",{{"orgid", "Organización"}, {"siteid", "Campus"}, {"location", "Ubicación"}, {"parent", "Nivel Superior"}})
+				
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

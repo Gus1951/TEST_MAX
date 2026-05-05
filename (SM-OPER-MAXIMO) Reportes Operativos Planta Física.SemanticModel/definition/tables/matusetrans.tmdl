@@ -1,0 +1,904 @@
+table matusetrans
+	lineageTag: 5d06f047-24b1-4290-a72c-c84758bbb12b
+
+	column itemnum
+		dataType: string
+		lineageTag: 1320f5de-fc30-43f1-bf58-f13a0c65512f
+		summarizeBy: none
+		sourceColumn: itemnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column storeloc
+		dataType: string
+		lineageTag: 9a3d8594-3938-4583-b076-145652b741ea
+		summarizeBy: none
+		sourceColumn: storeloc
+
+		annotation SummarizationSetBy = Automatic
+
+	/// La fecha y la hora en la que se ingresó la transacción en Máximo. Este campo es de sólo lectura.
+	/// 
+	column 'Fecha Transacción'
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: c6b70531-824f-43e9-8b9d-dc8500f7f196
+		summarizeBy: none
+		sourceColumn: Fecha Transacción
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column actualdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 60929ef7-7653-4605-9095-95c6a2960b83
+		summarizeBy: none
+		sourceColumn: actualdate
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Este campo indica la cantidad de entrada o salida. Se trata de un cálculo de los artículos sumados o restados
+	column Cantidad
+		dataType: double
+		lineageTag: 0bf5d56c-eb29-4356-9575-3d65f876b0ff
+		summarizeBy: sum
+		sourceColumn: Cantidad
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column curbal
+		dataType: double
+		lineageTag: 60ecb657-c980-4a59-b192-96cb8a06dd0f
+		summarizeBy: sum
+		sourceColumn: curbal
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column physcnt
+		dataType: double
+		lineageTag: 16b3a884-f40f-41b3-aad7-984fa632031c
+		summarizeBy: sum
+		sourceColumn: physcnt
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Coste de la parte de esta transacción
+	column 'Coste Unitario'
+		dataType: double
+		lineageTag: 97af3424-aa2a-4e25-9842-bb162baeaf45
+		summarizeBy: sum
+		sourceColumn: Coste Unitario
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Coste ampliado de la parte de esta transacción
+	column 'Coste Real'
+		dataType: double
+		lineageTag: 6c530cec-ab1d-4c6b-b496-211684c8bfa5
+		summarizeBy: sum
+		sourceColumn: Coste Real
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ponum
+		dataType: string
+		lineageTag: 91b6ce70-59a6-4dc8-b1ac-56dd9a85a8ef
+		summarizeBy: none
+		sourceColumn: ponum
+
+		annotation SummarizationSetBy = Automatic
+
+	column conversion
+		dataType: double
+		lineageTag: b10a6af7-4640-4caf-a266-c99300df45f0
+		summarizeBy: sum
+		sourceColumn: conversion
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column assetnum
+		dataType: string
+		lineageTag: 08819957-cdd7-4732-82a3-ae6b65eb7a1a
+		summarizeBy: none
+		sourceColumn: assetnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column enterby
+		dataType: string
+		lineageTag: 2d25a16f-abfd-47be-9eae-05c651b92d1b
+		summarizeBy: none
+		sourceColumn: enterby
+
+		annotation SummarizationSetBy = Automatic
+
+	column it1
+		dataType: string
+		lineageTag: 3183d2a3-f3be-4415-afcb-84bd56925bfe
+		summarizeBy: none
+		sourceColumn: it1
+
+		annotation SummarizationSetBy = Automatic
+
+	column it2
+		dataType: string
+		lineageTag: 8164d340-53d1-46b0-8905-a5c0c6ddfb38
+		summarizeBy: none
+		sourceColumn: it2
+
+		annotation SummarizationSetBy = Automatic
+
+	column it3
+		dataType: string
+		lineageTag: c0b566b2-a209-4ce9-bb31-369eb53b7aea
+		summarizeBy: none
+		sourceColumn: it3
+
+		annotation SummarizationSetBy = Automatic
+
+	column it4
+		dataType: double
+		lineageTag: 979f9b04-7b64-425a-83c3-e4311dc8e9cb
+		summarizeBy: sum
+		sourceColumn: it4
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column it5
+		dataType: string
+		lineageTag: 6b7270df-1951-41c4-83f1-80a9e1ad252d
+		summarizeBy: none
+		sourceColumn: it5
+
+		annotation SummarizationSetBy = Automatic
+
+	column memo
+		dataType: string
+		lineageTag: d3e4e490-03ea-45b5-9146-fae4faa854e5
+		summarizeBy: none
+		sourceColumn: memo
+
+		annotation SummarizationSetBy = Automatic
+
+	column outside
+		dataType: int64
+		formatString: 0
+		lineageTag: d8b4148c-33fd-46eb-ab4a-24f911145623
+		summarizeBy: sum
+		sourceColumn: outside
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Persona a la que se despacha la parte, herramienta o material. Haga clic en el botón Menú Detalles para seleccionar una persona o vaya a la aplicación Personas
+	column Despachado
+		dataType: string
+		lineageTag: ff295f07-3554-4b65-b72c-ada3d831f6fd
+		summarizeBy: none
+		sourceColumn: Despachado
+
+		annotation SummarizationSetBy = Automatic
+
+	column packingslipnum
+		dataType: string
+		lineageTag: 2802970c-bbc5-471b-8a3c-6af63eb0dfc5
+		summarizeBy: none
+		sourceColumn: packingslipnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column polinenum
+		dataType: int64
+		formatString: 0
+		lineageTag: 8ee8f73d-6630-4c40-9a79-c85ac8a25824
+		summarizeBy: sum
+		sourceColumn: polinenum
+
+		annotation SummarizationSetBy = Automatic
+
+	column rollup
+		dataType: int64
+		formatString: 0
+		lineageTag: 2ee3e684-9d8f-4947-b8bd-e0e02fcc820d
+		summarizeBy: sum
+		sourceColumn: rollup
+
+		annotation SummarizationSetBy = Automatic
+
+	column itin1
+		dataType: string
+		lineageTag: 162afc5c-bd96-447d-a0ea-6b5a5d967a16
+		summarizeBy: none
+		sourceColumn: itin1
+
+		annotation SummarizationSetBy = Automatic
+
+	column itin2
+		dataType: string
+		lineageTag: b4ea13eb-da08-491f-9917-866a0415bd0a
+		summarizeBy: none
+		sourceColumn: itin2
+
+		annotation SummarizationSetBy = Automatic
+
+	column itin3
+		dataType: string
+		lineageTag: 843cc74a-d646-4bcd-800d-adfb1420e4b9
+		summarizeBy: none
+		sourceColumn: itin3
+
+		annotation SummarizationSetBy = Automatic
+
+	column binnum
+		dataType: string
+		lineageTag: e840f788-c0e3-4cb0-ae2e-33e6c6c15ffa
+		summarizeBy: none
+		sourceColumn: binnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column lotnum
+		dataType: string
+		lineageTag: 3c50a80f-a8cb-4f16-86dd-4f3ec92cbdbc
+		summarizeBy: none
+		sourceColumn: lotnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column issuetype
+		dataType: string
+		lineageTag: 7d42559f-2ca6-467e-b770-e7cdf94be218
+		summarizeBy: none
+		sourceColumn: issuetype
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Cuenta del LM debitada cuando se despacha la parte. Haga clic en el botón Seleccionar valor para seleccionar una cuenta de LM
+	column 'Cuenta Débito del LM'
+		dataType: string
+		lineageTag: b686ed50-5cd8-4d82-bacf-71afefdf1bbd
+		summarizeBy: none
+		sourceColumn: Cuenta Débito del LM
+
+		annotation SummarizationSetBy = Automatic
+
+	column glcreditacct
+		dataType: string
+		lineageTag: df03c7d3-504a-43a5-acc8-2c5e581eff03
+		summarizeBy: none
+		sourceColumn: glcreditacct
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Coste de Línea'
+		dataType: double
+		lineageTag: 36978edf-3e85-4437-8f86-8ac940919b9c
+		summarizeBy: sum
+		sourceColumn: Coste de Línea
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column financialperiod
+		dataType: string
+		lineageTag: ce8de664-8075-4d1f-bfcc-2ba5fefb3220
+		summarizeBy: none
+		sourceColumn: financialperiod
+
+		annotation SummarizationSetBy = Automatic
+
+	column currencycode
+		dataType: string
+		lineageTag: d5620dd5-d54b-48c0-8e9c-9be8ec39f335
+		summarizeBy: none
+		sourceColumn: currencycode
+
+		annotation SummarizationSetBy = Automatic
+
+	column currencyunitcost
+		dataType: double
+		lineageTag: ded0dcf3-588f-4049-85b5-ad978526b9e9
+		summarizeBy: sum
+		sourceColumn: currencyunitcost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column rotassetnum
+		dataType: string
+		lineageTag: dd80ace4-eaf7-41b5-a867-d9fc96b9c170
+		summarizeBy: none
+		sourceColumn: rotassetnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column currencylinecost
+		dataType: double
+		lineageTag: e2b2167e-25b2-4336-86f3-fe86d0d2df31
+		summarizeBy: sum
+		sourceColumn: currencylinecost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Ubicación a cobrar por esta transacción
+	column Ubicación
+		dataType: string
+		lineageTag: 0c5b698d-2430-4ad1-bb65-06e313ead45f
+		summarizeBy: none
+		sourceColumn: Ubicación
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Describe la parte. Para ingresar o ver información adicional, haga clic en el botón Descripción detallada
+	column Descripción
+		dataType: string
+		lineageTag: d185ece5-7263-4c73-9723-0dbb4510ae74
+		summarizeBy: none
+		sourceColumn: Descripción
+
+		annotation SummarizationSetBy = Automatic
+
+	column exchangerate
+		dataType: double
+		lineageTag: e9e37a2c-4143-42d6-88ce-245568a0995a
+		summarizeBy: sum
+		sourceColumn: exchangerate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sparepartadded
+		dataType: int64
+		formatString: 0
+		lineageTag: 58d31620-7f59-47fd-ab3d-51442df34216
+		summarizeBy: sum
+		sourceColumn: sparepartadded
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtyrequested
+		dataType: double
+		lineageTag: 9aa164f9-d8bf-4620-bd3f-993abc9ce756
+		summarizeBy: sum
+		sourceColumn: qtyrequested
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column exchangerate2
+		dataType: double
+		lineageTag: a2ee0b36-77ce-4b17-ad71-f58bae799ab5
+		summarizeBy: sum
+		sourceColumn: exchangerate2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column linecost2
+		dataType: double
+		lineageTag: e504aced-9ef9-4ce4-9d4c-531fbbba2cf3
+		summarizeBy: sum
+		sourceColumn: linecost2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column mrnum
+		dataType: string
+		lineageTag: 7153dd7a-4708-4718-a0b7-23fcd048fc9b
+		summarizeBy: none
+		sourceColumn: mrnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column mrlinenum
+		dataType: int64
+		formatString: 0
+		lineageTag: 8bef1dff-0cac-48f8-a998-14d877fdb6b6
+		summarizeBy: sum
+		sourceColumn: mrlinenum
+
+		annotation SummarizationSetBy = Automatic
+
+	column matusetransid
+		dataType: int64
+		formatString: 0
+		lineageTag: d6584a94-10a2-49e1-9e61-b772cfdf24fb
+		summarizeBy: sum
+		sourceColumn: matusetransid
+
+		annotation SummarizationSetBy = Automatic
+
+	column matrectransid
+		dataType: int64
+		formatString: 0
+		lineageTag: 3b59b47f-e301-4df7-99eb-d2559a516505
+		summarizeBy: sum
+		sourceColumn: matrectransid
+
+		annotation SummarizationSetBy = Automatic
+
+	column it6
+		dataType: string
+		lineageTag: 13e12b09-ffac-49ae-b770-1332e92faea6
+		summarizeBy: none
+		sourceColumn: it6
+
+		annotation SummarizationSetBy = Automatic
+
+	column it7
+		dataType: string
+		lineageTag: 1562a111-3971-4bf5-a5cc-66aa4b77609d
+		summarizeBy: none
+		sourceColumn: it7
+
+		annotation SummarizationSetBy = Automatic
+
+	column it8
+		dataType: string
+		lineageTag: 11a0a141-dfa5-4e3b-bbbd-8c99d1a1048b
+		summarizeBy: none
+		sourceColumn: it8
+
+		annotation SummarizationSetBy = Automatic
+
+	column it9
+		dataType: string
+		lineageTag: 7dbc50e1-ce32-4317-b4a8-233e1b399e4a
+		summarizeBy: none
+		sourceColumn: it9
+
+		annotation SummarizationSetBy = Automatic
+
+	column it10
+		dataType: string
+		lineageTag: 97d6edd1-93ae-4682-aa9d-37303c2780eb
+		summarizeBy: none
+		sourceColumn: it10
+
+		annotation SummarizationSetBy = Automatic
+
+	column itin4
+		dataType: string
+		lineageTag: a84f1ea0-cf9b-40b9-bef9-1816218293cd
+		summarizeBy: none
+		sourceColumn: itin4
+
+		annotation SummarizationSetBy = Automatic
+
+	column itin5
+		dataType: string
+		lineageTag: 9c3b9d2f-805e-4283-91ac-461ef46c9949
+		summarizeBy: none
+		sourceColumn: itin5
+
+		annotation SummarizationSetBy = Automatic
+
+	column itin6
+		dataType: string
+		lineageTag: 3d9abee6-0159-40d8-93ed-ba55e4f4b9df
+		summarizeBy: none
+		sourceColumn: itin6
+
+		annotation SummarizationSetBy = Automatic
+
+	column itin7
+		dataType: string
+		lineageTag: 56f86e92-3cf0-492c-a2ec-804380394122
+		summarizeBy: none
+		sourceColumn: itin7
+
+		annotation SummarizationSetBy = Automatic
+
+	column sourcesysid
+		dataType: string
+		lineageTag: c725787c-0658-4a3f-b5b3-32bbfe8b87d5
+		summarizeBy: none
+		sourceColumn: sourcesysid
+
+		annotation SummarizationSetBy = Automatic
+
+	column ownersysid
+		dataType: string
+		lineageTag: 65ce840c-bed9-45db-88a9-4999b66a1b12
+		summarizeBy: none
+		sourceColumn: ownersysid
+
+		annotation SummarizationSetBy = Automatic
+
+	column externalrefid
+		dataType: string
+		lineageTag: 772b59ed-b4f2-4189-ad4b-ed41a27f1f0e
+		summarizeBy: none
+		sourceColumn: externalrefid
+
+		annotation SummarizationSetBy = Automatic
+
+	column sendersysid
+		dataType: string
+		lineageTag: d77f3753-bc1d-4692-ac44-3674bd73c778
+		summarizeBy: none
+		sourceColumn: sendersysid
+
+		annotation SummarizationSetBy = Automatic
+
+	column fincntrlid
+		dataType: string
+		lineageTag: f9d86544-9d6a-4147-9619-4782a3538258
+		summarizeBy: none
+		sourceColumn: fincntrlid
+
+		annotation SummarizationSetBy = Automatic
+
+	column issueid
+		dataType: int64
+		formatString: 0
+		lineageTag: 505ac927-41fa-4116-b9ec-239327ac2211
+		summarizeBy: sum
+		sourceColumn: issueid
+
+		annotation SummarizationSetBy = Automatic
+
+	column qtyreturned
+		dataType: double
+		lineageTag: 0c5dfa34-feb7-4b84-8bfd-8cf360ae2cf5
+		summarizeBy: sum
+		sourceColumn: qtyreturned
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Identificador de organización
+	column Organización
+		dataType: string
+		lineageTag: e2e7a05d-5035-4398-a210-aae50272b217
+		summarizeBy: none
+		sourceColumn: Organización
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador de planta
+	column Planta
+		dataType: string
+		lineageTag: 2415927f-c1d5-4bfd-80bb-bcee98c50fda
+		summarizeBy: none
+		sourceColumn: Planta
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Este campo indica el número de orden de compra de referencia
+	column 'Orden de Trabajo'
+		dataType: string
+		lineageTag: ed5f6879-bee6-48d1-9db1-6b9ed835384d
+		summarizeBy: none
+		sourceColumn: Orden de Trabajo
+
+		annotation SummarizationSetBy = Automatic
+
+	column enteredastask
+		dataType: int64
+		formatString: 0
+		lineageTag: c704b804-2a74-4172-a9b6-3f1ee57b3a28
+		summarizeBy: sum
+		sourceColumn: enteredastask
+
+		annotation SummarizationSetBy = Automatic
+
+	column linetype
+		dataType: string
+		lineageTag: 7a3c749b-6a95-443f-9be6-ed19d8d358bd
+		summarizeBy: none
+		sourceColumn: linetype
+
+		annotation SummarizationSetBy = Automatic
+
+	column itemsetid
+		dataType: string
+		lineageTag: 1b25c40f-ee7c-4ce0-86d3-87ef42784893
+		summarizeBy: none
+		sourceColumn: itemsetid
+
+		annotation SummarizationSetBy = Automatic
+
+	column conditioncode
+		dataType: string
+		lineageTag: 8fc0c928-1b27-41f2-b690-75e286aee3e5
+		summarizeBy: none
+		sourceColumn: conditioncode
+
+		annotation SummarizationSetBy = Automatic
+
+	column condrate
+		dataType: int64
+		formatString: 0
+		lineageTag: d48637c8-70f5-4dea-a684-6a6e12500e84
+		summarizeBy: sum
+		sourceColumn: condrate
+
+		annotation SummarizationSetBy = Automatic
+
+	column commoditygroup
+		dataType: string
+		lineageTag: 5b46fb58-62ff-4090-9574-4e0cb1f49fb8
+		summarizeBy: none
+		sourceColumn: commoditygroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column commodity
+		dataType: string
+		lineageTag: a28ab120-819f-4f61-a116-089563f28d52
+		summarizeBy: none
+		sourceColumn: commodity
+
+		annotation SummarizationSetBy = Automatic
+
+	column tositeid
+		dataType: string
+		lineageTag: 9f221fd3-6fff-47d8-9760-e88551ee2fdc
+		summarizeBy: none
+		sourceColumn: tositeid
+
+		annotation SummarizationSetBy = Automatic
+
+	column langcode
+		dataType: string
+		lineageTag: 82c9fb27-e58e-4dac-9c8d-172e6b8eddbc
+		summarizeBy: none
+		sourceColumn: langcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column hasld
+		dataType: int64
+		formatString: 0
+		lineageTag: 08416398-a7af-453f-8585-d71ee5ccf014
+		summarizeBy: sum
+		sourceColumn: hasld
+
+		annotation SummarizationSetBy = Automatic
+
+	column porevisionnum
+		dataType: int64
+		formatString: 0
+		lineageTag: 5bd7b991-4faf-4f33-84b9-485b98df36db
+		summarizeBy: sum
+		sourceColumn: porevisionnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column invuselineid
+		dataType: int64
+		formatString: 0
+		lineageTag: fa9c9729-2aea-4707-a550-d22e5ab05939
+		summarizeBy: sum
+		sourceColumn: invuselineid
+
+		annotation SummarizationSetBy = Automatic
+
+	column invuseid
+		dataType: int64
+		formatString: 0
+		lineageTag: d9822759-0b93-4645-b84c-d602bcde1d33
+		summarizeBy: sum
+		sourceColumn: invuseid
+
+		annotation SummarizationSetBy = Automatic
+
+	column consignment
+		dataType: int64
+		formatString: 0
+		lineageTag: 899ac3ef-6610-446f-9dc3-44ca8be69e8a
+		summarizeBy: sum
+		sourceColumn: consignment
+
+		annotation SummarizationSetBy = Automatic
+
+	column consinvoicenum
+		dataType: string
+		lineageTag: 360dae33-b8b7-456a-9e42-e4d454ee9b75
+		summarizeBy: none
+		sourceColumn: consinvoicenum
+
+		annotation SummarizationSetBy = Automatic
+
+	column consvendor
+		dataType: string
+		lineageTag: e490a452-7209-4d12-871f-cdad80498264
+		summarizeBy: none
+		sourceColumn: consvendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column issueunit
+		dataType: string
+		lineageTag: 70266a76-cc0a-416d-bf7f-e1975595aef8
+		summarizeBy: none
+		sourceColumn: issueunit
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_it3
+		dataType: string
+		lineageTag: 3708f733-c56e-4e77-addd-241c4184e852
+		summarizeBy: none
+		sourceColumn: tm_it3
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_p_itype
+		dataType: string
+		lineageTag: 75b62d00-d511-4e0b-b8ce-f060ef41bb09
+		summarizeBy: none
+		sourceColumn: tm_p_itype
+
+		annotation SummarizationSetBy = Automatic
+
+	column anywhererefid
+		dataType: int64
+		formatString: 0
+		lineageTag: 868b53d5-fff4-430d-abc6-dd5017486cec
+		summarizeBy: sum
+		sourceColumn: anywhererefid
+
+		annotation SummarizationSetBy = Automatic
+
+	column matusetransKey
+		dataType: string
+		lineageTag: 55ac79da-7f1a-41f4-ac71-ec1f0bcf7d7e
+		summarizeBy: none
+		sourceColumn: matusetransKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrgidSiteidLocationKey
+		dataType: string
+		lineageTag: ba8f96d3-cb34-40f8-a4f6-613e6433969d
+		summarizeBy: none
+		sourceColumn: OrgidSiteidLocationKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'locations.Nombre Edificio'
+		dataType: string
+		lineageTag: 9856576f-4e08-4063-aee1-298f916d58e1
+		summarizeBy: none
+		sourceColumn: locations.Nombre Edificio
+
+		annotation SummarizationSetBy = Automatic
+
+	column Personaid_OrigKey = matusetrans[Despachado] & ":" & matusetrans[Organización]
+		lineageTag: 3d0e30df-6da2-41d8-8eee-4d771a7813ed
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Transaction_Date = DATE(YEAR(matusetrans[Fecha Transacción]),MONTH(matusetrans[Fecha Transacción]),DAY(matusetrans[Fecha Transacción]))
+		formatString: Long Date
+		lineageTag: d88d032d-3087-4195-b3fe-71d4180b677b
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Colaborador = RELATED(person[Nombre])
+		lineageTag: 55d07e46-0f7f-40f2-b369-12f040ce58b2
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Cantidad_Abs = ABS(matusetrans[Cantidad])
+		lineageTag: 2c2cbae2-9c68-4338-8bf0-7dc7bf74f99e
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'Fecha Transacción2'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 425c4f48-eaac-4cc3-b934-d86d6e5e4542
+		summarizeBy: none
+		sourceColumn: Fecha Transacción2
+
+		annotation SummarizationSetBy = Automatic
+
+	column wpitemid
+		dataType: int64
+		formatString: 0
+		lineageTag: 5033b8c7-b6dc-4943-bc0c-ec3d0e4ddcb9
+		summarizeBy: sum
+		sourceColumn: wpitemid
+
+		annotation SummarizationSetBy = Automatic
+
+	column invpicklistid
+		dataType: int64
+		formatString: 0
+		lineageTag: 6d1efd04-ab68-4157-bfa3-c4e9916c5ae8
+		summarizeBy: sum
+		sourceColumn: invpicklistid
+
+		annotation SummarizationSetBy = Automatic
+
+	column invuselinesplitid
+		dataType: int64
+		formatString: 0
+		lineageTag: b579cab0-5b81-4d93-8dd3-d0de8ff8ef33
+		summarizeBy: sum
+		sourceColumn: invuselinesplitid
+
+		annotation SummarizationSetBy = Automatic
+
+	partition matusetrans = m
+		mode: import
+		source = ```
+				let
+				    RangeStartText = DateTime.ToText(RangeStart, "yyyy-MM-dd HH:mm:ss"),
+				    RangeEndText   = DateTime.ToText(RangeEnd,   "yyyy-MM-dd HH:mm:ss"),
+				
+				SQL = 
+				        "SELECT *
+				         FROM dbo.matusetrans
+				         ",
+				
+				    Origen = Odbc.Query(
+				        "dsn=" & #"Parámetro de Cadena de Conexión",
+				        SQL
+				    ),
+				
+				    //Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    //maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    //dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    //matusetrans_Table = dbo_Schema{[Name="matusetrans",Kind="Table"]}[Data],
+				    #"Inserted Merged Column1" = Table.AddColumn(Origen, "matusetransKey", each Text.Combine({[orgid], [siteid], [location], [refwo]}, ":"), type text),
+				
+				   #"Inserted Merged Column2" = Table.AddColumn(#"Inserted Merged Column1", "OrgidSiteidLocationKey", each Text.Combine({[orgid], [siteid], [location]}, ":"), type text),
+				    #"Merged Queries1" = Table.NestedJoin(#"Inserted Merged Column2", {"OrgidSiteidLocationKey"}, locations, {"OrgidSiteidLocationKey"}, "locations", JoinKind.LeftOuter),
+				    //#"Expanded locations" = Table.ExpandTableColumn(#"Merged Queries1", "locations", {"tm_nom_edif"}, {"locations.tm_nom_edif"}),
+				    #"Expanded locations" = Table.ExpandTableColumn(#"Merged Queries1", "locations", {"Nombre Edificio"}, {"locations.Nombre Edificio"}),
+				    
+				
+				    #"Renamed Columns" = Table.RenameColumns(#"Expanded locations",{{"transdate", "Fecha Transacción"}, {"quantity", "Cantidad"}, {"unitcost", "Coste Unitario"}, {"actualcost", "Coste Real"}, {"issueto", "Despachado"}, {"gldebitacct", "Cuenta Débito del LM"}, {"linecost", "Coste de Línea"}, {"location", "Ubicación"}, {"description", "Descripción"}, {"orgid", "Organización"}, {"siteid", "Planta"}, {"refwo", "Orden de Trabajo"}}),
+				    #"Columna duplicada" = Table.DuplicateColumn(#"Renamed Columns", "Fecha Transacción", "Fecha Transacción - Copia"),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Columna duplicada",{{"Fecha Transacción - Copia", "Fecha Transacción2"}}),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Columnas con nombre cambiado",{{"Fecha Transacción", type date}})
+				
+				
+				
+				in
+				    #"Tipo cambiado"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

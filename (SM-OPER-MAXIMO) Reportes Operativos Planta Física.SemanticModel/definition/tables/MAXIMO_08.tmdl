@@ -1,0 +1,460 @@
+table MAXIMO_08
+	lineageTag: a244f980-6657-4a05-b687-7531964fc526
+
+	column keyOSL
+		lineageTag: 658adece-f58a-45a8-bb48-190bd0bafeaf
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyOSL]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'locations_Nombre Edificio'
+		lineageTag: af4fb845-037f-4906-96d8-038a92a86f53
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: locations[Nombre Edificio]
+
+		annotation SummarizationSetBy = Automatic
+
+	column asset_Tipo
+		lineageTag: 7ad63cea-c853-43f8-8638-fe10dd1e5024
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: asset[Tipo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column asset_Uso
+		lineageTag: 1369ace0-ffb4-49cb-bc05-fcbb1a7ed7a3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: asset[Uso]
+
+		annotation SummarizationSetBy = Automatic
+
+	column asset_Descripción
+		lineageTag: fdc34aa1-8bca-4014-8204-80d8cfd6d9d4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: asset[Descripción]
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyOSA
+		lineageTag: 07576f7c-7b3d-4f9c-a4ba-60e6f34111b2
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyOSA]
+
+		annotation SummarizationSetBy = Automatic
+
+	column pm_Organización
+		lineageTag: 777656a7-aa21-43ba-a99d-8ad67b0a354b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: pm[Organización]
+
+		annotation SummarizationSetBy = Automatic
+
+	column pm_MP
+		lineageTag: 33f85fc0-9c2f-4ab5-a89f-139c8ec90044
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: pm[MP]
+
+		annotation SummarizationSetBy = Automatic
+
+	column pm_Activo
+		lineageTag: d01b5ba4-04c2-43e8-ad7a-19d2260e9b4d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: pm[Activo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'pm_Plan Trabajo'
+		lineageTag: 9a269157-7930-4dd6-86a4-405762aca05a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: pm[Plan Trabajo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column pm_nextdate
+		formatString: General Date
+		lineageTag: da612b12-5513-424a-8052-5f4ca14f0b4d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: pm[nextdate]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'pm_Coste Total'
+		lineageTag: 230a6812-4b79-4a71-9026-1a0afc6db781
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: pm[Coste Total]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'pm_Tipo Trabajo'
+		lineageTag: 55162a70-9fda-433a-a345-57b1d7dcb9fe
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: pm[Tipo Trabajo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column pm_Descripción
+		lineageTag: 06945132-63fe-4e5a-bf3b-68beb9ccf3f1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: pm[Descripción]
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyOS
+		lineageTag: 26816948-60b2-4495-a93b-4cbdb20ac0db
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyOS]
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyOSAWJ
+		lineageTag: 21144ed2-baa9-4cde-83a8-82214ff6180f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyOSAWJ]
+
+		annotation SummarizationSetBy = Automatic
+
+	column site_Tm_region
+		lineageTag: 1d71e2dc-b9b6-4dc5-9aae-270dc1303754
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: site[Tm_region]
+
+		annotation SummarizationSetBy = Automatic
+
+	column site_Descripción
+		lineageTag: 9fbb5433-6ecb-4b0d-9f48-6b64ca113968
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: site[Descripción]
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyOJWCS
+		lineageTag: 30f3cc59-b073-4ce0-a269-700bf01ed161
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyOJWCS]
+
+		annotation SummarizationSetBy = Automatic
+
+	column jobplan_Descripción
+		lineageTag: 891be4bd-c3a2-49ba-9cb8-c02341f9c98e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: jobplan[Descripción]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_Estado
+		lineageTag: 6f7584fd-0dc4-4468-b2f8-a19a195a3efd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_Estado]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'wo_Orden Trabajo'
+		lineageTag: 20fe332c-3ce1-4edc-9726-d40c3a2d5194
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_Orden Trabajo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'wo_Plan Trabajo'
+		lineageTag: 10a81196-451c-45c7-96f3-b1c8579c8893
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_Plan Trabajo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_Descripcion
+		lineageTag: 0e86c604-e158-40a7-acc9-d72f21cf43ab
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_Descripcion]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_actstart
+		formatString: General Date
+		lineageTag: 919bb04c-d7f7-4c7e-9dc8-9c6fcecd036c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_actstart]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_actfinish
+		formatString: General Date
+		lineageTag: e1dd5158-feba-4842-b7c3-99e6c76b7804
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_actfinish]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_schedstart
+		formatString: General Date
+		lineageTag: 620151fa-3992-4837-b9f9-30773e1cf7e0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_schedstart]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_schedfinish
+		formatString: General Date
+		lineageTag: 67827595-7c9b-495d-b2d8-a0d2291a1d13
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_schedfinish]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_schedfinish2
+		formatString: General Date
+		lineageTag: 82fde715-4b9e-44f3-8a77-2877328fa75a
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_schedfinish2]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'wo_Tipo Trabajo'
+		lineageTag: 79f8a9a9-3fc7-4225-a71c-96bef7c7ab75
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [wo_Tipo Trabajo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'wo_Coste Herramientas'
+		lineageTag: d7b5c35a-2233-41ee-86b7-06395851f326
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [wo_Coste Herramientas]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'wo_Coste Real Mano Obra'
+		lineageTag: d888a881-c804-4886-87eb-1b67e73c3cb7
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [wo_Coste Real Mano Obra]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column 'wo_Coste Real Materiales'
+		lineageTag: 95745b33-7ad7-4309-aecf-3826a5920d4d
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [wo_Coste Real Materiales]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column MP_Pendientes_Vencida
+		formatString: 0
+		lineageTag: b93a6cc8-2d37-4c64-9d3c-927e233aabaa
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [MP_Pendientes_Vencida]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MP_Atender_Tiempo
+		formatString: 0
+		lineageTag: 4b190e5e-cde1-45a5-b9e5-9da6cd0544cc
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [MP_Atender_Tiempo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MP_Pendientes_Tiempo
+		formatString: 0
+		lineageTag: 723d7e03-12ab-4757-8ec8-629605777d6c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [MP_Pendientes_Tiempo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MP_Atender_Vencido
+		formatString: 0
+		lineageTag: 0804ba5e-e4f5-4145-b5c8-f0ac489e11ec
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [MP_Atender_Vencido]
+
+		annotation SummarizationSetBy = Automatic
+
+	column MP_Cancelado
+		formatString: 0
+		lineageTag: 48f11f58-d353-4660-b48e-a61284bb51ea
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [MP_Cancelado]
+
+		annotation SummarizationSetBy = Automatic
+
+	column site_Campus
+		lineageTag: 035aca1b-810e-4af5-b7f0-b43c07523a1e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: site[Campus]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MAXIMO_08 = calculated
+		mode: import
+		source = ```
+				
+				var today = TODAY()
+				
+				var tblPM = SELECTCOLUMNS(pm, 	pm[Organización],
+				                                pm[MP],
+												pm[Activo],
+												pm[Plan Trabajo],
+												pm[nextdate],
+												pm[Coste Total],
+				                                pm[Tipo Trabajo],
+				                                pm[Descripción],
+					"keyOS",    pm[Organización]&pm[Campus],
+					"keyOSAWJ", pm[Organización]&pm[Campus]&pm[Activo]&pm[Tipo Trabajo]&pm[Plan Trabajo],
+					"keyOSA",   pm[Organización]&pm[Campus]&pm[Activo]
+				)
+				
+				var tblSite = SELECTCOLUMNS(site, 	site[Tm_region],
+													site[Descripción],
+				                                    site[Campus],
+				    "keyOS", site[Organización]&site[Campus]		)	
+					
+				var tblWorkorder = 
+				CALCULATETABLE(
+				    ADDCOLUMNS(
+				        SELECTCOLUMNS(
+				            workorder,
+				            "wo_Estado",workorder[Estado],
+				            "wo_Orden Trabajo",workorder[Orden de Trabajo],
+				            "wo_Plan Trabajo",workorder[Plan de Trabajo],
+				            "wo_Descripcion",workorder[Descripción],
+				            "wo_actstart",workorder[actstart],
+				            "wo_actfinish",workorder[actfinish],
+				            "wo_schedstart",workorder[schedstart],
+				            "wo_schedfinish",workorder[schedfinish],
+				            "wo_schedfinish2",workorder[schedfinish2],
+				            "wo_Tipo Trabajo",workorder[Tipo de Trabajo],
+				            "wo_Coste Herramientas",workorder[Coste Real Herramientas],
+				            "wo_Coste Real Mano Obra",workorder[Coste Real Mano de Obra],
+				            "wo_Coste Real Materiales",workorder[Coste Real de Materiales],
+				            "keyOJWCS", workorder[Organización]&workorder[Plan de Trabajo]&workorder[Tipo de Trabajo]&workorder[Clasificación]&workorder[Subclasificación],
+				            "keyOSAWJ", workorder[Organización]&workorder[Campus]&workorder[Activo]&workorder[Tipo de Trabajo]&workorder[Plan de Trabajo]
+				        ),
+				        "MP_Pendientes_Vencida", 
+				            IF(
+				               [wo_Tipo Trabajo] = "MP" &&
+				                [wo_Estado] = "APROB" &&
+				                [wo_schedfinish2] < TODAY(),
+				                1,
+				                0
+				            ),
+				        "MP_Atender_Tiempo", 
+				            IF(
+				               [wo_Tipo Trabajo] = "MP" &&
+				                [wo_Estado] = "CERR" &&
+				                [wo_actfinish] <= [wo_schedfinish2] ,
+				                1,
+				                0
+				            ),
+				        "MP_Pendientes_Tiempo", 
+				            IF(
+				               [wo_Tipo Trabajo] = "MP" &&
+				                [wo_Estado] = "APROB" &&
+				                [wo_schedfinish2] >= TODAY() ,
+				                1,
+				                0
+				            ),
+				            "MP_Atender_Vencido", 
+				            IF(
+				               [wo_Tipo Trabajo] = "MP" &&
+				                [wo_Estado] = "CERR" &&
+				                [wo_actfinish] > [wo_schedfinish2] ,
+				                1,
+				                0
+				            ),
+				            "MP_Cancelado", 
+				            IF(
+				               [wo_Tipo Trabajo] = "MP" &&
+				                [wo_Estado] = "CAN",
+				                1,
+				                0
+				            )
+				    ),
+				    workorder[Estado] IN ({"APROB","CAN", "CERR"}), 
+				    workorder[Tipo de Trabajo] = "MP"
+				)
+				
+				var tblJobplan = SELECTCOLUMNS(jobplan, jobplan[Descripción],
+				"keyOJWCS", jobplan[Organización]&jobplan[Plan Trabajo]&jobplan[Tipo Trabajo]&jobplan[Clasificación]&jobplan[Subclasificación]
+				)
+				
+								
+				var tblAsset = SELECTCOLUMNS(asset,                            	
+					                                asset[Tipo],
+					                                asset[Uso],
+					                                asset[Descripción],
+										  "keyOSA", asset[Organización]&asset[Campus]&asset[Activo],
+										  "keyOSL", asset[Organización]&asset[Campus]&asset[Ubicación]
+				)
+				
+				var tblLocations = SELECTCOLUMNS( locations, 
+				                    "keyOSL", locations[Organización]&locations[Campus]&locations[Ubicacion],
+				                     locations[Nombre Edificio] )
+									 
+				RETURN
+				NATURALLEFTOUTERJOIN(tblLocations,
+				
+				(
+				NATURALLEFTOUTERJOIN(tblAsset,  (NATURALLEFTOUTERJOIN( (NATURALLEFTOUTERJOIN(tblPM          ,tblSite   )),
+				                                                       (NATURALLEFTOUTERJOIN(tblWorkorder,tblJobplan))
+				                                                     )
+				                                )
+				                     )
+				)
+				
+				                     )
+				
+									 
+				
+											 
+				```
+
+	annotation PBI_Id = d0732b87f4334bf9a7be9f9890e95c4b
+

@@ -1,0 +1,1269 @@
+table asset
+	lineageTag: c70c4641-0422-41ab-8796-1e757a65d762
+
+	/// Número de activo
+	column Activo
+		dataType: string
+		lineageTag: 33dc8532-8ecc-4eb0-adcb-cf9e1efa3120
+		summarizeBy: none
+		sourceColumn: Activo
+
+		annotation SummarizationSetBy = Automatic
+
+	column parent
+		dataType: string
+		lineageTag: ea4e57c6-cd87-45b7-9ce7-a5e7e6316ef9
+		summarizeBy: none
+		sourceColumn: parent
+
+		annotation SummarizationSetBy = Automatic
+
+	column serialnum
+		dataType: string
+		lineageTag: 5f3abd67-b5b5-427c-8948-39b1505d0a1f
+		summarizeBy: none
+		sourceColumn: serialnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column assettag
+		dataType: string
+		lineageTag: 79948147-13e1-4b1b-bbee-1499d0278e8a
+		summarizeBy: none
+		sourceColumn: assettag
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Ubicación de activo
+	column Ubicación
+		dataType: string
+		lineageTag: afa44f20-5782-4584-8bfa-abc3c9bc06be
+		summarizeBy: none
+		sourceColumn: Ubicación
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Describe el activo. Para especificar o ver información adicional, haga clic en el botón Descripción detallada.
+	column Descripción
+		dataType: string
+		lineageTag: bae5841f-a4f1-47f5-adee-2852b85bc506
+		summarizeBy: none
+		sourceColumn: Descripción
+
+		annotation SummarizationSetBy = Automatic
+
+	column vendor
+		dataType: string
+		lineageTag: c8000ecb-4eff-4b00-ab85-dabed5e46f6c
+		summarizeBy: none
+		sourceColumn: vendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column failurecode
+		dataType: string
+		lineageTag: ed973d7e-e159-47ff-ae98-48deb78539ca
+		summarizeBy: none
+		sourceColumn: failurecode
+
+		annotation SummarizationSetBy = Automatic
+
+	column manufacturer
+		dataType: string
+		lineageTag: 05e062e2-6d64-41b4-bdf7-a970c5a7826d
+		summarizeBy: none
+		sourceColumn: manufacturer
+
+		annotation SummarizationSetBy = Automatic
+
+	column purchaseprice
+		dataType: double
+		lineageTag: 1a5fb606-8efc-4923-a82b-42dd2656cfe7
+		summarizeBy: sum
+		sourceColumn: purchaseprice
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Coste de reemplazo
+	column 'Coste Reemplazo'
+		dataType: double
+		lineageTag: 7de79a54-ac13-4858-b3ba-fd85d95dea38
+		summarizeBy: sum
+		sourceColumn: Coste Reemplazo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column installdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f65e221c-f914-4581-89b2-7e07db575d53
+		summarizeBy: none
+		sourceColumn: installdate
+
+		annotation SummarizationSetBy = Automatic
+
+	column warrantyexpdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2a2764fd-6ce1-404d-b162-0acbd66ebabf
+		summarizeBy: none
+		sourceColumn: warrantyexpdate
+
+		annotation SummarizationSetBy = Automatic
+
+	column totalcost
+		dataType: double
+		lineageTag: b78ecd8c-bbc3-4966-b9e7-b5f54871586e
+		summarizeBy: sum
+		sourceColumn: totalcost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column ytdcost
+		dataType: double
+		lineageTag: 4ca0ff51-d008-42b3-8f8c-85023d4e6abd
+		summarizeBy: sum
+		sourceColumn: ytdcost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column budgetcost
+		dataType: double
+		lineageTag: fbad2352-9a09-4a34-b836-703cbce4aa57
+		summarizeBy: sum
+		sourceColumn: budgetcost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column calnum
+		dataType: string
+		lineageTag: 2eefb43e-27c0-404b-a68a-6eb3dd6fd142
+		summarizeBy: none
+		sourceColumn: calnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column isrunning
+		dataType: int64
+		formatString: 0
+		lineageTag: da338177-cd67-4ecd-9454-6df67a5bcf34
+		summarizeBy: sum
+		sourceColumn: isrunning
+
+		annotation SummarizationSetBy = Automatic
+
+	column itemnum
+		dataType: string
+		lineageTag: 42d51516-7b8e-4faf-8381-d12500e0a00a
+		summarizeBy: none
+		sourceColumn: itemnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column unchargedcost
+		dataType: double
+		lineageTag: c6fa5d1a-c46c-4542-b02d-83985b00cbca
+		summarizeBy: sum
+		sourceColumn: unchargedcost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column totunchargedcost
+		dataType: double
+		lineageTag: 69668ea1-058a-4db8-87bc-08cb3487fafa
+		summarizeBy: sum
+		sourceColumn: totunchargedcost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column totdowntime
+		dataType: double
+		lineageTag: a4e1f885-9ddc-4107-b542-9ef3eb92da79
+		summarizeBy: sum
+		sourceColumn: totdowntime
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column statusdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2b53e459-5004-4b1e-a750-ca7e4c7f9a1d
+		summarizeBy: none
+		sourceColumn: statusdate
+
+		annotation SummarizationSetBy = Automatic
+
+	column changedate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5cbbac31-0452-4d8f-86bd-c3a937e194f9
+		summarizeBy: none
+		sourceColumn: changedate
+
+		annotation SummarizationSetBy = Automatic
+
+	column changeby
+		dataType: string
+		lineageTag: b36ed089-81ba-44b8-b824-7cda0186366e
+		summarizeBy: none
+		sourceColumn: changeby
+
+		annotation SummarizationSetBy = Automatic
+
+	column eq1
+		dataType: string
+		lineageTag: 7cc621b4-713c-4280-a366-1928b7a14497
+		summarizeBy: none
+		sourceColumn: eq1
+
+		annotation SummarizationSetBy = Automatic
+
+	column eq2
+		dataType: string
+		lineageTag: ab4b7159-a140-43d9-bc20-5774ab81e4ad
+		summarizeBy: none
+		sourceColumn: eq2
+
+		annotation SummarizationSetBy = Automatic
+
+	column eq3
+		dataType: string
+		lineageTag: 04f9da28-7f42-4788-a1d5-7166b8e6b1d0
+		summarizeBy: none
+		sourceColumn: eq3
+
+		annotation SummarizationSetBy = Automatic
+
+	column eq4
+		dataType: string
+		lineageTag: ad02b3cb-7e56-43a0-b84e-3c9b5a097db2
+		summarizeBy: none
+		sourceColumn: eq4
+
+		annotation SummarizationSetBy = Automatic
+
+	column eq5
+		dataType: double
+		lineageTag: 80ba4b92-d15e-4186-bf20-c0f1a47c511f
+		summarizeBy: sum
+		sourceColumn: eq5
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column eq6
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5a5f887d-8721-4e86-9883-235cd9f7967d
+		summarizeBy: none
+		sourceColumn: eq6
+
+		annotation SummarizationSetBy = Automatic
+
+	column eq7
+		dataType: double
+		lineageTag: 8f1b3f0c-2c56-4ed9-81bb-ec16fe44e2f6
+		summarizeBy: sum
+		sourceColumn: eq7
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column eq8
+		dataType: string
+		lineageTag: 682a0a09-a946-4a54-9428-e35b132bd3ac
+		summarizeBy: none
+		sourceColumn: eq8
+
+		annotation SummarizationSetBy = Automatic
+
+	column eq9
+		dataType: string
+		lineageTag: eda7da03-84cd-4e79-93c7-e75e5bc9e3d5
+		summarizeBy: none
+		sourceColumn: eq9
+
+		annotation SummarizationSetBy = Automatic
+
+	column eq10
+		dataType: string
+		lineageTag: bb95c1bb-3193-4e32-a8e3-a6b388b715ef
+		summarizeBy: none
+		sourceColumn: eq10
+
+		annotation SummarizationSetBy = Automatic
+
+	column eq11
+		dataType: string
+		lineageTag: 7b708e3f-043e-4c00-9821-12206af5d0fd
+		summarizeBy: none
+		sourceColumn: eq11
+
+		annotation SummarizationSetBy = Automatic
+
+	column eq12
+		dataType: double
+		lineageTag: 6902aa37-bbac-4c9e-b9dc-631cd6f598c8
+		summarizeBy: sum
+		sourceColumn: eq12
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column eq23
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: bbf22b92-5eb2-48b1-a7cc-090c62dfccce
+		summarizeBy: none
+		sourceColumn: eq23
+
+		annotation SummarizationSetBy = Automatic
+
+	column eq24
+		dataType: double
+		lineageTag: 99ef3f2f-fa26-4757-9700-d0d192068d16
+		summarizeBy: sum
+		sourceColumn: eq24
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column priority
+		dataType: int64
+		formatString: 0
+		lineageTag: 140bc439-8164-4f73-ba80-875ccbfa8d9a
+		summarizeBy: sum
+		sourceColumn: priority
+
+		annotation SummarizationSetBy = Automatic
+
+	column invcost
+		dataType: double
+		lineageTag: 4dc9ae7e-85cc-4ee2-9953-9346dd5e785d
+		summarizeBy: sum
+		sourceColumn: invcost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column glaccount
+		dataType: string
+		lineageTag: 5be7fcd0-766e-4a3a-ad0e-cc30dd552eb7
+		summarizeBy: none
+		sourceColumn: glaccount
+
+		annotation SummarizationSetBy = Automatic
+
+	column rotsuspacct
+		dataType: string
+		lineageTag: e74009e2-1650-4e24-904c-8f06a0e98f52
+		summarizeBy: none
+		sourceColumn: rotsuspacct
+
+		annotation SummarizationSetBy = Automatic
+
+	column children
+		dataType: int64
+		formatString: 0
+		lineageTag: deed12b4-e2ae-4abc-89df-0b7a75cff2d8
+		summarizeBy: sum
+		sourceColumn: children
+
+		annotation SummarizationSetBy = Automatic
+
+	column binnum
+		dataType: string
+		lineageTag: 6486826b-8974-494f-8519-1bbe2822166e
+		summarizeBy: none
+		sourceColumn: binnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column disabled
+		dataType: int64
+		formatString: 0
+		lineageTag: 2f908e3b-92da-43a6-893b-d5dede080f72
+		summarizeBy: sum
+		sourceColumn: disabled
+
+		annotation SummarizationSetBy = Automatic
+
+	column classstructureid
+		dataType: string
+		lineageTag: 618cd302-b90d-488c-a6a5-6db25a8b742f
+		summarizeBy: none
+		sourceColumn: classstructureid
+
+		annotation SummarizationSetBy = Automatic
+
+	column sourcesysid
+		dataType: string
+		lineageTag: 037c4288-083d-4bef-8cc3-487c3315f39d
+		summarizeBy: none
+		sourceColumn: sourcesysid
+
+		annotation SummarizationSetBy = Automatic
+
+	column ownersysid
+		dataType: string
+		lineageTag: e2d512b1-f585-402e-ba87-785ef9a6f44d
+		summarizeBy: none
+		sourceColumn: ownersysid
+
+		annotation SummarizationSetBy = Automatic
+
+	column externalrefid
+		dataType: string
+		lineageTag: 51f08d23-576c-41e5-a7d3-d42ad4f1decc
+		summarizeBy: none
+		sourceColumn: externalrefid
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador de campus
+	column Campus
+		dataType: string
+		lineageTag: 3f1cad98-aab6-4c33-8fd9-946faa324b71
+		summarizeBy: none
+		sourceColumn: Campus
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador de organización
+	column Organización
+		dataType: string
+		lineageTag: 83e9a604-ef76-4e90-88ef-72beb7a7992c
+		summarizeBy: none
+		sourceColumn: Organización
+
+		annotation SummarizationSetBy = Automatic
+
+	column autowogen
+		dataType: int64
+		formatString: 0
+		lineageTag: 0bb76bd7-af76-41f7-a9f7-455821617473
+		summarizeBy: sum
+		sourceColumn: autowogen
+
+		annotation SummarizationSetBy = Automatic
+
+	column itemsetid
+		dataType: string
+		lineageTag: 95ca98f9-f6a7-4832-b470-a5ffd738f857
+		summarizeBy: none
+		sourceColumn: itemsetid
+
+		annotation SummarizationSetBy = Automatic
+
+	column conditioncode
+		dataType: string
+		lineageTag: 5924451d-993a-4560-9912-ada4968b5fc7
+		summarizeBy: none
+		sourceColumn: conditioncode
+
+		annotation SummarizationSetBy = Automatic
+
+	column groupname
+		dataType: string
+		lineageTag: 83bc1eef-f2c0-42bc-9fa8-a5d24b9140f9
+		summarizeBy: none
+		sourceColumn: groupname
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Tipo predefinido de este activo.
+	column Tipo
+		dataType: string
+		lineageTag: c1f7296d-8a9e-467e-9352-3624217c2cce
+		summarizeBy: none
+		sourceColumn: Tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Uso
+	column Uso
+		dataType: string
+		lineageTag: 80d08856-e8cb-4c1b-8068-ccbad43ff989
+		summarizeBy: none
+		sourceColumn: Uso
+
+		annotation SummarizationSetBy = Automatic
+
+	column status
+		dataType: string
+		lineageTag: f0985d6e-5f84-4a24-80fb-a02f70c3e530
+		summarizeBy: none
+		sourceColumn: status
+
+		annotation SummarizationSetBy = Automatic
+
+	column mainthierchy
+		dataType: int64
+		formatString: 0
+		lineageTag: 809f7d88-43dc-4336-9723-d8883bab3b60
+		summarizeBy: sum
+		sourceColumn: mainthierchy
+
+		annotation SummarizationSetBy = Automatic
+
+	column assetid
+		dataType: int64
+		formatString: 0
+		lineageTag: b6f89fd4-cbf0-4ec4-bc76-e0f9092229f4
+		summarizeBy: sum
+		sourceColumn: assetid
+
+		annotation SummarizationSetBy = Automatic
+
+	column moved
+		dataType: int64
+		formatString: 0
+		lineageTag: f4ccac11-5996-43d6-aef5-6ff0530635a6
+		summarizeBy: sum
+		sourceColumn: moved
+
+		annotation SummarizationSetBy = Automatic
+
+	column assetuid
+		dataType: int64
+		formatString: 0
+		lineageTag: e07f3e62-3ed3-4d13-804b-e90ba04f749c
+		summarizeBy: sum
+		sourceColumn: assetuid
+
+		annotation SummarizationSetBy = Automatic
+
+	column langcode
+		dataType: string
+		lineageTag: 8133cf57-85af-4742-b8f6-cd7daf8c016d
+		summarizeBy: none
+		sourceColumn: langcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column toolrate
+		dataType: double
+		lineageTag: 7025568e-7058-44fb-97f5-58428f360cdb
+		summarizeBy: sum
+		sourceColumn: toolrate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column itemtype
+		dataType: string
+		lineageTag: aedfe61b-65c9-4c5c-9275-421eb212faba
+		summarizeBy: none
+		sourceColumn: itemtype
+
+		annotation SummarizationSetBy = Automatic
+
+	column ancestor
+		dataType: string
+		lineageTag: 58bdab36-c749-4a4d-b73c-ff531968f6ac
+		summarizeBy: none
+		sourceColumn: ancestor
+
+		annotation SummarizationSetBy = Automatic
+
+	column sendersysid
+		dataType: string
+		lineageTag: 98a61687-4ad5-4e06-8e5d-9098636ded41
+		summarizeBy: none
+		sourceColumn: sendersysid
+
+		annotation SummarizationSetBy = Automatic
+
+	column shiftnum
+		dataType: string
+		lineageTag: a73d4ce0-7ec1-4f9e-89dd-7ce5a860f172
+		summarizeBy: none
+		sourceColumn: shiftnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column toolcontrolaccount
+		dataType: string
+		lineageTag: 5cdb43e7-55b6-43ba-9d6a-4861a6d88cd8
+		summarizeBy: none
+		sourceColumn: toolcontrolaccount
+
+		annotation SummarizationSetBy = Automatic
+
+	column hasld
+		dataType: int64
+		formatString: 0
+		lineageTag: 8330d899-bddf-4e43-949d-7696bac05d6c
+		summarizeBy: sum
+		sourceColumn: hasld
+
+		annotation SummarizationSetBy = Automatic
+
+	column direction
+		dataType: string
+		lineageTag: 964a10f5-d71b-4b60-8d60-0a2b5cd06fce
+		summarizeBy: none
+		sourceColumn: direction
+
+		annotation SummarizationSetBy = Automatic
+
+	column startmeasure
+		dataType: double
+		lineageTag: 837e9fd2-3403-4bec-9585-114dca824d4b
+		summarizeBy: sum
+		sourceColumn: startmeasure
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column endmeasure
+		dataType: double
+		lineageTag: 5a753676-e05a-49b6-a602-bba417a24a78
+		summarizeBy: sum
+		sourceColumn: endmeasure
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column islinear
+		dataType: int64
+		formatString: 0
+		lineageTag: 867c8596-2d94-43ad-b0c9-90f84c096056
+		summarizeBy: sum
+		sourceColumn: islinear
+
+		annotation SummarizationSetBy = Automatic
+
+	column enddescription
+		dataType: string
+		lineageTag: f1dc136e-6d68-4dc8-8bd0-6b4243d59dd9
+		summarizeBy: none
+		sourceColumn: enddescription
+
+		annotation SummarizationSetBy = Automatic
+
+	column startdescription
+		dataType: string
+		lineageTag: 4ab7b764-ffc7-455a-9517-1be6f4ee869b
+		summarizeBy: none
+		sourceColumn: startdescription
+
+		annotation SummarizationSetBy = Automatic
+
+	column lrm
+		dataType: string
+		lineageTag: bb9d99c9-d579-4039-9c08-ca8509d312b2
+		summarizeBy: none
+		sourceColumn: lrm
+
+		annotation SummarizationSetBy = Automatic
+
+	column defaultrepfacsiteid
+		dataType: string
+		lineageTag: 99d6378d-c08c-4e45-b971-a67ed817e9ea
+		summarizeBy: none
+		sourceColumn: defaultrepfacsiteid
+
+		annotation SummarizationSetBy = Automatic
+
+	column defaultrepfac
+		dataType: string
+		lineageTag: afc1ace3-9848-4120-a876-4f47960c9238
+		summarizeBy: none
+		sourceColumn: defaultrepfac
+
+		annotation SummarizationSetBy = Automatic
+
+	column returnedtovendor
+		dataType: int64
+		formatString: 0
+		lineageTag: adbce1a0-dd11-49ee-b974-c7aeb59b305d
+		summarizeBy: sum
+		sourceColumn: returnedtovendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column tloamhash
+		dataType: string
+		lineageTag: c383c193-e725-492d-93cf-840d7d06ad9d
+		summarizeBy: none
+		sourceColumn: tloamhash
+
+		annotation SummarizationSetBy = Automatic
+
+	column tloampartition
+		dataType: int64
+		formatString: 0
+		lineageTag: f1350ac9-5740-4cd3-8345-f4f90502bb88
+		summarizeBy: sum
+		sourceColumn: tloampartition
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscassetdept
+		dataType: string
+		lineageTag: a0cd3b9f-b421-44d3-95ba-82f8b7e7eb73
+		summarizeBy: none
+		sourceColumn: pluscassetdept
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscclass
+		dataType: string
+		lineageTag: 5797c91a-9b18-47c7-87fb-4dcdd9cd18ed
+		summarizeBy: none
+		sourceColumn: pluscclass
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscduedate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 642c5f5c-e33c-4eb8-bb08-a366af3578c9
+		summarizeBy: none
+		sourceColumn: pluscduedate
+
+		annotation SummarizationSetBy = Automatic
+
+	column plusciscondesc
+		dataType: string
+		lineageTag: 916bc403-1cb2-4329-b55e-1aed4b5410e0
+		summarizeBy: none
+		sourceColumn: plusciscondesc
+
+		annotation SummarizationSetBy = Automatic
+
+	column plusciscontam
+		dataType: int64
+		formatString: 0
+		lineageTag: 40005d21-9f2b-4cee-ac95-94398ef6ac9e
+		summarizeBy: sum
+		sourceColumn: plusciscontam
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscisinhousecal
+		dataType: int64
+		formatString: 0
+		lineageTag: f5df9693-ce16-41a2-8ad3-dec1aae86012
+		summarizeBy: sum
+		sourceColumn: pluscisinhousecal
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscismte
+		dataType: int64
+		formatString: 0
+		lineageTag: ebe6b802-0f2e-4f4a-ae8d-5abc6318b73a
+		summarizeBy: sum
+		sourceColumn: pluscismte
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscismteclass
+		dataType: string
+		lineageTag: c631ca2c-df99-4016-8443-07d44eaace85
+		summarizeBy: none
+		sourceColumn: pluscismteclass
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscloopnum
+		dataType: string
+		lineageTag: 4caf0263-88dc-4765-ae35-064786a12759
+		summarizeBy: none
+		sourceColumn: pluscloopnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscmodelnum
+		dataType: string
+		lineageTag: 6e4ff992-5b90-4f46-afd2-557cffbc2aea
+		summarizeBy: none
+		sourceColumn: pluscmodelnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscoprgeeu
+		dataType: string
+		lineageTag: b7b49ec0-2027-460d-84f9-40b4a5b9ece4
+		summarizeBy: none
+		sourceColumn: pluscoprgeeu
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscoprgefrom
+		dataType: string
+		lineageTag: ac1bfc66-39a0-4053-a87d-056f6ac47dff
+		summarizeBy: none
+		sourceColumn: pluscoprgefrom
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscoprgeto
+		dataType: string
+		lineageTag: 218629c1-9290-4f3f-870c-e05bfd6ffc8a
+		summarizeBy: none
+		sourceColumn: pluscoprgeto
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscphyloc
+		dataType: string
+		lineageTag: 6fb79cfc-6d12-4114-bd38-8719d386b6de
+		summarizeBy: none
+		sourceColumn: pluscphyloc
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscpmextdate
+		dataType: int64
+		formatString: 0
+		lineageTag: 9aa7d2b0-f20f-4f9c-a2d4-0b36a2779c1f
+		summarizeBy: sum
+		sourceColumn: pluscpmextdate
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscsolution
+		dataType: int64
+		formatString: 0
+		lineageTag: 17fdda98-5d2d-49ca-9ad5-9278cf286724
+		summarizeBy: sum
+		sourceColumn: pluscsolution
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscsumdir
+		dataType: string
+		lineageTag: 0e7d09f1-8209-415c-a614-b4a626bfc7ff
+		summarizeBy: none
+		sourceColumn: pluscsumdir
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscsumeu
+		dataType: string
+		lineageTag: dde5ea5f-38d7-4884-9139-1be6669ac39d
+		summarizeBy: none
+		sourceColumn: pluscsumeu
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscsumread
+		dataType: string
+		lineageTag: 58f2d785-047b-4204-b41a-f85445e97e4b
+		summarizeBy: none
+		sourceColumn: pluscsumread
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscsumspan
+		dataType: string
+		lineageTag: 6d6cb0d4-6038-424f-b7ad-0b767eefe931
+		summarizeBy: none
+		sourceColumn: pluscsumspan
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscsumurv
+		dataType: string
+		lineageTag: f268cde2-3082-456f-a0b2-2ce17a4fa509
+		summarizeBy: none
+		sourceColumn: pluscsumurv
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscvendor
+		dataType: string
+		lineageTag: 65f37d84-5a29-4ed3-bf90-b79c1f09a588
+		summarizeBy: none
+		sourceColumn: pluscvendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column iscalibration
+		dataType: int64
+		formatString: 0
+		lineageTag: 9296fe8d-7e7d-45b7-a5a7-c316e60431cd
+		summarizeBy: sum
+		sourceColumn: iscalibration
+
+		annotation SummarizationSetBy = Automatic
+
+	column templateid
+		dataType: string
+		lineageTag: acddc883-5bac-4274-879e-2c87a54d2f26
+		summarizeBy: none
+		sourceColumn: templateid
+
+		annotation SummarizationSetBy = Automatic
+
+	column plusclploc
+		dataType: string
+		lineageTag: 9d25b1b6-8204-442f-88c5-aebf89806a9b
+		summarizeBy: none
+		sourceColumn: plusclploc
+
+		annotation SummarizationSetBy = Automatic
+
+	column saddresscode
+		dataType: string
+		lineageTag: b0077393-0889-437f-bf0a-2be0b6edc27a
+		summarizeBy: none
+		sourceColumn: saddresscode
+
+		annotation SummarizationSetBy = Automatic
+
+	column depreciationpending
+		dataType: int64
+		formatString: 0
+		lineageTag: 77f35a43-05e9-4a4f-ae27-b13af63ec9fb
+		summarizeBy: sum
+		sourceColumn: depreciationpending
+
+		annotation SummarizationSetBy = Automatic
+
+	column moblastauditeddate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ace8ce63-0b74-4d85-aeea-90479ddf6c6a
+		summarizeBy: none
+		sourceColumn: moblastauditeddate
+
+		annotation SummarizationSetBy = Automatic
+
+	column moblastauditedby
+		dataType: string
+		lineageTag: cc1d4eee-b42e-4970-b809-cdd8d8f74123
+		summarizeBy: none
+		sourceColumn: moblastauditedby
+
+		annotation SummarizationSetBy = Automatic
+
+	column mobrfidtag
+		dataType: string
+		lineageTag: e6f91a2c-2385-4ee1-b64f-559a150b4608
+		summarizeBy: none
+		sourceColumn: mobrfidtag
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_activo
+		dataType: string
+		lineageTag: 6180af9c-77b2-49b4-b991-bce9d271869c
+		summarizeBy: none
+		sourceColumn: tm_activo
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_color
+		dataType: string
+		lineageTag: 703282c5-6a20-4755-af78-aed95e8db788
+		summarizeBy: none
+		sourceColumn: tm_color
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Fecha de adquisición
+	column tm_fecadq
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: b3c3de8d-46aa-4958-a9c2-0621bef82d5a
+		summarizeBy: none
+		sourceColumn: tm_fecadq
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column tm_fecgar
+		dataType: int64
+		formatString: 0
+		lineageTag: 3938d8ce-2e2b-4288-a6a7-22e71bcb33b1
+		summarizeBy: sum
+		sourceColumn: tm_fecgar
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_km
+		dataType: double
+		lineageTag: 311755d5-7de8-43f1-9f8a-04d20f4402bc
+		summarizeBy: sum
+		sourceColumn: tm_km
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tm_marca
+		dataType: string
+		lineageTag: a00a6b27-e62c-4fb4-862c-f5749f411a6a
+		summarizeBy: none
+		sourceColumn: tm_marca
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_modelo
+		dataType: string
+		lineageTag: 665affa3-4466-44f2-8c6d-af1926b461dd
+		summarizeBy: none
+		sourceColumn: tm_modelo
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_moneda
+		dataType: string
+		lineageTag: f06a990c-7423-4279-91ec-4a6c08484791
+		summarizeBy: none
+		sourceColumn: tm_moneda
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_placas
+		dataType: string
+		lineageTag: 2516330a-a256-4a18-8ea6-75200e79dbf1
+		summarizeBy: none
+		sourceColumn: tm_placas
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_tipo
+		dataType: string
+		lineageTag: b96bfef3-cfe2-4916-be9c-931267dc4c16
+		summarizeBy: none
+		sourceColumn: tm_tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_uso
+		dataType: string
+		lineageTag: d280a52d-371d-4c98-b5b7-6ee2da2174e1
+		summarizeBy: none
+		sourceColumn: tm_uso
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_vidautil
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e1ea67ad-21e9-4492-9a02-9681adb75ade
+		summarizeBy: none
+		sourceColumn: tm_vidautil
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Vida útil en años
+	column 'Vida Útil Años'
+		dataType: int64
+		formatString: 0
+		lineageTag: fababbab-83c0-48fb-86b4-5ad997c4d3b9
+		summarizeBy: sum
+		sourceColumn: Vida Útil Años
+
+		annotation SummarizationSetBy = Automatic
+
+	column assethealth
+		dataType: int64
+		formatString: 0
+		lineageTag: 55572d0a-7938-4cdb-955a-72b3bbbe8c12
+		summarizeBy: sum
+		sourceColumn: assethealth
+
+		annotation SummarizationSetBy = Automatic
+
+	column expectedlife
+		dataType: int64
+		formatString: 0
+		lineageTag: 05242579-d436-4e44-9308-8910bcc6e026
+		summarizeBy: sum
+		sourceColumn: expectedlife
+
+		annotation SummarizationSetBy = Automatic
+
+	column industryhealthscore
+		dataType: double
+		lineageTag: 1941f6fa-7821-4118-befd-49b5cd5524bf
+		summarizeBy: sum
+		sourceColumn: industryhealthscore
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column industryhealthgrade
+		dataType: string
+		lineageTag: 10a0be33-fea5-465d-9e7d-b3a1d246c2c2
+		summarizeBy: none
+		sourceColumn: industryhealthgrade
+
+		annotation SummarizationSetBy = Automatic
+
+	column estendoflife
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 26a8e2d2-2835-43d9-ae7c-a4c6555d0f97
+		summarizeBy: none
+		sourceColumn: estendoflife
+
+		annotation SummarizationSetBy = Automatic
+
+	column expectedlifedate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: da571e4f-6d79-42e8-9537-a33ae7a0d5d8
+		summarizeBy: none
+		sourceColumn: expectedlifedate
+
+		annotation SummarizationSetBy = Automatic
+
+	column deviceid
+		dataType: string
+		lineageTag: e97e52b1-6ee8-4f67-83ae-74bb4989eeae
+		summarizeBy: none
+		sourceColumn: deviceid
+
+		annotation SummarizationSetBy = Automatic
+
+	column devicetype
+		dataType: string
+		lineageTag: 335f5265-e2df-438b-9136-41c3bba0abb6
+		summarizeBy: none
+		sourceColumn: devicetype
+
+		annotation SummarizationSetBy = Automatic
+
+	column well_maintained
+		dataType: int64
+		formatString: 0
+		lineageTag: 2a729115-d446-450c-9de6-c0417449e888
+		summarizeBy: sum
+		sourceColumn: well_maintained
+
+		annotation SummarizationSetBy = Automatic
+
+	column pmnextfaildt
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: dff25286-f86a-4edd-bb78-719d2a2cce12
+		summarizeBy: none
+		sourceColumn: pmnextfaildt
+
+		annotation SummarizationSetBy = Automatic
+
+	column modelid
+		dataType: string
+		lineageTag: eb24ea2d-ba27-4832-bb8c-614ebe5e04b1
+		summarizeBy: none
+		sourceColumn: modelid
+
+		annotation SummarizationSetBy = Automatic
+
+	column productid
+		dataType: string
+		lineageTag: be17166c-3593-484c-9bdc-7f178601b5b1
+		summarizeBy: none
+		sourceColumn: productid
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_proveedor
+		dataType: string
+		lineageTag: 6955a228-bc13-4efe-a337-0731c06556f7
+		summarizeBy: none
+		sourceColumn: tm_proveedor
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrgidSiteidLocationKey
+		dataType: string
+		lineageTag: 3abd64a3-1549-4d6e-953f-ec3043a5b6df
+		summarizeBy: none
+		sourceColumn: OrgidSiteidLocationKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrgidSiteidKey
+		dataType: string
+		lineageTag: 815bf5a7-425d-460a-91c5-88698f8b6f4d
+		summarizeBy: none
+		sourceColumn: OrgidSiteidKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tm_fecadq_VU
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 0dc3ce90-5e7c-4793-8fb2-34b1b840c708
+		summarizeBy: none
+		sourceColumn: Tm_fecadq_VU
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column Anio_Renovacion = YEAR(asset[Tm_fecadq_VU])
+		formatString: 0
+		lineageTag: d3fb3339-7d0b-48aa-9ccb-bc71e4ce470d
+		summarizeBy: sum
+
+		annotation SummarizationSetBy = Automatic
+
+	partition asset = m
+		mode: import
+		source = ```
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    asset_Table = dbo_Schema{[Name="asset",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(asset_Table,{{"assetnum", "Activo"}, 
+				                                                        {"location", "Ubicación"}, 
+				                                                        {"description", "Descripción"}, 
+				                                                        {"replacecost", "Coste Reemplazo"}, 
+				                                                        {"siteid", "Campus"}, 
+				                                                        {"orgid", "Organización"}, 
+				                                                        {"assettype", "Tipo"}, 
+				                                                        {"usage", "Uso"}, 
+				                                                        //{"tm_fecadq", "Fecha Adquisición"}, 
+				                                                        {"tm_vutil", "Vida Útil Años"}}),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Renamed Columns",{{"tm_fecadq", type date}}),
+				    #"Personalizada agregada" = Table.AddColumn(#"Tipo cambiado", "OrgidSiteidLocationKey", each [Organización] & ":" & [Campus] & ":" & [Ubicación]),
+				    #"Personalizada agregada1" = Table.AddColumn(#"Personalizada agregada", "OrgidSiteidKey", each [Organización] & ":" & [Campus]),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Personalizada agregada1",{{"OrgidSiteidLocationKey", type text}, {"OrgidSiteidKey", type text}}),
+				    #"Poner En Mayúsculas Cada Palabra" = Table.TransformColumns(#"Tipo cambiado1",{{"Uso", Text.Proper, type text}}),
+				    #"Personalizada agregada2" = Table.AddColumn(#"Poner En Mayúsculas Cada Palabra", "Tm_fecadq_VU", each if [tm_fecadq] <> null and [Vida Útil Años] <> null then Date.AddYears([tm_fecadq],[Vida Útil Años])
+				else null),
+				    #"Tipo cambiado2" = Table.TransformColumnTypes(#"Personalizada agregada2",{{"Tm_fecadq_VU", type date}})
+				in
+				    #"Tipo cambiado2"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

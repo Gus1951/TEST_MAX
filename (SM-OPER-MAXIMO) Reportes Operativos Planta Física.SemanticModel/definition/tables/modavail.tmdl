@@ -1,0 +1,87 @@
+table modavail
+	lineageTag: 22639d79-1c39-4025-8de6-85c5c2adef45
+
+	/// Persona
+	column Persona
+		dataType: string
+		lineageTag: 39bfc885-a0cb-4205-94e5-b14fcc8c5288
+		summarizeBy: none
+		sourceColumn: Persona
+
+		annotation SummarizationSetBy = Automatic
+
+	column starttime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9bc03def-724b-4461-8953-a96d34c5777c
+		summarizeBy: none
+		sourceColumn: starttime
+
+		annotation SummarizationSetBy = Automatic
+
+	column endtime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 8711ca91-f22b-40c4-adb5-b4c5804b5d67
+		summarizeBy: none
+		sourceColumn: endtime
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Disponibilidad real de la persona para este período de tiempo de trabajo
+	column Horas
+		dataType: double
+		lineageTag: 6dfc2a45-8e42-46dc-a5af-c92464ba1793
+		summarizeBy: sum
+		sourceColumn: Horas
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column reasoncode
+		dataType: string
+		lineageTag: 2732c4ea-c416-4eac-a1df-a5538d3344c2
+		summarizeBy: none
+		sourceColumn: reasoncode
+
+		annotation SummarizationSetBy = Automatic
+
+	column modavailid
+		dataType: int64
+		formatString: 0
+		lineageTag: 77d0c509-b9f5-4616-92d4-2d416e83663f
+		summarizeBy: sum
+		sourceColumn: modavailid
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Fecha de disponibilidad de la persona
+	column 'Fecha de Trabajo'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 2405e79b-3662-4cf6-85c2-940e5711aa54
+		summarizeBy: none
+		sourceColumn: Fecha de Trabajo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	partition modavail = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    modavail_Table = dbo_Schema{[Name="modavail",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(modavail_Table,{{"personid", "Persona"}, {"workhours", "Horas"}, {"workdate", "Fecha de Trabajo"}}),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Renamed Columns",{{"Fecha de Trabajo", type date}})
+				in
+				    #"Tipo cambiado"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

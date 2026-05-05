@@ -1,0 +1,99 @@
+table synonymdomain
+	lineageTag: 7a47c0b9-09e5-4afc-ab9e-e070c0cc163d
+
+	/// ID de dominio
+	column 'ID Dominio'
+		dataType: string
+		lineageTag: ad2035d1-ce55-4d73-9c6f-93ccf6964d86
+		summarizeBy: none
+		sourceColumn: ID Dominio
+
+		annotation SummarizationSetBy = Automatic
+
+	column maxvalue
+		dataType: string
+		lineageTag: 3d431c41-829b-4c47-9b11-9e4fdc1b70f7
+		summarizeBy: none
+		sourceColumn: maxvalue
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Valor de Dominio
+	column 'Valor Dominio'
+		dataType: string
+		lineageTag: d141dea9-3c8f-420b-b83a-2185289f4fd4
+		summarizeBy: none
+		sourceColumn: Valor Dominio
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Describe la planta
+	column Descripción
+		dataType: string
+		lineageTag: 84165900-5cf4-4e9c-8beb-5bb1ceb5df41
+		summarizeBy: none
+		sourceColumn: Descripción
+
+		annotation SummarizationSetBy = Automatic
+
+	column defaults
+		dataType: int64
+		formatString: 0
+		lineageTag: 26485de5-5baa-4e83-bc4e-18769a8e0c3d
+		summarizeBy: none
+		sourceColumn: defaults
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador de planta
+	column Campus
+		dataType: string
+		lineageTag: f9db2d46-f4a5-44e3-989c-17a7c0bf14e7
+		summarizeBy: none
+		sourceColumn: Campus
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador de organización
+	column Organización
+		dataType: string
+		lineageTag: 778619a3-c520-46c2-a548-3e1d84dd467a
+		summarizeBy: none
+		sourceColumn: Organización
+
+		annotation SummarizationSetBy = Automatic
+
+	column synonymdomainid
+		dataType: int64
+		formatString: 0
+		lineageTag: 23a1e17a-6149-40c1-a8f4-6c5cfad31ea8
+		summarizeBy: none
+		sourceColumn: synonymdomainid
+
+		annotation SummarizationSetBy = Automatic
+
+	column valueid
+		dataType: string
+		lineageTag: 29850e65-158c-404e-848f-221904add8fe
+		summarizeBy: none
+		sourceColumn: valueid
+
+		annotation SummarizationSetBy = Automatic
+
+	partition synonymdomain = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    synonymdomain_Table = dbo_Schema{[Name="synonymdomain",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(synonymdomain_Table,{{"domainid", "ID Dominio"}, {"value", "Valor Dominio"}, {"description", "Descripción"}, {"siteid", "Campus"}, {"orgid", "Organización"}}),
+				    #"Filas filtradas" = Table.SelectRows(#"Renamed Columns", each ([ID Dominio] = "ASSETTYPE"))
+				in
+				    #"Filas filtradas"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

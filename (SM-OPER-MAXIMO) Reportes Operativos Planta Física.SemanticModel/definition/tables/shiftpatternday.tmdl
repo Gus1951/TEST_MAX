@@ -1,0 +1,86 @@
+table shiftpatternday
+	lineageTag: 92aaec7f-9688-4b6e-90ff-4a39f41a3116
+
+	/// Identificador de turno al que pertenece este día de patrón
+	column Turno
+		dataType: string
+		lineageTag: c3347bb8-c6a1-4cad-b56d-cadfac01c8da
+		summarizeBy: none
+		sourceColumn: Turno
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Número de orden que identifica un día específico de un patrón de días repetitivo
+	column 'Secuencia de día'
+		dataType: string
+		lineageTag: e80439d0-946a-41dd-9b86-70f55847e72c
+		summarizeBy: none
+		sourceColumn: Secuencia de día
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Hora en la que empieza el turno en un día determinado del patrón
+	column 'Hora Inicio'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 6b40421b-23f6-4527-aeb2-0b0797522a48
+		summarizeBy: none
+		sourceColumn: Hora Inicio
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Hora en la que termina el turno en un día determinado del patrón
+	column 'Hora Finalización'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4bff488f-b42c-4632-b53c-7b37e40a80e6
+		summarizeBy: none
+		sourceColumn: Hora Finalización
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Número de horas de trabajo durante el turno
+	column 'Horas de Trabajo'
+		dataType: double
+		lineageTag: 9446a212-ee99-4a52-9541-c11f7499dd0c
+		summarizeBy: sum
+		sourceColumn: Horas de Trabajo
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Identificador de organización
+	column Organización
+		dataType: string
+		lineageTag: 89128244-833c-47d7-a9eb-1be18b98d030
+		summarizeBy: none
+		sourceColumn: Organización
+
+		annotation SummarizationSetBy = Automatic
+
+	column shiftpatterndayid
+		dataType: int64
+		formatString: 0
+		lineageTag: f38cf0a8-6fa7-4077-9e33-aba5ac61c8f0
+		summarizeBy: sum
+		sourceColumn: shiftpatterndayid
+
+		annotation SummarizationSetBy = Automatic
+
+	partition shiftpatternday = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    shiftpatternday_Table = dbo_Schema{[Name="shiftpatternday",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(shiftpatternday_Table,{{"shiftnum", "Turno"}, {"patterndayseq", "Secuencia de día"}, {"starttime", "Hora Inicio"}, {"endtime", "Hora Finalización"}, {"workhours", "Horas de Trabajo"}, {"orgid", "Organización"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

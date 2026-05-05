@@ -1,0 +1,127 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "8a650bd793ae07402190",
+  "position": {
+    "x": 0,
+    "y": 263.01369863013696,
+    "z": 1000,
+    "height": 411.08066971080666,
+    "width": 694.55098934550983,
+    "tabOrder": 10000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MAXIMO_09"
+                    }
+                  },
+                  "Property": "Wo_organización"
+                }
+              },
+              "queryRef": "MAXIMO_09.Wo_organización",
+              "nativeQueryRef": "Wo_organización"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "MAXIMO_09"
+                    }
+                  },
+                  "Property": "Site_Campus"
+                }
+              },
+              "queryRef": "MAXIMO_09.Site_Campus",
+              "nativeQueryRef": "Site_Campus"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Metricas"
+                    }
+                  },
+                  "Property": "Cantidad OT Reincidencia"
+                }
+              },
+              "queryRef": "Metricas.Cantidad OT Reincidencia",
+              "nativeQueryRef": "Cantidad OT Reincidencia"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Metricas"
+                    }
+                  },
+                  "Property": "CntaReincidencia"
+                }
+              },
+              "queryRef": "Metricas.CntaReincidencia",
+              "nativeQueryRef": "CntaReincidencia"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Metricas"
+                    }
+                  },
+                  "Property": "CtaOTCReincidencia"
+                }
+              },
+              "queryRef": "Metricas.CtaOTCReincidencia",
+              "nativeQueryRef": "CtaOTCReincidencia"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "values": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "columnHeaders": [
+        {
+          "properties": {
+            "fontSize": {
+              "expr": {
+                "Literal": {
+                  "Value": "10D"
+                }
+              }
+            }
+          }
+        }
+      ],
+      "general": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

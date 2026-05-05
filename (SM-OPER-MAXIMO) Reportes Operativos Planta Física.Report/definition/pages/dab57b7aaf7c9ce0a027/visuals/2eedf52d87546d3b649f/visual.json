@@ -1,0 +1,298 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "2eedf52d87546d3b649f",
+  "position": {
+    "x": 25.4726368159204,
+    "y": 280.19900497512441,
+    "z": 2000,
+    "height": 382.089552238806,
+    "width": 1179.1708126036485
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "asset"
+                    }
+                  },
+                  "Property": "Organización"
+                }
+              },
+              "queryRef": "asset.Organización",
+              "nativeQueryRef": "Organización",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "site"
+                    }
+                  },
+                  "Property": "Tm_region"
+                }
+              },
+              "queryRef": "site.Tm_region",
+              "nativeQueryRef": "Tm_region",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "site"
+                    }
+                  },
+                  "Property": "Descripción"
+                }
+              },
+              "queryRef": "site.Descripción",
+              "nativeQueryRef": "Descripción",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "asset"
+                    }
+                  },
+                  "Property": "Tipo"
+                }
+              },
+              "queryRef": "asset.Tipo",
+              "nativeQueryRef": "Tipo",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "synonymdomain"
+                    }
+                  },
+                  "Property": "Descripción"
+                }
+              },
+              "queryRef": "synonymdomain.Descripción",
+              "nativeQueryRef": "Descripción1",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alias_de_alndomine_Usage"
+                    }
+                  },
+                  "Property": "description"
+                }
+              },
+              "queryRef": "Alias_de_alndomine_Usage.description",
+              "nativeQueryRef": "description",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Alias_de_alndomine_Usage"
+                    }
+                  },
+                  "Property": "Sub"
+                }
+              },
+              "queryRef": "Alias_de_alndomine_Usage.Sub",
+              "nativeQueryRef": "Sub",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "locations"
+                    }
+                  },
+                  "Property": "Nombre Edificio"
+                }
+              },
+              "queryRef": "locations.Nombre Edificio",
+              "nativeQueryRef": "Nombre Edificio",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "asset"
+                    }
+                  },
+                  "Property": "Activo"
+                }
+              },
+              "queryRef": "asset.Activo",
+              "nativeQueryRef": "Activo",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "asset"
+                    }
+                  },
+                  "Property": "Descripción"
+                }
+              },
+              "queryRef": "asset.Descripción",
+              "nativeQueryRef": "Descripción2",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "asset"
+                    }
+                  },
+                  "Property": "Anio_Renovacion"
+                }
+              },
+              "queryRef": "asset.Anio_Renovacion",
+              "nativeQueryRef": "Anio_Renovacion",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "Costo_Reemplazo"
+                }
+              },
+              "queryRef": "DAX_Metricas.Costo_Reemplazo",
+              "nativeQueryRef": "Costo_Reemplazo"
+            }
+          ]
+        }
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "asset.Organización"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "site.Tm_region"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "site.Descripción"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "asset.Tipo"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "synonymdomain.Descripción"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "Alias_de_alndomine_Usage.description"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "Alias_de_alndomine_Usage.Sub"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "locations.Nombre Edificio"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "asset.Activo"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "asset.Descripción"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "asset.Anio_Renovacion"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          }
+        ],
+        "root": {}
+      }
+    ],
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "layout": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Tabular'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

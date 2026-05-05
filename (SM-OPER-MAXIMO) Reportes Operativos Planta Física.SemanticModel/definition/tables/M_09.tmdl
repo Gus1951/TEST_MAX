@@ -1,0 +1,211 @@
+table M_09
+	lineageTag: 3a656852-19bf-4fd9-98e8-56b2cebfd560
+
+	column organizacion
+		lineageTag: 8ebc36df-47ca-4bec-af6c-9e1af720b5ac
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[organizacion]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Site_Campus
+		lineageTag: adf4d148-6fc4-4764-a47d-f02e973387ad
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[Site_Campus]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Concat_Reincidencia
+		lineageTag: 7034b539-a2a8-4b06-90c9-5df4d5f10a66
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[Concat_Reincidencia]
+
+		annotation SummarizationSetBy = Automatic
+
+	column CtaOTCReincidencia
+		formatString: 0
+		lineageTag: ab17ebb1-4f0d-4500-bf9d-c07fc5dc8d1c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [CtaOTCReincidencia]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_schedfinish
+		formatString: General Date
+		lineageTag: a36f98af-4ed7-491b-a1a2-d332ad3842d0
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[wo_schedfinish]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Wo_Ubicación
+		lineageTag: 5e9af934-af86-48a7-96bd-b5c1afd5b913
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[Wo_Ubicación]
+
+		annotation SummarizationSetBy = Automatic
+
+	column clasificacion
+		lineageTag: e00402b6-9883-4d89-8e31-e4c698091ea1
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[clasificacion]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Subclasificacion
+		lineageTag: f041abdc-2291-455c-979a-1e93fa106e4b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[Subclasificacion]
+
+		annotation SummarizationSetBy = Automatic
+
+	column jobplan_description
+		lineageTag: 5ad876ec-37b1-4cd8-bbae-e0abd6e2fe1d
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[jobplan_description]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'wo_Plan Trabajo'
+		lineageTag: 7103df2f-d8fb-45fb-807b-a8f8441dd995
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[wo_Plan Trabajo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'wo_Orden Trabajo'
+		lineageTag: 24f971ed-092a-4225-ad9e-ff655a805ebd
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[wo_Orden Trabajo]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_Descripcion
+		lineageTag: 45260044-7fa8-4274-8a2f-2b23b1261186
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[wo_Descripcion]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_nombre
+		lineageTag: 7db1830b-2b12-4adc-9511-689deacad500
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[wo_nombre]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nombre_Persona
+		lineageTag: 0e66fef2-f73e-49c8-b30d-98f4ee080c2e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[Nombre_Persona]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_actstart
+		formatString: General Date
+		lineageTag: 8b891095-3e7b-425a-9cac-1fd9d603327b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[wo_actstart]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_actfinish
+		formatString: General Date
+		lineageTag: 470e2fa6-6dca-4a99-afd0-021f9d9c2a77
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[wo_actfinish]
+
+		annotation SummarizationSetBy = Automatic
+
+	column wo_schedstart
+		formatString: General Date
+		lineageTag: dc9431da-acdc-43f1-8c44-561fbee62691
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[wo_schedstart]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nivel
+		lineageTag: b477b2e7-d51f-4500-91c4-2d857f6cee25
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[Nivel]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Parent
+		lineageTag: a99f0575-ca55-4803-a10f-3ffefbe7ce1c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[Parent]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Edificio
+		lineageTag: df8d5f07-06e7-4698-a70d-1057aefd3b11
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: MAXIMO_09[Edificio]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition M_09 = calculated
+		mode: import
+		source = ```
+				
+				VAR TablaReincidencias = 
+				    ADDCOLUMNS(
+				        SUMMARIZE(
+				            MAXIMO_09,
+				            MAXIMO_09[organizacion],
+				            MAXIMO_09[Site_Campus],
+				            MAXIMO_09[Concat_Reincidencia],
+				            MAXIMO_09[Wo_Ubicación],
+				            MAXIMO_09[clasificacion],
+				            MAXIMO_09[Subclasificacion],
+				            MAXIMO_09[jobplan_description],
+				            MAXIMO_09[wo_Plan Trabajo],
+				            MAXIMO_09[wo_Orden Trabajo],
+				            MAXIMO_09[wo_Descripcion],
+				            MAXIMO_09[wo_nombre],
+				            MAXIMO_09[Nombre_Persona],
+				            MAXIMO_09[wo_actstart],
+				            MAXIMO_09[wo_actfinish],
+				            MAXIMO_09[wo_schedstart],
+				            MAXIMO_09[wo_schedfinish],
+				            MAXIMO_09[Nivel],
+				            MAXIMO_09[Parent],
+				            MAXIMO_09[Edificio]
+				        ),
+				        "CtaOTCReincidencia", CALCULATE(COUNT(MAXIMO_09[Concat_Reincidencia]))
+				    )
+				RETURN 
+				    TablaReincidencias
+				
+				
+				
+				
+				
+				
+				
+				```
+
+	annotation PBI_Id = 25c8c3750de44f93865ef414ffb3bd2c
+

@@ -1,0 +1,3825 @@
+table workorder
+	lineageTag: 12156ac0-beb1-45a9-9251-4cdb3e4c3105
+
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 20
+		incrementalGranularity: month
+		incrementalPeriods: 12
+		pollingExpression = let Maxactfinish = List.Max(workorder[actfinish]), accountForNull = if Maxactfinish = null then #datetime(1901, 01, 01, 00, 00, 00) else Maxactfinish in accountForNull
+		sourceExpression = ```
+			let
+			    RangeStartText = DateTime.ToText(RangeStart, "yyyy-MM-dd HH:mm:ss"),
+			    RangeEndText   = DateTime.ToText(RangeEnd,   "yyyy-MM-dd HH:mm:ss"),
+			
+			    SQL = 
+			        "SELECT *
+			         FROM dbo.workorder
+			         WHERE reportdate >= '" & RangeStartText & "'
+			           AND reportdate <  '" & RangeEndText   & "'",
+			
+			    Origen = Odbc.Query(
+			        "dsn=" & #"Parámetro de Cadena de Conexión",
+			        SQL
+			    ),
+			
+			    #"Inserted Merged Column" = Table.AddColumn(Origen, "OrgidSiteidKey", each Text.Combine({[orgid], [siteid]}, ":"), type text),
+			    #"Inserted Merged Column1" = Table.AddColumn(#"Inserted Merged Column", "OrgidTmasignadoKey", each Text.Combine({[orgid], [tm_asignado]}, ":"), type text),
+			    #"Added Custom" = Table.AddColumn(#"Inserted Merged Column1", "M_tm_incidente", each if [tm_incidente] is null then 0 else 1),
+			
+			    #"Inserted Merged Column2" = Table.AddColumn(#"Added Custom", "OrgidSiteidLocationKey", each Text.Combine({[orgid], [siteid], [location]}, ":"), type text),
+			    #"Added Custom1" = Table.AddColumn(#"Inserted Merged Column2", "MconcatJpnumLocation", each (if [jpnum] <> null then [jpnum] else "S/CodTarea") & "-" & (if [location] <> null then [location] else "S/Ubicación")),
+			
+			    #"Inserted Merged Column3" = Table.AddColumn(#"Added Custom1", "AliasJobPlanKey", each Text.Combine({[orgid], [jpnum], [tm_clasificacion]}, ":"), type text),
+			    #"Inserted Merged Column4" = Table.AddColumn(#"Inserted Merged Column3", "JobPlanKey", each Text.Combine({[orgid], [jpnum], [worktype], [tm_clasificacion], [tm_subclasificacion]}, ":"), type text),
+			    #"Inserted Merged Column5" = Table.AddColumn(#"Inserted Merged Column4", "matusetransKey", each Text.Combine({[orgid], [siteid], [location], [wonum]}, ":"), type text),
+			
+			    #"Renamed Columns" = Table.RenameColumns(#"Inserted Merged Column5",{
+			        {"wonum","Orden de Trabajo"}, 
+			        {"status", "Estado"}, 
+			        {"worktype", "Tipo de Trabajo"}, 
+			        {"description", "Descripción"},
+			        {"assetnum", "Activo"},
+			        {"location", "Ubicación"}, 
+			        {"jpnum", "Plan de Trabajo"},
+			        {"changedate", "Fecha Modificación"},
+			        {"actlabhrs", "Horas Reales Mano de Obra"}, 
+			        {"actmatcost", "Coste Real de Materiales"}, 
+			        {"actlabcost", "Coste Real Mano de Obra"},
+			        {"acttoolcost", "Coste Real Herramientas"},
+			        {"targcompdate", "Finalización Prevista"},
+			        {"reportdate", "Fecha de Notificación"},
+			        {"orgid", "Organización"}, 
+			        {"siteid", "Campus"}, 
+			        {"istask", "Es Tarea"}, 
+			        {"tm_cta_depto", "Departamento"},
+			        {"tm_fechadesmontaje", "Fecha Desmontaje"},
+			        {"tm_fechamontaje", "Fecha Montaje"},
+			        {"tm_incidente", "No. de  Evento"}, 
+			        {"tm_subclasificacion", "Subclasificación"}, 
+			        {"tm_clasificacion", "Clasificación"}, 
+			        {"tm_nombre", "Usuario"}, 
+			        {"tm_asignado", "Mano de Obra Asignada"} 
+			    }),
+			
+			    #"Valor reemplazado" = Table.ReplaceValue(#"Renamed Columns", null, " ", Replacer.ReplaceValue, {"Subclasificación"}),
+			    #"Tipo cambiado" = Table.TransformColumnTypes(#"Valor reemplazado", {{"statusdate", type date}, {"MconcatJpnumLocation", type text}, {"M_tm_incidente", type text}}),
+			    #"Columna duplicada" = Table.DuplicateColumn(#"Tipo cambiado", "schedfinish", "schedfinish - Copia"),
+			    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Columna duplicada", {{"schedfinish - Copia", "schedfinish2"}}),
+			    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Columnas con nombre cambiado", {{"schedfinish", type date}}),
+			    #"Personalizada agregada" = Table.AddColumn(#"Tipo cambiado1", "workorder_pm_KEY", each [Organización] & ":" & [Campus] & ":" & [Activo] & ":" & [Tipo de Trabajo] & ":" & [Plan de Trabajo]),
+			    #"Tipo cambiado2" = Table.TransformColumnTypes(#"Personalizada agregada", {{"workorder_pm_KEY", type text}, {"Fecha Modificación", type date}, {"Fecha de Notificación", type date}})
+			in
+			    #"Tipo cambiado2"
+			```
+
+	measure Datediff_schedfinish = ```
+			SUMX(workorder, IF(DATEDIFF(workorder[schedfinish], TODAY(),DAY ) > 0, DATEDIFF(workorder[schedfinish], TODAY(),DAY ), 0 ) )  
+			                           
+			```
+		formatString: 0
+		lineageTag: 47f0f717-cd38-41fe-9cf9-35e660d2b3f4
+
+		changedProperty = IsHidden
+
+	measure 'Dif Tiempo Solucion Dias' =
+			SUMX(workorder,
+			SWITCH(TRUE(),
+			DATEDIFF(workorder[schedfinish], TODAY(),DAY) >0 ,
+			DATEDIFF(workorder[schedfinish], TODAY(),DAY),
+			0
+			)
+			)
+		formatString: 0
+		lineageTag: d63b7ad4-4e0c-42b4-a3be-337d1797b261
+
+		changedProperty = IsHidden
+
+	/// Identifica la orden de trabajo
+	column 'Orden de Trabajo'
+		dataType: string
+		lineageTag: 770a3cc9-288b-4ebf-b174-ee26820dad1b
+		summarizeBy: none
+		sourceColumn: Orden de Trabajo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column parent
+		dataType: string
+		lineageTag: a00d5ff2-eb6e-49d0-a953-10592eea4954
+		summarizeBy: none
+		sourceColumn: parent
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Estado de la orden de trabajo, por ejemplo: esperando materiales, esperando aprobación, en progreso, finalizado o cerrado.
+	column Estado
+		dataType: string
+		lineageTag: 2ae1d4bd-984f-4c97-bc8e-9993afd55f50
+		summarizeBy: none
+		sourceColumn: Estado
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column statusdate
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 4935bddc-548e-46f4-9ca6-63a0098f873f
+		summarizeBy: none
+		sourceColumn: statusdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Identifica el tipo de la orden de trabajo. Algunos tipos de ejemplos son: mantenimiento preventivo, mantenimiento correctivo, mantenimiento de emergencia, proyecto de capital e informe de eventos.
+	column 'Tipo de Trabajo'
+		dataType: string
+		lineageTag: c8b9d3ed-993b-4677-bbd8-692cbab8fd47
+		summarizeBy: none
+		sourceColumn: Tipo de Trabajo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Describe la orden de trabajo. Para especificar o ver información adicional, haga clic en el botón Descripción detallada.
+	column Descripción
+		dataType: string
+		lineageTag: 8ded9e00-80eb-4963-8c4c-eea6296b7d36
+		summarizeBy: none
+		sourceColumn: Descripción
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identifica el activo
+	column Activo
+		dataType: string
+		lineageTag: c5a6cb86-d028-49d8-9a36-be0f37b6de88
+		summarizeBy: none
+		sourceColumn: Activo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identifica la ubicación de la orden de trabajo. Ésta no es, necesariamente, la ubicación del activo. Sin embargo, si se ingresa un activo, su ubicación predeterminada será ésta
+	column Ubicación
+		dataType: string
+		lineageTag: 443ca41c-d82d-4263-ac36-100a05e1a2b0
+		summarizeBy: none
+		sourceColumn: Ubicación
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identifica el plan de trabajo de la orden de trabajo.
+	column 'Plan de Trabajo'
+		dataType: string
+		lineageTag: 2cf08b5f-fb1a-4acf-9f12-2fe9d48daf96
+		summarizeBy: none
+		sourceColumn: Plan de Trabajo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column faildate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 90dbbf6a-66e6-4efd-8662-fb003ba9fd4a
+		summarizeBy: none
+		sourceColumn: faildate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column changeby
+		dataType: string
+		lineageTag: 1d742ecb-a290-4ac1-8272-5928af6df7a0
+		summarizeBy: none
+		sourceColumn: changeby
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Fecha de última modificación de la orden de trabajo.
+	column 'Fecha Modificación'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 8f307066-0c2a-4394-8802-fdb61c1c6422
+		summarizeBy: none
+		sourceColumn: Fecha Modificación
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column estdur
+		dataType: double
+		lineageTag: e91e6d0e-a229-4025-af73-0f10b355314d
+		summarizeBy: sum
+		sourceColumn: estdur
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estlabhrs
+		dataType: double
+		lineageTag: a853b97e-21c6-45a9-a98d-32f593c2787d
+		summarizeBy: sum
+		sourceColumn: estlabhrs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estmatcost
+		dataType: double
+		lineageTag: 4c94d6fa-2d3f-42e9-9403-d37819c77a44
+		summarizeBy: sum
+		sourceColumn: estmatcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estlabcost
+		dataType: double
+		lineageTag: 46bf6c8f-fc0c-4d7d-b0f7-c4738397d351
+		summarizeBy: sum
+		sourceColumn: estlabcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column esttoolcost
+		dataType: double
+		lineageTag: 9e2af219-bacb-4d1e-b260-7885fd42aa96
+		summarizeBy: sum
+		sourceColumn: esttoolcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column pmnum
+		dataType: string
+		lineageTag: ef610efb-6bf8-4a30-9c01-dcf330d7ae9e
+		summarizeBy: none
+		sourceColumn: pmnum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Horas reales de mano de obra
+	column 'Horas Reales Mano de Obra'
+		dataType: double
+		lineageTag: 4c81c0f8-c43b-4a83-88cb-3f73cb622ca7
+		summarizeBy: sum
+		sourceColumn: Horas Reales Mano de Obra
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Coste real de materiales
+	column 'Coste Real de Materiales'
+		dataType: double
+		lineageTag: 05a35166-f8f6-4804-b86b-82f68c5ac700
+		summarizeBy: sum
+		sourceColumn: Coste Real de Materiales
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Coste real de mano de obra
+	column 'Coste Real Mano de Obra'
+		dataType: double
+		lineageTag: e2e6c2b3-3b88-4748-8e33-cbaa2d9bfaf7
+		summarizeBy: sum
+		sourceColumn: Coste Real Mano de Obra
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	/// Coste real de herramientas
+	column 'Coste Real Herramientas'
+		dataType: double
+		lineageTag: f52304f9-d5a8-40dc-9410-4534e939c52b
+		summarizeBy: sum
+		sourceColumn: Coste Real Herramientas
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column haschildren
+		dataType: int64
+		formatString: 0
+		lineageTag: 046597ad-2134-48b6-98fb-3ef544cfcb0a
+		summarizeBy: sum
+		sourceColumn: haschildren
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column outlabcost
+		dataType: double
+		lineageTag: 6b04c1c3-0347-490b-91e7-a0faa6cae5a9
+		summarizeBy: sum
+		sourceColumn: outlabcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column outmatcost
+		dataType: double
+		lineageTag: f4071e4e-84d3-4f5e-915e-c88115ac57ec
+		summarizeBy: sum
+		sourceColumn: outmatcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column outtoolcost
+		dataType: double
+		lineageTag: cb65f275-2823-4c58-bbef-e5b17401d0f2
+		summarizeBy: sum
+		sourceColumn: outtoolcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column historyflag
+		dataType: int64
+		formatString: 0
+		lineageTag: 7a4035eb-4166-4225-8c11-798252e6e76c
+		summarizeBy: sum
+		sourceColumn: historyflag
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column contract
+		dataType: string
+		lineageTag: 19380753-be89-4918-9537-d611ec3b1283
+		summarizeBy: none
+		sourceColumn: contract
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wopriority
+		dataType: int64
+		formatString: 0
+		lineageTag: 8773b80e-d3cc-4e56-84ed-d955ffbf5834
+		summarizeBy: sum
+		sourceColumn: wopriority
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Fecha prevista para que se complete la orden de trabajo.
+	column 'Finalización Prevista'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 72e83fae-c1f4-4506-bd4b-d90f3cd2312f
+		summarizeBy: none
+		sourceColumn: Finalización Prevista
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column targstartdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: da07857e-9b1c-4b2e-9113-46f2d5e31778
+		summarizeBy: none
+		sourceColumn: targstartdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woeq1
+		dataType: string
+		lineageTag: ef9c5613-ece4-44d0-b42b-de7d542d3377
+		summarizeBy: none
+		sourceColumn: woeq1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woeq2
+		dataType: string
+		lineageTag: cb006268-2e0a-443d-9c82-13cc7a416e33
+		summarizeBy: none
+		sourceColumn: woeq2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woeq3
+		dataType: string
+		lineageTag: f0ff60b2-d732-4944-ac44-95c5f248aff0
+		summarizeBy: none
+		sourceColumn: woeq3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woeq4
+		dataType: string
+		lineageTag: 597b7e7e-ea86-4279-b1d0-1ccb45d0a38e
+		summarizeBy: none
+		sourceColumn: woeq4
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woeq5
+		dataType: double
+		lineageTag: c1ea48ac-9eae-476b-ba2b-63d47e82a3aa
+		summarizeBy: sum
+		sourceColumn: woeq5
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column woeq6
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: de1dedaf-615e-4cc3-b290-501d6e3c7ae5
+		summarizeBy: none
+		sourceColumn: woeq6
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woeq7
+		dataType: double
+		lineageTag: a5011db4-bfb3-43dc-8214-e4534370ca70
+		summarizeBy: sum
+		sourceColumn: woeq7
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column woeq8
+		dataType: string
+		lineageTag: 8d85f338-88d4-4b4a-bc38-c664ce9972b2
+		summarizeBy: none
+		sourceColumn: woeq8
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woeq9
+		dataType: string
+		lineageTag: f8fa16dd-e004-4984-a29e-d4d911455a23
+		summarizeBy: none
+		sourceColumn: woeq9
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woeq10
+		dataType: string
+		lineageTag: 85bd0bea-c6ba-4ecf-ae4e-3afab452ba8e
+		summarizeBy: none
+		sourceColumn: woeq10
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woeq11
+		dataType: string
+		lineageTag: 8e950bee-11b7-4382-821f-aae8fff7eaf9
+		summarizeBy: none
+		sourceColumn: woeq11
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woeq12
+		dataType: double
+		lineageTag: 957ead0e-dc00-4176-90e8-f9bb1523e46a
+		summarizeBy: sum
+		sourceColumn: woeq12
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column reportedby
+		dataType: string
+		lineageTag: f26ad384-8800-4cc8-adb3-55272284c95f
+		summarizeBy: none
+		sourceColumn: reportedby
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Fecha y hora en que se informó de la orden de trabajo.
+	column 'Fecha de Notificación'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 62d7e2a7-0e6f-4f46-b589-3d118c32b574
+		summarizeBy: none
+		sourceColumn: Fecha de Notificación
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column phone
+		dataType: string
+		lineageTag: e48fb799-692c-4b91-9240-2d18f0d92935
+		summarizeBy: none
+		sourceColumn: phone
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column problemcode
+		dataType: string
+		lineageTag: eee28137-1887-45d5-9355-d6d0a16a0a69
+		summarizeBy: none
+		sourceColumn: problemcode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column calendar
+		dataType: string
+		lineageTag: 04c99d93-f00d-4131-85eb-557ce5d9892e
+		summarizeBy: none
+		sourceColumn: calendar
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column downtime
+		dataType: int64
+		formatString: 0
+		lineageTag: 33ebc0c6-a8c4-4c0c-93c3-cb538996fe02
+		summarizeBy: sum
+		sourceColumn: downtime
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column actstart
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a96e2697-a8c9-4b04-bc89-3723d8091d6c
+		summarizeBy: none
+		sourceColumn: actstart
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column actfinish
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: aec172a9-3c27-44a5-9846-d1b844c61ad9
+		summarizeBy: none
+		sourceColumn: actfinish
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column schedstart
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2fc1ad0c-a592-4bd8-a5a8-bdfcc8629267
+		summarizeBy: none
+		sourceColumn: schedstart
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column schedfinish
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: a69ea4f9-8c62-416c-a46e-fed7e900e2ca
+		summarizeBy: none
+		sourceColumn: schedfinish
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column remdur
+		dataType: double
+		lineageTag: a2834c94-f91d-48fa-9330-995394a15378
+		summarizeBy: sum
+		sourceColumn: remdur
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column crewid
+		dataType: string
+		lineageTag: fa82dae3-4698-4ec7-8e6e-96cc8d6cb96f
+		summarizeBy: none
+		sourceColumn: crewid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column supervisor
+		dataType: string
+		lineageTag: dc7dc560-329b-45ae-8f22-54d89d21effe
+		summarizeBy: none
+		sourceColumn: supervisor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woeq13
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5edcb3c1-a6bf-4f19-a52a-f6794740d4e7
+		summarizeBy: none
+		sourceColumn: woeq13
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woeq14
+		dataType: double
+		lineageTag: f373cb28-bc3d-4d31-8eea-67c653cef980
+		summarizeBy: sum
+		sourceColumn: woeq14
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wojp1
+		dataType: string
+		lineageTag: 4affdd9e-3c4a-47ab-86fc-d64dd15a7ffd
+		summarizeBy: none
+		sourceColumn: wojp1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wojp2
+		dataType: string
+		lineageTag: 3f1c2f45-6f5f-43b3-be60-ad184d7d1bac
+		summarizeBy: none
+		sourceColumn: wojp2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wojp3
+		dataType: string
+		lineageTag: ead9ca4c-431d-4e8e-8432-5081bd4fd629
+		summarizeBy: none
+		sourceColumn: wojp3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wojp4
+		dataType: double
+		lineageTag: 122843ab-6d65-45af-88bb-cbb47d5867f1
+		summarizeBy: sum
+		sourceColumn: wojp4
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wojp5
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4da2dbd3-14aa-4b28-a9e5-8c890b81f365
+		summarizeBy: none
+		sourceColumn: wojp5
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wol1
+		dataType: string
+		lineageTag: ae5504c5-590e-48d7-af19-1e4f8f41dba1
+		summarizeBy: none
+		sourceColumn: wol1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wol2
+		dataType: string
+		lineageTag: 538cd1c2-562b-4fc2-828a-620e16e2e807
+		summarizeBy: none
+		sourceColumn: wol2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wol3
+		dataType: double
+		lineageTag: fef2b49f-29e0-462a-9505-d28323c5a0c7
+		summarizeBy: sum
+		sourceColumn: wol3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wol4
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4dd3a0c2-1634-4b4f-9ec7-800360c948fe
+		summarizeBy: none
+		sourceColumn: wol4
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wolablnk
+		dataType: string
+		lineageTag: 5d37c569-9523-4a9d-bf3d-c00ca5c1a440
+		summarizeBy: none
+		sourceColumn: wolablnk
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column respondby
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1b4c63b0-305a-49ea-8ead-a88a06027e81
+		summarizeBy: none
+		sourceColumn: respondby
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column assetlocpriority
+		dataType: int64
+		formatString: 0
+		lineageTag: 02dfc378-5d66-4f0d-a3d3-f4e74851b045
+		summarizeBy: sum
+		sourceColumn: assetlocpriority
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column calcpriority
+		dataType: int64
+		formatString: 0
+		lineageTag: ea2096cd-086c-46c9-bdb4-87d7adafc470
+		summarizeBy: sum
+		sourceColumn: calcpriority
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column chargestore
+		dataType: int64
+		formatString: 0
+		lineageTag: 00203aa1-f643-4176-a941-2e2d53c6ac7b
+		summarizeBy: sum
+		sourceColumn: chargestore
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column failurecode
+		dataType: string
+		lineageTag: 48877df3-459d-4c31-967c-0f6e297e9203
+		summarizeBy: none
+		sourceColumn: failurecode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wolo1
+		dataType: string
+		lineageTag: fe1e7213-9690-4ffd-bdc6-c05978b812aa
+		summarizeBy: none
+		sourceColumn: wolo1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wolo2
+		dataType: string
+		lineageTag: 7eed0df9-71af-4681-a46f-9a5360548f8a
+		summarizeBy: none
+		sourceColumn: wolo2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wolo3
+		dataType: string
+		lineageTag: df31149a-ca4b-4cf7-b137-f40560b843cc
+		summarizeBy: none
+		sourceColumn: wolo3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wolo4
+		dataType: string
+		lineageTag: 149c8c6d-de16-4044-9141-491773b94161
+		summarizeBy: none
+		sourceColumn: wolo4
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wolo5
+		dataType: string
+		lineageTag: 66739d3a-9a0d-4d0f-b705-c00b8f4ea337
+		summarizeBy: none
+		sourceColumn: wolo5
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wolo6
+		dataType: double
+		lineageTag: de0b71ef-5f8a-4925-be74-bf0bde86ef00
+		summarizeBy: sum
+		sourceColumn: wolo6
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wolo7
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f5cef3b3-8250-4c87-8358-1e8d99cd6f39
+		summarizeBy: none
+		sourceColumn: wolo7
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wolo8
+		dataType: double
+		lineageTag: 81ff34fd-f0d8-4737-b0f2-2a07b3cc9a5b
+		summarizeBy: sum
+		sourceColumn: wolo8
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wolo9
+		dataType: string
+		lineageTag: 5dc4a266-e9a6-4460-8f5a-3c8bf7faecf5
+		summarizeBy: none
+		sourceColumn: wolo9
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wolo10
+		dataType: int64
+		formatString: 0
+		lineageTag: 744c55f9-4443-438b-a628-c93e3082b651
+		summarizeBy: sum
+		sourceColumn: wolo10
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column glaccount
+		dataType: string
+		lineageTag: 5d5b3e53-cea3-4bac-a232-809158f7f1e0
+		summarizeBy: none
+		sourceColumn: glaccount
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column estservcost
+		dataType: double
+		lineageTag: 59ac5a9b-f502-40f4-8692-6ca5d7580509
+		summarizeBy: sum
+		sourceColumn: estservcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column actservcost
+		dataType: double
+		lineageTag: f5ed4b8e-0a58-43e5-a12a-f0c36d87805c
+		summarizeBy: sum
+		sourceColumn: actservcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column disabled
+		dataType: int64
+		formatString: 0
+		lineageTag: abae3645-809c-43e7-b9c1-9d7666ad8e29
+		summarizeBy: sum
+		sourceColumn: disabled
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column estatapprlabhrs
+		dataType: double
+		lineageTag: fa68770f-fde0-48fb-9ab3-a700cf3c3345
+		summarizeBy: sum
+		sourceColumn: estatapprlabhrs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estatapprlabcost
+		dataType: double
+		lineageTag: f3cad175-1d36-4723-807d-2cf0f6531950
+		summarizeBy: sum
+		sourceColumn: estatapprlabcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estatapprmatcost
+		dataType: double
+		lineageTag: 08542ecf-e1d2-4605-a330-fd2e54a394b4
+		summarizeBy: sum
+		sourceColumn: estatapprmatcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estatapprtoolcost
+		dataType: double
+		lineageTag: 36d48050-673b-4472-930c-435da498c3b0
+		summarizeBy: sum
+		sourceColumn: estatapprtoolcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estatapprservcost
+		dataType: double
+		lineageTag: ccc217f1-1fda-4f99-9f3b-f2d9b344de7a
+		summarizeBy: sum
+		sourceColumn: estatapprservcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wosequence
+		dataType: int64
+		formatString: 0
+		lineageTag: aecbbc98-673a-41b3-ae2a-e648ca1d3213
+		summarizeBy: sum
+		sourceColumn: wosequence
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column hasfollowupwork
+		dataType: int64
+		formatString: 0
+		lineageTag: ec4a081f-6a6c-4b4a-8963-0c53b882ee6a
+		summarizeBy: sum
+		sourceColumn: hasfollowupwork
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column worts1
+		dataType: string
+		lineageTag: d31e70ee-db86-4cec-af4f-50a25f513c7a
+		summarizeBy: none
+		sourceColumn: worts1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column worts2
+		dataType: string
+		lineageTag: f22ad847-67ab-40a8-993f-e0a941615cae
+		summarizeBy: none
+		sourceColumn: worts2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column worts3
+		dataType: string
+		lineageTag: f85f0cb0-6118-4500-8951-bc4aa9123a99
+		summarizeBy: none
+		sourceColumn: worts3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column worts4
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 54af4cbb-c5b4-4eb0-9c94-a00c127842e2
+		summarizeBy: none
+		sourceColumn: worts4
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column worts5
+		dataType: double
+		lineageTag: 750e1cb6-71bb-4678-8cd8-02c0268a3fa3
+		summarizeBy: sum
+		sourceColumn: worts5
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column sourcesysid
+		dataType: string
+		lineageTag: 5ce695d5-1f23-468a-90e8-5bfa25b5d0c1
+		summarizeBy: none
+		sourceColumn: sourcesysid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ownersysid
+		dataType: string
+		lineageTag: 6df123aa-ea09-4d79-ba10-2881dfe1c683
+		summarizeBy: none
+		sourceColumn: ownersysid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pmduedate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 9238200d-e33b-4d89-ae08-85d626f82979
+		summarizeBy: none
+		sourceColumn: pmduedate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pmextdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0ae91468-310b-4172-8b9e-ff52516b7002
+		summarizeBy: none
+		sourceColumn: pmextdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pmnextduedate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d3730d83-b34f-4ed4-bf46-885449f676e8
+		summarizeBy: none
+		sourceColumn: pmnextduedate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column worklocation
+		dataType: string
+		lineageTag: 72da2716-0999-46e2-a59a-551c7ca6996e
+		summarizeBy: none
+		sourceColumn: worklocation
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column externalrefid
+		dataType: string
+		lineageTag: ad79da05-934b-4dfe-b5ff-9798132d3b20
+		summarizeBy: none
+		sourceColumn: externalrefid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column sendersysid
+		dataType: string
+		lineageTag: c57de434-eb32-48e3-ad42-a9d1d3341d72
+		summarizeBy: none
+		sourceColumn: sendersysid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column fincntrlid
+		dataType: string
+		lineageTag: e9846666-3c59-4608-ad3b-b91a32b8bde2
+		summarizeBy: none
+		sourceColumn: fincntrlid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column generatedforpo
+		dataType: string
+		lineageTag: 146b5baf-c978-4f45-974a-377004d0dc39
+		summarizeBy: none
+		sourceColumn: generatedforpo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column genforpolineid
+		dataType: int64
+		formatString: 0
+		lineageTag: a9be3ba8-d514-43a6-a5c8-253c9aa9dafc
+		summarizeBy: sum
+		sourceColumn: genforpolineid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador de organización
+	column Organización
+		dataType: string
+		lineageTag: 388f356b-b1ba-452b-afa0-aaa74d167be8
+		summarizeBy: none
+		sourceColumn: Organización
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identifica la planta.
+	column Campus
+		dataType: string
+		lineageTag: c853c6e4-ea89-4686-995e-a68f792926f5
+		summarizeBy: none
+		sourceColumn: Campus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column taskid
+		dataType: int64
+		formatString: 0
+		lineageTag: 6909288e-81ad-454f-baa3-34d11fc55005
+		summarizeBy: sum
+		sourceColumn: taskid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column inspector
+		dataType: string
+		lineageTag: a9da1b55-6381-49e4-af47-12d9b9227ddc
+		summarizeBy: none
+		sourceColumn: inspector
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column measurementvalue
+		dataType: double
+		lineageTag: 65f8d3ba-8898-477a-8f54-fc1447897727
+		summarizeBy: sum
+		sourceColumn: measurementvalue
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column measuredate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: ac3edee8-8306-4d6a-af53-cf0d6f4a7d53
+		summarizeBy: none
+		sourceColumn: measuredate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column observation
+		dataType: string
+		lineageTag: 5b8a7e0a-9714-454b-a3ac-09763894b085
+		summarizeBy: none
+		sourceColumn: observation
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pointnum
+		dataType: string
+		lineageTag: 610df610-ec6a-4c88-be6f-2fe8d82288e7
+		summarizeBy: none
+		sourceColumn: pointnum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wojo1
+		dataType: string
+		lineageTag: b34259ac-37f0-4069-9bc3-8c90c0589551
+		summarizeBy: none
+		sourceColumn: wojo1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wojo2
+		dataType: string
+		lineageTag: 4a5d49ee-dfb2-4e44-8a45-0c13bf9919e5
+		summarizeBy: none
+		sourceColumn: wojo2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wojo3
+		dataType: string
+		lineageTag: 4b26f93a-69c0-4b23-aabb-0ad1b799ba88
+		summarizeBy: none
+		sourceColumn: wojo3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wojo4
+		dataType: double
+		lineageTag: d06d09ea-1720-4e4f-9f68-0d5a10c2ec71
+		summarizeBy: sum
+		sourceColumn: wojo4
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column wojo5
+		dataType: string
+		lineageTag: ca8cae9e-757a-4b8b-b66b-4c845cdc1e1d
+		summarizeBy: none
+		sourceColumn: wojo5
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wojo6
+		dataType: string
+		lineageTag: 934e6da0-f73c-4cd5-a17c-116851ef7776
+		summarizeBy: none
+		sourceColumn: wojo6
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wojo7
+		dataType: string
+		lineageTag: 83ca1962-3b19-4b58-9b78-a8479a2f742e
+		summarizeBy: none
+		sourceColumn: wojo7
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wojo8
+		dataType: string
+		lineageTag: dc4edc79-8d9d-42ed-93d7-dacfed6efd22
+		summarizeBy: none
+		sourceColumn: wojo8
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Especifica si la orden de trabajo es una tarea. Si se selecciona la casilla, la orden de trabajo es una tarea. Si la casilla no está seleccionada, la orden de trabajo no es una tarea.
+	column 'Es Tarea'
+		dataType: int64
+		formatString: 0
+		lineageTag: 21c7b774-cebe-4173-bc0d-d9096607561b
+		summarizeBy: sum
+		sourceColumn: Es Tarea
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woclass
+		dataType: string
+		lineageTag: 56d9ffca-d3b1-4d5a-a912-6431c289c7f2
+		summarizeBy: none
+		sourceColumn: woclass
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column onbehalfof
+		dataType: string
+		lineageTag: 0ae755ec-1441-4d9b-8315-bcf160340acf
+		summarizeBy: none
+		sourceColumn: onbehalfof
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column vendor
+		dataType: string
+		lineageTag: c72f374f-883c-47e5-8940-9a9252cb616e
+		summarizeBy: none
+		sourceColumn: vendor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column origrecordclass
+		dataType: string
+		lineageTag: 7c63d168-2121-48c4-860c-b094dbfcfcde
+		summarizeBy: none
+		sourceColumn: origrecordclass
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column origrecordid
+		dataType: string
+		lineageTag: 4f0e7395-0751-4953-8a83-7fecd299ba42
+		summarizeBy: none
+		sourceColumn: origrecordid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column justifypriority
+		dataType: string
+		lineageTag: cae1ef7d-a064-445c-aca6-ff9efab115ca
+		summarizeBy: none
+		sourceColumn: justifypriority
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column risk
+		dataType: string
+		lineageTag: 4d895fe8-cd73-47a1-b8b7-fbd8b0a6b11e
+		summarizeBy: none
+		sourceColumn: risk
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column environment
+		dataType: string
+		lineageTag: a0c8d714-0dcf-4752-b29e-1e7e72e77443
+		summarizeBy: none
+		sourceColumn: environment
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column backoutplan
+		dataType: string
+		lineageTag: b3eb4f97-554a-4131-b8d0-9b03db1ff6b7
+		summarizeBy: none
+		sourceColumn: backoutplan
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woacceptscharges
+		dataType: int64
+		formatString: 0
+		lineageTag: 63038bc5-70a0-40db-a948-b514fc6b7d80
+		summarizeBy: sum
+		sourceColumn: woacceptscharges
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column owner
+		dataType: string
+		lineageTag: 266581d9-1627-4988-b651-b4b9464ab135
+		summarizeBy: none
+		sourceColumn: owner
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column classstructureid
+		dataType: string
+		lineageTag: fb17fd63-fe2c-4f87-872e-83800f3a3d62
+		summarizeBy: none
+		sourceColumn: classstructureid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column parentchgsstatus
+		dataType: int64
+		formatString: 0
+		lineageTag: fa52736b-8a55-4a92-9fbf-16394299f4d4
+		summarizeBy: sum
+		sourceColumn: parentchgsstatus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ownergroup
+		dataType: string
+		lineageTag: 52b74bc5-8e7b-440c-9756-2c6bd2aaca26
+		summarizeBy: none
+		sourceColumn: ownergroup
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column commoditygroup
+		dataType: string
+		lineageTag: 3e4d255a-a622-404f-b001-fb8286c8da19
+		summarizeBy: none
+		sourceColumn: commoditygroup
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column commodity
+		dataType: string
+		lineageTag: 6cde784e-ecc8-4ff3-ad2a-e2f669ff22b4
+		summarizeBy: none
+		sourceColumn: commodity
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador único
+	column workorderid
+		dataType: int64
+		formatString: 0
+		lineageTag: 080cf55a-dcb0-444e-9cea-8da98a65c6bb
+		summarizeBy: sum
+		sourceColumn: workorderid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column whomischangefor
+		dataType: string
+		lineageTag: 712237bd-64bf-4cd0-9710-910e4985b2a4
+		summarizeBy: none
+		sourceColumn: whomischangefor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column reasonforchange
+		dataType: string
+		lineageTag: 2b1298e5-1543-463e-88c1-2cf286bf1c13
+		summarizeBy: none
+		sourceColumn: reasonforchange
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column verification
+		dataType: string
+		lineageTag: 12a0ba62-ad9f-4a27-992c-d6c392076a48
+		summarizeBy: none
+		sourceColumn: verification
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column persongroup
+		dataType: string
+		lineageTag: 599036e8-2ac7-4ae3-820d-d266b134d348
+		summarizeBy: none
+		sourceColumn: persongroup
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column lead
+		dataType: string
+		lineageTag: 45892114-55ba-4191-99ad-02ea03c20696
+		summarizeBy: none
+		sourceColumn: lead
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column langcode
+		dataType: string
+		lineageTag: 4c21e524-9f41-470c-8281-33c8ff173d89
+		summarizeBy: none
+		sourceColumn: langcode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column interruptible
+		dataType: int64
+		formatString: 0
+		lineageTag: 151eb044-aefc-450d-9c84-05b24cb19319
+		summarizeBy: sum
+		sourceColumn: interruptible
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wogroup
+		dataType: string
+		lineageTag: 102541f5-2317-47ba-bde4-dec9f5909c6c
+		summarizeBy: none
+		sourceColumn: wogroup
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column hasld
+		dataType: int64
+		formatString: 0
+		lineageTag: f7f5862c-f844-4b4b-b4f2-629a82ce12ac
+		summarizeBy: sum
+		sourceColumn: hasld
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column route
+		dataType: string
+		lineageTag: 120bd091-8aa2-4627-918e-de2a3a5c21c3
+		summarizeBy: none
+		sourceColumn: route
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column routestopid
+		dataType: int64
+		formatString: 0
+		lineageTag: 7f47b32b-0bfb-4eb7-8565-d42a2dceb2ab
+		summarizeBy: sum
+		sourceColumn: routestopid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column cinum
+		dataType: string
+		lineageTag: 023894b2-058d-40ee-9dc1-547aa4ab137b
+		summarizeBy: none
+		sourceColumn: cinum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column jobtaskid
+		dataType: int64
+		formatString: 0
+		lineageTag: ea714a1d-0a79-4530-b024-50429dc9354b
+		summarizeBy: sum
+		sourceColumn: jobtaskid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woisswap
+		dataType: int64
+		formatString: 0
+		lineageTag: b59bfe18-1037-45bf-9c29-8d6045989bfa
+		summarizeBy: sum
+		sourceColumn: woisswap
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column newchildclass
+		dataType: string
+		lineageTag: 5bdbf8c2-0762-4ca4-9c34-cfceca038a21
+		summarizeBy: none
+		sourceColumn: newchildclass
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column suspendflow
+		dataType: int64
+		formatString: 0
+		lineageTag: e2f7605d-5bf1-4f3c-a978-1e43a0b5de1c
+		summarizeBy: sum
+		sourceColumn: suspendflow
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column flowcontrolled
+		dataType: int64
+		formatString: 0
+		lineageTag: 0f830245-90a6-4cf2-a7d4-2654cfd74c7d
+		summarizeBy: sum
+		sourceColumn: flowcontrolled
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column flowactionassist
+		dataType: int64
+		formatString: 0
+		lineageTag: e7d17329-03ac-44bb-942f-adb04ccfb2a4
+		summarizeBy: sum
+		sourceColumn: flowactionassist
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column launchentryname
+		dataType: string
+		lineageTag: 3c2ede52-f360-4df9-9cdd-767b21b072aa
+		summarizeBy: none
+		sourceColumn: launchentryname
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column targetdesc
+		dataType: string
+		lineageTag: 2ed3bb10-b61d-4cb0-8bff-1730ffbcc7ed
+		summarizeBy: none
+		sourceColumn: targetdesc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column flowaction
+		dataType: string
+		lineageTag: 93f85d1b-bad3-4d9c-ade0-4dc91b2a9c59
+		summarizeBy: none
+		sourceColumn: flowaction
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column firstapprstatus
+		dataType: string
+		lineageTag: 09ced32d-2a14-4a03-b2e5-ec8ebd370495
+		summarizeBy: none
+		sourceColumn: firstapprstatus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column calcorgid
+		dataType: string
+		lineageTag: 36beec4b-1cd7-4591-8f07-8b5829853249
+		summarizeBy: none
+		sourceColumn: calcorgid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column calccalendar
+		dataType: string
+		lineageTag: 5c3fc68f-3a52-47e0-af31-ef3371c37898
+		summarizeBy: none
+		sourceColumn: calccalendar
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column calcshift
+		dataType: string
+		lineageTag: 53a7e932-e499-463e-850c-2f94e4e5dcf1
+		summarizeBy: none
+		sourceColumn: calcshift
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column repfacsiteid
+		dataType: string
+		lineageTag: 7f48dfcb-6a5b-4f69-89a5-dae49a5def4d
+		summarizeBy: none
+		sourceColumn: repfacsiteid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column repairfacility
+		dataType: string
+		lineageTag: 655ea255-b491-4116-b9ea-e514aeddf88f
+		summarizeBy: none
+		sourceColumn: repairfacility
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column genforporevision
+		dataType: int64
+		formatString: 0
+		lineageTag: 9508a172-9795-4e2e-abdd-6466422ca633
+		summarizeBy: sum
+		sourceColumn: genforporevision
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column storeroommtlstatus
+		dataType: string
+		lineageTag: 41aa6f2a-ee49-48e0-bd92-2498f65f2745
+		summarizeBy: none
+		sourceColumn: storeroommtlstatus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column dirissuemtlstatus
+		dataType: string
+		lineageTag: f3a7a1d4-0625-4979-8edd-56f91f412291
+		summarizeBy: none
+		sourceColumn: dirissuemtlstatus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column workpackmtlstatus
+		dataType: string
+		lineageTag: 541b0927-29fd-47bd-a987-e89d0fcbd0c8
+		summarizeBy: none
+		sourceColumn: workpackmtlstatus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ignoresrmavail
+		dataType: int64
+		formatString: 0
+		lineageTag: efe2702e-24e1-4e36-8691-42c0fa049860
+		summarizeBy: sum
+		sourceColumn: ignoresrmavail
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ignorediavail
+		dataType: int64
+		formatString: 0
+		lineageTag: ce546350-ea02-460a-8c55-595317cbc823
+		summarizeBy: sum
+		sourceColumn: ignorediavail
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column estintlabcost
+		dataType: double
+		lineageTag: ec3cefdf-882c-44ce-af6a-5f63b73c6f19
+		summarizeBy: sum
+		sourceColumn: estintlabcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estintlabhrs
+		dataType: double
+		lineageTag: 2a444e87-3831-4809-96fd-55074466a958
+		summarizeBy: sum
+		sourceColumn: estintlabhrs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estoutlabhrs
+		dataType: double
+		lineageTag: d1d0b5bd-59a7-4ae1-873d-e15dfb331c49
+		summarizeBy: sum
+		sourceColumn: estoutlabhrs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estoutlabcost
+		dataType: double
+		lineageTag: 5d2ff163-a373-48ef-b560-e0fb206d2253
+		summarizeBy: sum
+		sourceColumn: estoutlabcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column actintlabcost
+		dataType: double
+		lineageTag: 33d870be-a9d9-4ca4-bd86-73d4791310fb
+		summarizeBy: sum
+		sourceColumn: actintlabcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column actintlabhrs
+		dataType: double
+		lineageTag: 602b845b-f853-468d-8aea-c011dc439c04
+		summarizeBy: sum
+		sourceColumn: actintlabhrs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column actoutlabhrs
+		dataType: double
+		lineageTag: 934c5946-f2f7-401b-b881-3d80af641016
+		summarizeBy: sum
+		sourceColumn: actoutlabhrs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column actoutlabcost
+		dataType: double
+		lineageTag: 7a75d25f-5f10-46a3-bfe0-74d06cdbbd1e
+		summarizeBy: sum
+		sourceColumn: actoutlabcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estatapprintlabcost
+		dataType: double
+		lineageTag: b41e64d6-e0a6-4e8b-9724-f9e26a818a9e
+		summarizeBy: sum
+		sourceColumn: estatapprintlabcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estatapprintlabhrs
+		dataType: double
+		lineageTag: 65c42acc-f973-464e-9a12-addcad82ae66
+		summarizeBy: sum
+		sourceColumn: estatapprintlabhrs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estatapproutlabhrs
+		dataType: double
+		lineageTag: 4127df86-fe20-4b93-a65f-4c4da4c32f48
+		summarizeBy: sum
+		sourceColumn: estatapproutlabhrs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column estatapproutlabcost
+		dataType: double
+		lineageTag: fee3e9a9-7340-4304-b7ca-5f7a0a0816f4
+		summarizeBy: sum
+		sourceColumn: estatapproutlabcost
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column assignedownergroup
+		dataType: string
+		lineageTag: abbb5a9f-1b8d-4f24-a322-b01d1c190ad3
+		summarizeBy: none
+		sourceColumn: assignedownergroup
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column availstatusdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 617e01fb-c91e-4fab-8a19-06d41b96e0d0
+		summarizeBy: none
+		sourceColumn: availstatusdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column lastcopylinkdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 16ae7814-81d1-4241-ae87-cc0c954cd724
+		summarizeBy: none
+		sourceColumn: lastcopylinkdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column nestedjpinprocess
+		dataType: int64
+		formatString: 0
+		lineageTag: 9c41eb88-8da7-4e53-ae2d-78a1ea2f21ff
+		summarizeBy: sum
+		sourceColumn: nestedjpinprocess
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscfrequency
+		dataType: int64
+		formatString: 0
+		lineageTag: 0fafa79e-8ce8-418e-bced-4345c5412928
+		summarizeBy: sum
+		sourceColumn: pluscfrequency
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscfrequnit
+		dataType: string
+		lineageTag: 64a01872-9bfb-49d6-81d8-f9dc953f8ad5
+		summarizeBy: none
+		sourceColumn: pluscfrequnit
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscismobile
+		dataType: int64
+		formatString: 0
+		lineageTag: ed6eee76-06b4-4c4d-9068-c5afdd1fe72b
+		summarizeBy: sum
+		sourceColumn: pluscismobile
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscjprevnum
+		dataType: int64
+		formatString: 0
+		lineageTag: 810f55ff-c590-4ffc-a9a1-c2b85824f917
+		summarizeBy: sum
+		sourceColumn: pluscjprevnum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscloop
+		dataType: int64
+		formatString: 0
+		lineageTag: f75c5cef-d450-41cb-a411-9814bcaea257
+		summarizeBy: sum
+		sourceColumn: pluscloop
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscnextdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2d1b57d4-ef47-4b97-b227-727050928425
+		summarizeBy: none
+		sourceColumn: pluscnextdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscoverduedate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f0adc401-2c3a-44c8-b352-1c24db4dd97c
+		summarizeBy: none
+		sourceColumn: pluscoverduedate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pluscphyloc
+		dataType: string
+		lineageTag: fe097751-8187-4af2-adf9-2cc0a49588b3
+		summarizeBy: none
+		sourceColumn: pluscphyloc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column inctasksinsched
+		dataType: int64
+		formatString: 0
+		lineageTag: 26bf47b9-524e-45ac-b06b-9760d5a4a9f0
+		summarizeBy: sum
+		sourceColumn: inctasksinsched
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column sneconstraint
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 823b4188-bae7-41de-b3e3-18e00d20f0bf
+		summarizeBy: none
+		sourceColumn: sneconstraint
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column fnlconstraint
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 05fc0eb5-2043-48e0-b1f8-99bf88ad317c
+		summarizeBy: none
+		sourceColumn: fnlconstraint
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column amcrew
+		dataType: string
+		lineageTag: 194dd111-2c4c-4888-a061-32a82d729721
+		summarizeBy: none
+		sourceColumn: amcrew
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column crewworkgroup
+		dataType: string
+		lineageTag: 6f84fe32-ecdf-46f2-8eb5-65347b771f51
+		summarizeBy: none
+		sourceColumn: crewworkgroup
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column reqasstdwntime
+		dataType: int64
+		formatString: 0
+		lineageTag: a83859af-9796-4af1-8b2a-67fb3e42599b
+		summarizeBy: sum
+		sourceColumn: reqasstdwntime
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column apptrequired
+		dataType: int64
+		formatString: 0
+		lineageTag: 69b097ea-9097-4239-b7be-dddee85f4ea6
+		summarizeBy: sum
+		sourceColumn: apptrequired
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column aos
+		dataType: int64
+		formatString: 0
+		lineageTag: e01496f1-95f5-4203-8449-b68ca51c0e5a
+		summarizeBy: sum
+		sourceColumn: aos
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ams
+		dataType: int64
+		formatString: 0
+		lineageTag: 904034d9-4da5-4cf0-afce-1bcacc86ae89
+		summarizeBy: sum
+		sourceColumn: ams
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column los
+		dataType: int64
+		formatString: 0
+		lineageTag: 5f921695-e0a1-4f5b-aa7d-8888985b786c
+		summarizeBy: sum
+		sourceColumn: los
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column lms
+		dataType: int64
+		formatString: 0
+		lineageTag: 3db89780-6bb3-467d-8e20-c2ec1249e9cd
+		summarizeBy: sum
+		sourceColumn: lms
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column repairlocflag
+		dataType: int64
+		formatString: 0
+		lineageTag: 059704c2-610b-428e-89a0-762c020090c6
+		summarizeBy: sum
+		sourceColumn: repairlocflag
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_apertura
+		dataType: int64
+		formatString: 0
+		lineageTag: 6549e96b-2340-4a7c-a7f6-bab1e9024089
+		summarizeBy: sum
+		sourceColumn: tm_apertura
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_apuntador
+		dataType: int64
+		formatString: 0
+		lineageTag: 84ade6a1-2ba9-47ce-87ee-8bade30978ec
+		summarizeBy: sum
+		sourceColumn: tm_apuntador
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_aseo
+		dataType: int64
+		formatString: 0
+		lineageTag: 01fe618c-fde0-478a-9dc4-00d771840ffd
+		summarizeBy: sum
+		sourceColumn: tm_aseo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_asistentes
+		dataType: int64
+		formatString: 0
+		lineageTag: 2cfe5c5a-144b-4923-9cef-d3f888d8b5e1
+		summarizeBy: sum
+		sourceColumn: tm_asistentes
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_atencion
+		dataType: string
+		lineageTag: 9e15c77b-6e16-4f9d-82f2-9d2bf2053a6d
+		summarizeBy: none
+		sourceColumn: tm_atencion
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_autorizacuenta
+		dataType: string
+		lineageTag: 301dbe1e-6aa4-4cef-9d0c-9903881efbcb
+		summarizeBy: none
+		sourceColumn: tm_autorizacuenta
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_bandera
+		dataType: string
+		lineageTag: 32d1c289-edfc-4302-a09d-8e85a442ced9
+		summarizeBy: none
+		sourceColumn: tm_bandera
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_barras
+		dataType: int64
+		formatString: 0
+		lineageTag: 3951aace-8483-45ae-adcf-12e18b70da18
+		summarizeBy: sum
+		sourceColumn: tm_barras
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_calidad
+		dataType: string
+		lineageTag: d8c1740b-10a3-4537-9381-7b12d9ce57f3
+		summarizeBy: none
+		sourceColumn: tm_calidad
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_campus
+		dataType: string
+		lineageTag: 39d2cd77-7e44-4f97-81e1-f144ae25818d
+		summarizeBy: none
+		sourceColumn: tm_campus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_cantidadmantel
+		dataType: int64
+		formatString: 0
+		lineageTag: 53bdc4aa-a0c3-472e-b558-c5fa77076e77
+		summarizeBy: sum
+		sourceColumn: tm_cantidadmantel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_cantidadmantelr
+		dataType: int64
+		formatString: 0
+		lineageTag: e869da9f-a594-4532-bf98-60e08476d520
+		summarizeBy: sum
+		sourceColumn: tm_cantidadmantelr
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_cargo
+		dataType: string
+		lineageTag: 5a870f8a-7d6e-4694-8665-35abd4bea8de
+		summarizeBy: none
+		sourceColumn: tm_cargo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_causa
+		dataType: string
+		lineageTag: 5b0003b7-c00b-4007-9652-05a8863b9434
+		summarizeBy: none
+		sourceColumn: tm_causa
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_ccargo1
+		dataType: string
+		lineageTag: bd85b17a-d536-496f-89cc-0487c1bcb8bb
+		summarizeBy: none
+		sourceColumn: tm_ccargo1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_ccargo2
+		dataType: string
+		lineageTag: 7f094771-5811-450a-a2ff-d485c63adcf1
+		summarizeBy: none
+		sourceColumn: tm_ccargo2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_ccargo3
+		dataType: string
+		lineageTag: c6a539a3-cd01-433d-9716-c3fc2ba9dbe9
+		summarizeBy: none
+		sourceColumn: tm_ccargo3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_ccargo4
+		dataType: string
+		lineageTag: 52481eab-4a66-40cd-a63e-74a25251c82f
+		summarizeBy: none
+		sourceColumn: tm_ccargo4
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_cesta
+		dataType: string
+		lineageTag: 44fa7e36-a4aa-41fb-ab20-743184719ecb
+		summarizeBy: none
+		sourceColumn: tm_cesta
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_clima
+		dataType: int64
+		formatString: 0
+		lineageTag: 73469df0-e6bb-441b-bf07-4976281dcb2f
+		summarizeBy: sum
+		sourceColumn: tm_clima
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_combkm
+		dataType: double
+		lineageTag: 02a8f53a-12bd-4143-b6e1-4c23c2540b77
+		summarizeBy: sum
+		sourceColumn: tm_combkm
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tm_comblts
+		dataType: double
+		lineageTag: 3790f494-07e2-4aac-bab3-b155e65e75c6
+		summarizeBy: sum
+		sourceColumn: tm_comblts
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tm_comentario
+		dataType: string
+		lineageTag: c23e0679-57ea-459f-ab43-0eaf4a882b39
+		summarizeBy: none
+		sourceColumn: tm_comentario
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_comentariootro
+		dataType: string
+		lineageTag: 74bd8dd7-bf70-44af-b0e5-bb5a1f0efbaa
+		summarizeBy: none
+		sourceColumn: tm_comentariootro
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_conductor
+		dataType: string
+		lineageTag: f1644702-4347-462d-a4ac-ad12bc19b522
+		summarizeBy: none
+		sourceColumn: tm_conductor
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_contactos
+		dataType: int64
+		formatString: 0
+		lineageTag: f81a024b-46dd-4475-a566-4d16fc1ae9c4
+		summarizeBy: sum
+		sourceColumn: tm_contactos
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_correo
+		dataType: string
+		lineageTag: 0214f6b9-c795-433a-867f-f376d3301c03
+		summarizeBy: none
+		sourceColumn: tm_correo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Cuenta departamento
+	column Departamento
+		dataType: string
+		lineageTag: 235690b1-f212-4717-aa10-e7fdd0e2a3e7
+		summarizeBy: none
+		sourceColumn: Departamento
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_depto
+		dataType: string
+		lineageTag: a378128a-4200-4c49-9d7d-828051b1b2b0
+		summarizeBy: none
+		sourceColumn: tm_depto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_destino
+		dataType: string
+		lineageTag: 2d4c4b9c-5eb9-4d86-965e-70d331d5d07d
+		summarizeBy: none
+		sourceColumn: tm_destino
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_eqaudio
+		dataType: string
+		lineageTag: 4a192b68-3025-42ac-8c1a-e57f09e254ce
+		summarizeBy: none
+		sourceColumn: tm_eqaudio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_equipo
+		dataType: int64
+		formatString: 0
+		lineageTag: 34e0e225-1297-4613-a460-826a4c56a82e
+		summarizeBy: sum
+		sourceColumn: tm_equipo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_evento
+		dataType: string
+		lineageTag: eb9dd20e-fd50-485b-a6f7-5c4141598c3d
+		summarizeBy: none
+		sourceColumn: tm_evento
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_fecha1
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d4fcc359-c621-43ec-a334-4238d49b219b
+		summarizeBy: none
+		sourceColumn: tm_fecha1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_fecha2
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2fd598e5-610c-49dd-bb5a-74c6deccbb3a
+		summarizeBy: none
+		sourceColumn: tm_fecha2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Fecha de desmontaje
+	column 'Fecha Desmontaje'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 4e4ebb28-b856-4353-b8d2-f7896bd35fc2
+		summarizeBy: none
+		sourceColumn: Fecha Desmontaje
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Fecha de montaje
+	column 'Fecha Montaje'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: b4f29df4-843d-4541-9838-ccf6eff793b3
+		summarizeBy: none
+		sourceColumn: Fecha Montaje
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_hora_ent
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 38c59dc3-b8f5-4964-a7b0-ba5b9930671e
+		summarizeBy: none
+		sourceColumn: tm_hora_ent
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_hora_rec
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: a65e5129-af0a-4628-9e67-dfa125d91da4
+		summarizeBy: none
+		sourceColumn: tm_hora_rec
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_hora1
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d36ff4f4-6e91-4b3b-8d78-867db9723d05
+		summarizeBy: none
+		sourceColumn: tm_hora1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_hora2
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 1636de52-582a-4530-af87-c479e26fc5fc
+		summarizeBy: none
+		sourceColumn: tm_hora2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_impreso
+		dataType: string
+		lineageTag: db3b1813-3fdb-42e9-afe4-507652341b30
+		summarizeBy: none
+		sourceColumn: tm_impreso
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// No. de Evento
+	column 'No. de  Evento'
+		dataType: string
+		lineageTag: 50b9a9f3-258b-476c-b14c-6cce03827069
+		summarizeBy: none
+		sourceColumn: No. de  Evento
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_kmfinal
+		dataType: double
+		lineageTag: 7cb4d5b7-924e-41cb-9aa9-d02d40e6f7d5
+		summarizeBy: sum
+		sourceColumn: tm_kmfinal
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tm_kminicial
+		dataType: double
+		lineageTag: d16ce5ca-d338-421b-9125-b8f72d0c0a06
+		summarizeBy: sum
+		sourceColumn: tm_kminicial
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tm_mampara
+		dataType: int64
+		formatString: 0
+		lineageTag: d3ba7774-8f93-4c0e-80ae-a403c350164b
+		summarizeBy: sum
+		sourceColumn: tm_mampara
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_mantel
+		dataType: string
+		lineageTag: a1b52b89-6035-4e39-8bd2-7e095da469ff
+		summarizeBy: none
+		sourceColumn: tm_mantel
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_mantelregistro
+		dataType: string
+		lineageTag: 3fe08227-ac9a-490d-88e8-f862b7300c46
+		summarizeBy: none
+		sourceColumn: tm_mantelregistro
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_mesas
+		dataType: int64
+		formatString: 0
+		lineageTag: 6bd2c98f-ceeb-44b6-a9c1-fa146686b706
+		summarizeBy: sum
+		sourceColumn: tm_mesas
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_mesasregistro
+		dataType: int64
+		formatString: 0
+		lineageTag: 5d16456c-7e7c-47f6-9c5d-a412004e2621
+		summarizeBy: sum
+		sourceColumn: tm_mesasregistro
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_microdiadema
+		dataType: int64
+		formatString: 0
+		lineageTag: bfb42094-a445-40e2-8e86-1734dbde7990
+		summarizeBy: sum
+		sourceColumn: tm_microdiadema
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_micromano
+		dataType: int64
+		formatString: 0
+		lineageTag: e559f73d-d9d6-42c6-8f96-116b2515cad6
+		summarizeBy: sum
+		sourceColumn: tm_micromano
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_microsolapa
+		dataType: int64
+		formatString: 0
+		lineageTag: 30632147-5fc5-45df-9e94-11dc6d690eda
+		summarizeBy: sum
+		sourceColumn: tm_microsolapa
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_monto
+		dataType: double
+		lineageTag: e2312071-e849-4553-975b-d4bdd9d95eaa
+		summarizeBy: sum
+		sourceColumn: tm_monto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tm_nombreevento
+		dataType: string
+		lineageTag: 4913a2c8-0892-459b-82d1-669978eedc57
+		summarizeBy: none
+		sourceColumn: tm_nombreevento
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_nomenclatura
+		dataType: string
+		lineageTag: 96d006b7-2079-4246-a5cb-f89c89f26e6c
+		summarizeBy: none
+		sourceColumn: tm_nomenclatura
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_nomina
+		dataType: string
+		lineageTag: ecea47a7-7a4d-4749-bc4f-986940f735f7
+		summarizeBy: none
+		sourceColumn: tm_nomina
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_nominaautoriza
+		dataType: string
+		lineageTag: de75a4bb-ebe2-4793-8589-ea52484bd892
+		summarizeBy: none
+		sourceColumn: tm_nominaautoriza
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_otroarreglo
+		dataType: string
+		lineageTag: e9e0e05d-48c8-468e-8f93-60c328dc3f44
+		summarizeBy: none
+		sourceColumn: tm_otroarreglo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_pantalla
+		dataType: int64
+		formatString: 0
+		lineageTag: c89b0cbc-4597-45e8-b2e4-86d174e4ced1
+		summarizeBy: sum
+		sourceColumn: tm_pantalla
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_podium
+		dataType: string
+		lineageTag: 0427f5d5-3895-4ec6-b9f5-52a9954c1638
+		summarizeBy: none
+		sourceColumn: tm_podium
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_porc1
+		dataType: int64
+		formatString: 0
+		lineageTag: bdaf62d7-9a2a-4fe3-8178-4a2b65e4b8f6
+		summarizeBy: sum
+		sourceColumn: tm_porc1
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_porc2
+		dataType: int64
+		formatString: 0
+		lineageTag: cb811856-d8a3-45a3-97f1-123018381cac
+		summarizeBy: sum
+		sourceColumn: tm_porc2
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_porc3
+		dataType: int64
+		formatString: 0
+		lineageTag: 42908b48-9f73-4fc6-9a1a-1e8ca8d8df98
+		summarizeBy: sum
+		sourceColumn: tm_porc3
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_presidium
+		dataType: int64
+		formatString: 0
+		lineageTag: 46137076-d59a-42d8-80d1-ed1fd275dca8
+		summarizeBy: sum
+		sourceColumn: tm_presidium
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_puesto
+		dataType: string
+		lineageTag: a22ec843-1447-428a-8673-40237250cfb1
+		summarizeBy: none
+		sourceColumn: tm_puesto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_recinto
+		dataType: string
+		lineageTag: 32de532d-c571-452b-ba17-f5dc87af1dd7
+		summarizeBy: none
+		sourceColumn: tm_recinto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_reloj
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 36c81bdd-dfde-4317-9f7c-e8c74f232e63
+		summarizeBy: none
+		sourceColumn: tm_reloj
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_retro
+		dataType: string
+		lineageTag: bdb1bee8-eac8-4a56-a62f-4d86d5818c86
+		summarizeBy: none
+		sourceColumn: tm_retro
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_rotafolio
+		dataType: int64
+		formatString: 0
+		lineageTag: 94ffde37-6aa2-420e-9fe1-49f7c409a60f
+		summarizeBy: sum
+		sourceColumn: tm_rotafolio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_sillas
+		dataType: int64
+		formatString: 0
+		lineageTag: e91b2037-53a4-4c90-bac8-aee9c9b0c3f3
+		summarizeBy: sum
+		sourceColumn: tm_sillas
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_sillasregistro
+		dataType: int64
+		formatString: 0
+		lineageTag: 6a621689-003f-4220-8584-a510c651d5d9
+		summarizeBy: sum
+		sourceColumn: tm_sillasregistro
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_tarima30
+		dataType: int64
+		formatString: 0
+		lineageTag: 5835de90-880a-4102-abe0-3132135827cf
+		summarizeBy: sum
+		sourceColumn: tm_tarima30
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_tarima60
+		dataType: int64
+		formatString: 0
+		lineageTag: ede88613-b3ce-4e3b-bc73-d6c14cff320c
+		summarizeBy: sum
+		sourceColumn: tm_tarima60
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_tipo_veh
+		dataType: string
+		lineageTag: 9d1a923c-b650-498f-ae21-93f70396173e
+		summarizeBy: none
+		sourceColumn: tm_tipo_veh
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_tipoarreglo
+		dataType: string
+		lineageTag: cc1b3e7f-83cf-4c64-875c-ce7a609f94ce
+		summarizeBy: none
+		sourceColumn: tm_tipoarreglo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_tipomesa
+		dataType: string
+		lineageTag: 5aa97462-b68a-4aab-8c18-a5ff9df294da
+		summarizeBy: none
+		sourceColumn: tm_tipomesa
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_tipoot
+		dataType: string
+		lineageTag: 5dffd1e5-b624-4024-850c-456c36fccbce
+		summarizeBy: none
+		sourceColumn: tm_tipoot
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_trato
+		dataType: string
+		lineageTag: e362dc80-6cea-4a0e-a0cc-4902c53ef0c8
+		summarizeBy: none
+		sourceColumn: tm_trato
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_ubicacionevento
+		dataType: string
+		lineageTag: 83994c95-68d0-416b-8b37-d8eae7235583
+		summarizeBy: none
+		sourceColumn: tm_ubicacionevento
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_unifila
+		dataType: int64
+		formatString: 0
+		lineageTag: 5ed7d8b4-2771-48cd-bffe-4ad043839c48
+		summarizeBy: sum
+		sourceColumn: tm_unifila
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_videoproyector
+		dataType: int64
+		formatString: 0
+		lineageTag: 9da3e8d8-8b21-473e-abfe-de58fe96d5ec
+		summarizeBy: sum
+		sourceColumn: tm_videoproyector
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_esppri
+		dataType: string
+		lineageTag: 978f1057-4aec-4381-b817-c9fe7b226fc3
+		summarizeBy: none
+		sourceColumn: tm_esppri
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_atnmovil
+		dataType: int64
+		formatString: 0
+		lineageTag: cff6275d-1423-40fe-954a-bcf3a18e3f84
+		summarizeBy: sum
+		sourceColumn: tm_atnmovil
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Clasificación
+	column Clasificación
+		dataType: string
+		lineageTag: c49f44d5-3cb2-417a-bb68-d3dae87bac99
+		summarizeBy: none
+		sourceColumn: Clasificación
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_entarimado
+		dataType: string
+		lineageTag: e960f331-7553-4d63-b4eb-77b0eaa11962
+		summarizeBy: none
+		sourceColumn: tm_entarimado
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Usuario (Reportedby)
+	column Usuario
+		dataType: string
+		lineageTag: db5e1a34-8510-4a07-ab85-8a0ddf9ec340
+		summarizeBy: none
+		sourceColumn: Usuario
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_otrabandera
+		dataType: string
+		lineageTag: ad47c50e-7f19-4b7e-954e-e661391ae2f4
+		summarizeBy: none
+		sourceColumn: tm_otrabandera
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_pasajeros
+		dataType: int64
+		formatString: 0
+		lineageTag: e205ca3d-6f7e-4965-b00b-04ab4a725f26
+		summarizeBy: sum
+		sourceColumn: tm_pasajeros
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Subclasificación
+	column Subclasificación
+		dataType: string
+		lineageTag: 7fba0031-f5ac-416b-9866-8ce34902d458
+		summarizeBy: none
+		sourceColumn: Subclasificación
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Mano de obra asignada
+	column 'Mano de Obra Asignada'
+		dataType: string
+		lineageTag: 6d7b6b19-115a-42e8-9f1a-13dc8daf056a
+		summarizeBy: none
+		sourceColumn: Mano de Obra Asignada
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_totalmo
+		dataType: int64
+		formatString: 0
+		lineageTag: 395e8328-4f38-4a50-bf74-aac7ea614b55
+		summarizeBy: sum
+		sourceColumn: tm_totalmo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_fechcontacto
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 894fd3d5-fbbf-4404-9654-048188e7d641
+		summarizeBy: none
+		sourceColumn: tm_fechcontacto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_p_issueto
+		dataType: string
+		lineageTag: b319e28c-43b5-46ec-b695-41f6795c8f38
+		summarizeBy: none
+		sourceColumn: tm_p_issueto
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_p_itype
+		dataType: string
+		lineageTag: 2d8b3dd5-08c8-4013-aa56-97eef80a75db
+		summarizeBy: none
+		sourceColumn: tm_p_itype
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column inspformnum
+		dataType: string
+		lineageTag: 27a2a128-7704-46ae-8f7f-e52383c910e9
+		summarizeBy: none
+		sourceColumn: inspformnum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column intshift
+		dataType: string
+		lineageTag: 1f6406f5-26aa-4728-9e43-8385137ccd42
+		summarizeBy: none
+		sourceColumn: intshift
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcpchangeby
+		dataType: string
+		lineageTag: 0c07cb53-3312-441a-b7d2-7ea8f2ff52d5
+		summarizeBy: none
+		sourceColumn: pcpchangeby
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcpchangedate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 5a61e383-22dc-40b0-8b3e-c86d99866901
+		summarizeBy: none
+		sourceColumn: pcpchangedate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcphys
+		dataType: int64
+		formatString: 0
+		lineageTag: 210e73c6-4023-4fa7-b6e2-3340b6134268
+		summarizeBy: sum
+		sourceColumn: pcphys
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pcacthrs
+		dataType: int64
+		formatString: 0
+		lineageTag: cfa0f456-14b1-4888-b8fd-bde2dbf6e4bb
+		summarizeBy: sum
+		sourceColumn: pcacthrs
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column pctaskcomp
+		dataType: int64
+		formatString: 0
+		lineageTag: f2999d42-03f3-4dac-a26c-38f0dcd93378
+		summarizeBy: sum
+		sourceColumn: pctaskcomp
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_servicio
+		dataType: string
+		lineageTag: 73f00ea4-94f0-49b7-a0bb-30141c85c785
+		summarizeBy: none
+		sourceColumn: tm_servicio
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrgidSiteidKey
+		dataType: string
+		lineageTag: 98d8e525-251c-4746-8e61-669fadd70f7d
+		summarizeBy: none
+		sourceColumn: OrgidSiteidKey
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrgidTmasignadoKey
+		dataType: string
+		lineageTag: c032d113-860e-4350-9351-15d7b5cd2e5f
+		summarizeBy: none
+		sourceColumn: OrgidTmasignadoKey
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column M_tm_incidente
+		dataType: string
+		lineageTag: 13399a12-e2ce-493b-81cd-3036857208bf
+		summarizeBy: none
+		sourceColumn: M_tm_incidente
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column ActFinish-ActStart = ```
+			(workorder[actfinish] - workorder[actstart]) 
+			      
+			
+			```
+		formatString: General Date
+		lineageTag: 2f32d27a-1029-4cef-9d7d-bd21c9248e17
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Schedfinish-ScheduleStart = ```
+			workorder[schedfinish] - workorder[schedstart]  
+			
+			```
+		isHidden
+		formatString: General Date
+		lineageTag: 214335ac-39d6-45e4-a961-915be1da46af
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_costo
+		dataType: double
+		lineageTag: 7a93e579-058e-4002-a181-3ed9637531f7
+		summarizeBy: sum
+		sourceColumn: tm_costo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column tm_factura
+		dataType: string
+		lineageTag: 2820b41d-59ff-43a3-86a5-f277f78dc72b
+		summarizeBy: none
+		sourceColumn: tm_factura
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrgidSiteidLocationKey
+		dataType: string
+		lineageTag: 7d2bbdd7-eefd-4eba-9ad0-039fce12e5b9
+		summarizeBy: none
+		sourceColumn: OrgidSiteidLocationKey
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column concatjpnumLocation =
+			IF( NOT(ISBLANK(workorder[Plan de Trabajo])), workorder[Plan de Trabajo], "S/CodTarea"   )
+			                           & "_" &  IF( NOT( ISBLANK(workorder[Ubicación])), workorder[Ubicación], "S/Ubicación")
+		lineageTag: 9ee01a1d-c3a8-4e21-b36c-4cfe35ee5325
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column MconcatJpnumLocation
+		dataType: string
+		lineageTag: 04c5d6b5-f448-43a8-9f61-3265dcaef512
+		summarizeBy: none
+		sourceColumn: MconcatJpnumLocation
+
+		annotation SummarizationSetBy = Automatic
+
+	column AliasSchedfinish = IF(NOT ISBLANK(workorder[schedfinish]),CONVERT(workorder[schedfinish],DATETIME), BLANK())
+		formatString: Long Date
+		lineageTag: cf5868bb-1ef4-4113-9213-94bd84a42604
+		summarizeBy: none
+
+		changedProperty = DataType
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column AliasJobPlanKey
+		dataType: string
+		lineageTag: a888cfca-5429-4c9f-bb60-a04b5744d731
+		summarizeBy: none
+		sourceColumn: AliasJobPlanKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column JobPlanKey
+		dataType: string
+		lineageTag: cc01af01-0636-4a3c-af58-4028cb5a7ff5
+		summarizeBy: none
+		sourceColumn: JobPlanKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column matusetransKey
+		dataType: string
+		lineageTag: 534d92db-15b9-4ffe-aa49-476b3dc924d5
+		summarizeBy: none
+		sourceColumn: matusetransKey
+
+		annotation SummarizationSetBy = Automatic
+
+	column Periodo_Lastre_Solicitado = ```
+			
+			VAR _Fecha_Inicial = 
+			CALCULATE(
+			    MIN(workorder[schedfinish]),
+			    ALLSELECTED(workorder[schedfinish])
+			)
+			VAR _Alias_Sched = 
+			CALCULATE(
+			    MIN(workorder[schedfinish]), REMOVEFILTERS()
+			)
+			VAR _V_Filtro_PAnterior_PActual = 
+			    IF(_Alias_Sched >= _Fecha_Inicial,2,
+			        IF(
+			            _Alias_Sched < _Fecha_Inicial,1)
+			    )
+			VAR _V_Lista_Filtro = 
+			    IF(_V_Filtro_PAnterior_PActual = 2, "Periodo Solicitado","Periodo Lastre")
+			RETURN
+			_V_Lista_Filtro
+			```
+		lineageTag: 50dff089-93a6-419f-90c5-2f16da224b7b
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Status_Date = DATE(YEAR(workorder[statusdate]),MONTH(workorder[statusdate]),DAY(workorder[statusdate]))
+		formatString: General Date
+		lineageTag: 92a6ed21-5ada-41f9-b283-138f96d2bc0a
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column schedfinish2
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 0c273d1f-ff28-44fb-8c7f-922e7e9a6505
+		summarizeBy: none
+		sourceColumn: schedfinish2
+
+		annotation SummarizationSetBy = Automatic
+
+	column workorder_pm_KEY
+		dataType: string
+		lineageTag: 27d44192-428f-4484-9c81-b2ae94a2faaa
+		summarizeBy: none
+		sourceColumn: workorder_pm_KEY
+
+		annotation SummarizationSetBy = Automatic
+
+	column Alias_Job_Desc = RELATED(Alias_de_jobplan_Reincidencias[description])
+		lineageTag: fe96ddcc-1e48-45c6-b9a8-429255855f80
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Work_Lab_key = workorder[Organización]&workorder[Campus]&workorder[Orden de Trabajo]
+		lineageTag: 4fc65ecb-3085-43ce-b22e-2e194ed841c0
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column anywhererefid
+		dataType: int64
+		formatString: 0
+		lineageTag: 6bb25682-67f0-4daf-9c11-1160fa1153c8
+		summarizeBy: sum
+		sourceColumn: anywhererefid
+
+		annotation SummarizationSetBy = Automatic
+
+	column splanreviewdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3bced057-265b-4446-9f4d-ecad0ed4970a
+		summarizeBy: none
+		sourceColumn: splanreviewdate
+
+		annotation SummarizationSetBy = Automatic
+
+	column unitsofwork
+		dataType: string
+		lineageTag: 4b6ee1a7-23ec-4d28-b350-7f6fa11d42b9
+		summarizeBy: none
+		sourceColumn: unitsofwork
+
+		annotation SummarizationSetBy = Automatic
+
+	column djpapplied
+		dataType: string
+		lineageTag: 1b8f4ff1-e157-4fd7-9318-47be53cc49a7
+		summarizeBy: none
+		sourceColumn: djpapplied
+
+		annotation SummarizationSetBy = Automatic
+
+	column djperror
+		dataType: string
+		lineageTag: e609a260-2126-4e65-ae7c-2f8e9f957933
+		summarizeBy: none
+		sourceColumn: djperror
+
+		annotation SummarizationSetBy = Automatic
+
+	column milestone
+		dataType: int64
+		formatString: 0
+		lineageTag: f50cce6f-cb31-4051-8a54-1107e4fc73a4
+		summarizeBy: sum
+		sourceColumn: milestone
+
+		annotation SummarizationSetBy = Automatic
+
+	partition workorder = m
+		mode: import
+		source = ```
+				let
+				    RangeStartText = DateTime.ToText(RangeStart, "yyyy-MM-dd HH:mm:ss"),
+				    RangeEndText   = DateTime.ToText(RangeEnd,   "yyyy-MM-dd HH:mm:ss"),
+				
+				    SQL = 
+				        "SELECT *
+				         FROM dbo.workorder
+				         WHERE reportdate >= '" & RangeStartText & "'
+				           AND reportdate <  '" & RangeEndText   & "'",
+				
+				    Origen = Odbc.Query(
+				        "dsn=" & #"Parámetro de Cadena de Conexión",
+				        SQL
+				    ),
+				
+				    #"Inserted Merged Column" = Table.AddColumn(Origen, "OrgidSiteidKey", each Text.Combine({[orgid], [siteid]}, ":"), type text),
+				    #"Inserted Merged Column1" = Table.AddColumn(#"Inserted Merged Column", "OrgidTmasignadoKey", each Text.Combine({[orgid], [tm_asignado]}, ":"), type text),
+				    #"Added Custom" = Table.AddColumn(#"Inserted Merged Column1", "M_tm_incidente", each if [tm_incidente] is null then 0 else 1),
+				
+				    #"Inserted Merged Column2" = Table.AddColumn(#"Added Custom", "OrgidSiteidLocationKey", each Text.Combine({[orgid], [siteid], [location]}, ":"), type text),
+				    #"Added Custom1" = Table.AddColumn(#"Inserted Merged Column2", "MconcatJpnumLocation", each (if [jpnum] <> null then [jpnum] else "S/CodTarea") & "-" & (if [location] <> null then [location] else "S/Ubicación")),
+				
+				    #"Inserted Merged Column3" = Table.AddColumn(#"Added Custom1", "AliasJobPlanKey", each Text.Combine({[orgid], [jpnum], [tm_clasificacion]}, ":"), type text),
+				    #"Inserted Merged Column4" = Table.AddColumn(#"Inserted Merged Column3", "JobPlanKey", each Text.Combine({[orgid], [jpnum], [worktype], [tm_clasificacion], [tm_subclasificacion]}, ":"), type text),
+				    #"Inserted Merged Column5" = Table.AddColumn(#"Inserted Merged Column4", "matusetransKey", each Text.Combine({[orgid], [siteid], [location], [wonum]}, ":"), type text),
+				
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Merged Column5",{
+				        {"wonum","Orden de Trabajo"}, 
+				        {"status", "Estado"}, 
+				        {"worktype", "Tipo de Trabajo"}, 
+				        {"description", "Descripción"},
+				        {"assetnum", "Activo"},
+				        {"location", "Ubicación"}, 
+				        {"jpnum", "Plan de Trabajo"},
+				        {"changedate", "Fecha Modificación"},
+				        {"actlabhrs", "Horas Reales Mano de Obra"}, 
+				        {"actmatcost", "Coste Real de Materiales"}, 
+				        {"actlabcost", "Coste Real Mano de Obra"},
+				        {"acttoolcost", "Coste Real Herramientas"},
+				        {"targcompdate", "Finalización Prevista"},
+				        {"reportdate", "Fecha de Notificación"},
+				        {"orgid", "Organización"}, 
+				        {"siteid", "Campus"}, 
+				        {"istask", "Es Tarea"}, 
+				        {"tm_cta_depto", "Departamento"},
+				        {"tm_fechadesmontaje", "Fecha Desmontaje"},
+				        {"tm_fechamontaje", "Fecha Montaje"},
+				        {"tm_incidente", "No. de  Evento"}, 
+				        {"tm_subclasificacion", "Subclasificación"}, 
+				        {"tm_clasificacion", "Clasificación"}, 
+				        {"tm_nombre", "Usuario"}, 
+				        {"tm_asignado", "Mano de Obra Asignada"} 
+				    }),
+				
+				    #"Valor reemplazado" = Table.ReplaceValue(#"Renamed Columns", null, " ", Replacer.ReplaceValue, {"Subclasificación"}),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Valor reemplazado", {{"statusdate", type date}, {"MconcatJpnumLocation", type text}, {"M_tm_incidente", type text}}),
+				    #"Columna duplicada" = Table.DuplicateColumn(#"Tipo cambiado", "schedfinish", "schedfinish - Copia"),
+				    #"Columnas con nombre cambiado" = Table.RenameColumns(#"Columna duplicada", {{"schedfinish - Copia", "schedfinish2"}}),
+				    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Columnas con nombre cambiado", {{"schedfinish", type date}}),
+				    #"Personalizada agregada" = Table.AddColumn(#"Tipo cambiado1", "workorder_pm_KEY", each [Organización] & ":" & [Campus] & ":" & [Activo] & ":" & [Tipo de Trabajo] & ":" & [Plan de Trabajo]),
+				    #"Tipo cambiado2" = Table.TransformColumnTypes(#"Personalizada agregada", {{"workorder_pm_KEY", type text}, {"Fecha Modificación", type date}, {"Fecha de Notificación", type date}})
+				in
+				    #"Tipo cambiado2"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

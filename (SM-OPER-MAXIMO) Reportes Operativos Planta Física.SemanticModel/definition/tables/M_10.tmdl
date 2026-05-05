@@ -1,0 +1,652 @@
+table M_10
+	lineageTag: 1ef776d9-678b-4e67-82eb-a70435274f3f
+
+	column clasificacion
+		lineageTag: 4f271de8-9385-4ea2-9976-2b0bd23243b4
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [clasificacion]
+
+		annotation SummarizationSetBy = Automatic
+
+	column desc_clasificacion
+		lineageTag: 3410181e-f139-40fc-892c-a4325f449515
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [desc_clasificacion]
+
+		annotation SummarizationSetBy = Automatic
+
+	column fecha_inicio
+		formatString: General Date
+		lineageTag: 98275cf3-8b87-4aba-8306-b7e3e3f463ca
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [fecha_inicio]
+
+		annotation SummarizationSetBy = Automatic
+
+	column site_id
+		lineageTag: 595a98d7-8de4-4c49-9e69-8eb3fb46fc37
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [site_id]
+
+		annotation SummarizationSetBy = Automatic
+
+	column KeyL
+		lineageTag: 54a5b6df-4510-4316-8eaa-ee8b22ef7973
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyL]
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyOWOS
+		lineageTag: 143c0bb9-d017-402f-a1f7-13d7ba98526f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyOWOS]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Institución
+		lineageTag: eac19fe9-6e8e-418c-91ae-618ec3480387
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Institución]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Nombre
+		lineageTag: 276a162e-97a6-46bd-868c-502db6f86c0c
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Nombre]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Horas_Normales
+		lineageTag: a18a2bba-23ad-419b-8516-d33780abddc6
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Horas_Normales]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column TD_CalSunday
+		formatString: 0
+		lineageTag: eee5417d-fa39-457c-bdab-d9584981b104
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [TD_CalSunday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column TD_CalMonday
+		formatString: 0
+		lineageTag: 3f382cd6-586b-4d01-b245-1f49a160df54
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [TD_CalMonday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column TD_CalTuesday
+		formatString: 0
+		lineageTag: 5ce7c83f-af3b-4b52-9349-4f44ada28c74
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [TD_CalTuesday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column TD_CalWednesday
+		formatString: 0
+		lineageTag: cd0a99a3-b33d-4e67-b2f2-b57b9aea1a77
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [TD_CalWednesday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column TD_CalThursday
+		formatString: 0
+		lineageTag: 183cade7-309a-4080-b2a1-cd5b3d54be4f
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [TD_CalThursday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column TD_CalFriday
+		formatString: 0
+		lineageTag: dd0090db-a586-4e25-a55e-0c1709183a38
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [TD_CalFriday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column TD_CalSaturday
+		formatString: 0
+		lineageTag: 064fda88-e426-4cd1-abb3-5a57e48bf178
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [TD_CalSaturday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyTDPS
+		lineageTag: 4f2bc37c-c0b0-4304-ba8d-fe640bed7b77
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyTDPS]
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyPID
+		lineageTag: 4c36035a-2b53-4c26-9e89-f115f1561135
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyPID]
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyOS
+		lineageTag: c8114d8c-118c-40b6-b801-97e93c5ca99b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyOS]
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyV
+		lineageTag: 532c4e72-d920-4649-b3d8-ea4b7806a65e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyV]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Organización
+		lineageTag: 873afbb9-0e98-4697-9603-dc21408c121e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: workorder[Organización]
+
+		annotation SummarizationSetBy = Automatic
+
+	column personcal_Organización
+		lineageTag: 0343f23f-5fe1-483a-92c9-f6570114aa3f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: personcal[Organización]
+
+		annotation SummarizationSetBy = Automatic
+
+	column personcal_Persona
+		lineageTag: ae4f0e4a-8623-4576-ad44-9f79801b1427
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: personcal[Persona]
+
+		annotation SummarizationSetBy = Automatic
+
+	column personcal_Turno
+		lineageTag: 456df020-48a1-4288-acd7-56c2ee899e3b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: personcal[Turno]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Horas_disp_semana
+		lineageTag: 8531bbf6-954f-4226-b0f2-81bbd99e8ec9
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Horas_disp_semana]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Horas_disp_dia
+		lineageTag: 99efdf13-2273-46e4-a5c4-ac74136502a7
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Horas_disp_dia]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PcSpMonday
+		lineageTag: e3d519ad-cf16-4ca3-990f-05122b9582c6
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [PcSpMonday]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PcSpTuesday
+		lineageTag: 26c3b4c7-31ea-4a9a-937e-53069232a79c
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [PcSpTuesday]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PcSpWednesday
+		lineageTag: ab97e1a7-c372-4299-8393-abdd67ab7592
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [PcSpWednesday]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PcSpThursday
+		lineageTag: 37752e30-9881-4232-a317-830831126b67
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [PcSpThursday]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PcSpFriday
+		lineageTag: c9366739-d10a-46b6-96b5-05994097ada0
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [PcSpFriday]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PcSpSaturday
+		lineageTag: b13e78b2-ecea-4427-9da6-de4263e509ac
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [PcSpSaturday]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column PcSpSunday
+		lineageTag: d2cbdd4f-f840-4408-bda2-bf6f51d80110
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [PcSpSunday]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column modavail_Persona
+		lineageTag: 1900b090-dc57-4f01-964b-7eaf855ea165
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: TD_Modavail[modavail_Persona]
+
+		annotation SummarizationSetBy = Automatic
+
+	column AG_Modavail_Hrs
+		lineageTag: effc24cc-1311-4d03-aa2a-031510494093
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [AG_Modavail_Hrs]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column Monday
+		formatString: 0
+		lineageTag: 13ac961b-e5b0-4909-83c3-a6fdb14af026
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Monday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tuesday
+		formatString: 0
+		lineageTag: 5e1629e1-481c-420d-83d1-bd47dc7b1a9a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Tuesday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Wednesday
+		formatString: 0
+		lineageTag: 842b3fdb-a3fd-440e-aa92-f7643417b0c7
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Wednesday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Thursday
+		formatString: 0
+		lineageTag: cae857b6-67ac-4a9b-a5ff-f88fadb3ccd9
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Thursday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Friday
+		formatString: 0
+		lineageTag: 5a303ba8-1a76-4044-93cd-037c6b623401
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Friday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Saturday
+		formatString: 0
+		lineageTag: a83a59a5-fd28-4d3e-b632-ac89d2ac36c5
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Saturday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sunday
+		formatString: 0
+		lineageTag: b0122cf8-03bb-4583-b4b0-38118db5bee7
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Sunday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyPS
+		lineageTag: 7757ce97-2148-4d69-b595-06fe9dc9c83f
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyPS]
+
+		annotation SummarizationSetBy = Automatic
+
+	column keyPEROP
+		lineageTag: 88388d23-fd42-4359-849f-2adb9c98d86b
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [keyPEROP]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Dias
+		formatString: 0
+		lineageTag: 10b1ec78-fe18-406d-84dd-82a87fe48ae9
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Dias]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Campus
+		lineageTag: e605ee83-4258-44a5-b8b9-c4a2d94f574e
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Campus]
+
+		annotation SummarizationSetBy = Automatic
+
+	column alndomain_Descripción
+		lineageTag: 4319d6fb-f2ab-4b1b-9d57-b22e4278a6f3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: alndomain[Descripción]
+
+		annotation SummarizationSetBy = Automatic
+
+	column AGHrsDisponibles
+		lineageTag: eb1895cc-8d3d-46c1-817b-fed6c8a6fbb2
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [AGHrsDisponibles]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column HorasNoDisponibles2
+		formatString: 0
+		lineageTag: ef333164-a3a4-4a29-8181-237e9c746458
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [HorasNoDisponibles2]
+
+		annotation SummarizationSetBy = Automatic
+
+	column PbDiasTotales
+		lineageTag: f77df2b3-eb3c-49be-9ee1-6ff3b303afe1
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [PbDiasTotales]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition M_10 = calculated
+		mode: import
+		source = ```
+				
+				VAR startDate = DATE(2018, 01, 01)
+				VAR endDate = DATE(2018, 12, 31)
+				
+				VAR TD_Maximo_Cal =
+				ADDCOLUMNS(
+				    SUMMARIZECOLUMNS(
+				        'workorder'[Organización],
+				        "TD_CalSunday",
+				            CALCULATE(
+				                DISTINCTCOUNT('workorder'[Fecha de Notificación]),
+				                'workorder'[Fecha de Notificación] >= startDate,
+				                'workorder'[Fecha de Notificación] <= endDate,
+				                WEEKDAY('workorder'[Fecha de Notificación], 1) = 1
+				            ),
+				        "TD_CalMonday",
+				            CALCULATE(
+				                DISTINCTCOUNT('workorder'[Fecha de Notificación]),
+				                'workorder'[Fecha de Notificación] >= startDate,
+				                'workorder'[Fecha de Notificación] <= endDate,
+				                WEEKDAY('workorder'[Fecha de Notificación], 1) = 2
+				            ),
+				        "TD_CalTuesday",
+				            CALCULATE(
+				                DISTINCTCOUNT('workorder'[Fecha de Notificación]),
+				                'workorder'[Fecha de Notificación] >= startDate,
+				                'workorder'[Fecha de Notificación] <= endDate,
+				                WEEKDAY('workorder'[Fecha de Notificación], 1) = 3
+				            ),
+				        "TD_CalWednesday",
+				            CALCULATE(
+				                DISTINCTCOUNT('workorder'[Fecha de Notificación]),
+				                'workorder'[Fecha de Notificación] >= startDate,
+				                'workorder'[Fecha de Notificación] <= endDate,
+				                WEEKDAY('workorder'[Fecha de Notificación], 1) = 4
+				            ),
+				        "TD_CalThursday",
+				            CALCULATE(
+				                DISTINCTCOUNT('workorder'[Fecha de Notificación]),
+				                'workorder'[Fecha de Notificación] >= startDate,
+				                'workorder'[Fecha de Notificación] <= endDate,
+				                WEEKDAY('workorder'[Fecha de Notificación], 1) = 5
+				            ),
+				        "TD_CalFriday",
+				            CALCULATE(
+				                DISTINCTCOUNT('workorder'[Fecha de Notificación]),
+				                'workorder'[Fecha de Notificación] >= startDate,
+				                'workorder'[Fecha de Notificación] <= endDate,
+				                WEEKDAY('workorder'[Fecha de Notificación], 1) = 6
+				            ),
+				        "TD_CalSaturday",
+				            CALCULATE(
+				                DISTINCTCOUNT('workorder'[Fecha de Notificación]),
+				                'workorder'[Fecha de Notificación] >= startDate,
+				                'workorder'[Fecha de Notificación] <= endDate,
+				                WEEKDAY('workorder'[Fecha de Notificación], 1) = 7
+				            )
+				    ),
+				    "KeyL", [Organización] & ""
+				)
+				
+				
+				
+				
+				    VAR _Maximo_10 =
+				    CALCULATETABLE(
+				    SELECTCOLUMNS(
+				        MAXIMO_10,
+				        "Institución",MAXIMO_10[orgid],
+				        "clasificacion", MAXIMO_10[tm_clasificacion],
+				        "desc_clasificacion", MAXIMO_10[description],
+				        "Nombre",MAXIMO_10[displayname],
+				        "Horas_Normales",MAXIMO_10[Horas_Normales],
+				        "fecha_inicio", MAXIMO_10[startdate],
+				        "site_id", MAXIMO_10[siteid],
+				        "keyL",MAXIMO_10[orgid] & "",
+				        "keyOWOS",MAXIMO_10[orgid]&MAXIMO_10[siteid],
+				        "keyTDPS",MAXIMO_10[orgid]&MAXIMO_10[personid],
+				        "keyPID",MAXIMO_10[personid]&"",
+				        "keyOS",MAXIMO_10[orgid]&MAXIMO_10[siteid],
+				        "keyV",MAXIMO_10[tm_clasificacion]&""
+				    ),
+				    MAXIMO_10[startdate] >= startDate && MAXIMO_10[startdate] <= endDate
+				    )
+				    
+				
+				var tblPersoncal = SELECTCOLUMNS(personcal, personcal[Organización], 
+				                                            personcal[Persona],
+				                                            personcal[Turno],
+				                                "keyPS",    personcal[Organización]&personcal[Turno],
+				                                "keyTDPS",  personcal[Organización]&personcal[Persona],
+				                                "keyPEROP", personcal[Organización]&personcal[Persona],
+				                                "Dias",      DATEDIFF(startDate,endDate, DAY)+1
+				)
+				
+				VAR tblShiftpatternday =
+				    SELECTCOLUMNS(
+				        shiftpatternday,
+				        shiftpatternday[Horas de Trabajo],
+				        "Lunes", IF(shiftpatternday[Secuencia de día] = "001", shiftpatternday[Horas de Trabajo], 0),
+				        "Martes", IF(shiftpatternday[Secuencia de día] = "002", shiftpatternday[Horas de Trabajo], 0),
+				        "Miercoles", IF(shiftpatternday[Secuencia de día] = "003", shiftpatternday[Horas de Trabajo], 0),
+				        "Jueves", IF(shiftpatternday[Secuencia de día] = "004", shiftpatternday[Horas de Trabajo], 0),
+				        "Viernes", IF(shiftpatternday[Secuencia de día] = "005", shiftpatternday[Horas de Trabajo], 0),
+				        "Sabado", IF(shiftpatternday[Secuencia de día] = "006", shiftpatternday[Horas de Trabajo], 0),
+				        "Domingo", IF(shiftpatternday[Secuencia de día] = "007", shiftpatternday[Horas de Trabajo], 0),
+				        "keyPS", shiftpatternday[Organización] & shiftpatternday[Turno]
+				    )
+				
+				VAR TD_Personcal_Shiftp  =  
+				GROUPBY(  
+				    NATURALINNERJOIN( tblPersoncal,tblShiftpatternday), 
+				    [keyTDPS],
+				 personcal[Organización], personcal[Persona],personcal[Turno],
+				 "Horas_disp_semana",  SUMX(CURRENTGROUP(), shiftpatternday[Horas de Trabajo]), 
+				 "Horas_disp_dia", SUMX(CURRENTGROUP(), shiftpatternday[Horas de Trabajo]/7),
+				 "PcSpMonday",      SUMX(CURRENTGROUP(), [Lunes]),
+				 "PcSpTuesday",     SUMX(CURRENTGROUP(), [Martes]),
+				 "PcSpWednesday",   SUMX(CURRENTGROUP(), [Miercoles]),
+				 "PcSpThursday",    SUMX(CURRENTGROUP(), [Jueves]),
+				 "PcSpFriday",      SUMX(CURRENTGROUP(), [Viernes]),
+				 "PcSpSaturday",    SUMX(CURRENTGROUP(), [Sabado]),
+				 "PcSpSunday",      SUMX(CURRENTGROUP(), [Domingo])
+				 )
+				
+				
+				VAR tblModavail =
+				    CALCULATETABLE(
+				        SUMMARIZE(
+				            TD_Modavail,
+				            TD_Modavail[modavail_Persona],
+				            "keyPID", TD_Modavail[modavail_Persona] & "",
+				            "AG_Modavail_Hrs", SUM(TD_Modavail[modavail_Horas]),
+				            "Monday", SUM(TD_Modavail[Monday]),
+				            "Tuesday", SUM(TD_Modavail[Tuesday]),
+				            "Wednesday", SUM(TD_Modavail[Wednesday]),
+				            "Thursday", SUM(TD_Modavail[Thursday]),
+				            "Friday", SUM(TD_Modavail[Friday]),
+				            "Saturday", SUM(TD_Modavail[Saturday]),
+				            "Sunday", SUM(TD_Modavail[Sunday])
+				        ),
+				        TD_Modavail[Fecha] >= startDate && TD_Modavail[Fecha] <= endDate
+				    )
+				
+				var tblSite = SELECTCOLUMNS(site, "Campus",site[Descripción], "keyOS",site[Organización]&site[Campus])	
+				
+				var tblAlias_de_alndomain_Rendimiento =
+														CALCULATETABLE(
+				 										SELECTCOLUMNS(alndomain, alndomain[Descripción],
+																		"keyV", alndomain[Valor Dominio]&"" ),
+																		alndomain[ID Dominio]="TM_CLASIFICACION"
+																		)
+				
+				VAR _JOIN1 = 
+				NATURALLEFTOUTERJOIN(
+				NATURALLEFTOUTERJOIN(
+				NATURALLEFTOUTERJOIN(
+				NATURALLEFTOUTERJOIN(
+				NATURALLEFTOUTERJOIN(
+				NATURALINNERJOIN(TD_Maximo_Cal,_Maximo_10),TD_Personcal_Shiftp
+				),tblModavail),
+				tblPersoncal
+				),
+				tblSite
+				),
+				tblAlias_de_alndomain_Rendimiento
+				)
+				
+				
+				//NATURALLEFTOUTERJOIN(
+				//NATURALLEFTOUTERJOIN(
+				//NATURALLEFTOUTERJOIN(TD_Personcal_Shiftp,
+				//NATURALINNERJOIN(TD_Maximo_Cal,_Maximo_10)
+				//),tblModavail
+				//),
+				//tblPersoncal
+				//)
+				
+				
+				RETURN
+				ADDCOLUMNS(
+				_JOIN1,
+				 "AGHrsDisponibles", (ROUNDDOWN([Horas_disp_dia],1) * [Dias]), 
+				"HorasNoDisponibles2", (  IF(ISBLANK( ([Monday]    *   [PcSpMonday])      +
+				                            ([Tuesday]   *   [PcSpTuesday])     +
+				                            ([Wednesday] *   [PcSpWednesday])   +
+				                            ([Thursday]  *   [PcSpThursday])    +
+				                            ([Friday]    *   [PcSpFriday])      +
+				                            ([Saturday]  *   [PcSpSaturday])    +
+				                            ([Sunday]       * [PcSpSunday] )),0)),
+				"PbDiasTotales",            (([TD_CalMonday]    * [PcSpMonday]   )  +
+				                            ([TD_CalTuesday]   * [PcSpTuesday]   )  +
+				                            ([TD_CalWednesday] * [PcSpWednesday] )  +
+				                            ([TD_CalThursday]  * [PcSpThursday]  )  +
+				                            ([TD_CalFriday]    * [PcSpFriday]    )  +
+				                            ([TD_CalSaturday]  * [PcSpSaturday]  )  +
+				                            ([TD_CalSunday]    * [PcSpSunday]    )  )      
+				)
+				
+				```
+
+	annotation PBI_Id = 563b267286474657920293dcd9fabd85
+

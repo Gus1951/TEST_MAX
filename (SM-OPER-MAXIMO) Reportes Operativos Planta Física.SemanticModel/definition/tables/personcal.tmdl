@@ -1,0 +1,74 @@
+table personcal
+	lineageTag: 21df1b31-fe88-4dca-9227-de7a5a06413e
+
+	/// Persona
+	column Persona
+		dataType: string
+		lineageTag: 899c1261-f6e0-4e78-af54-81248e88f0bd
+		summarizeBy: none
+		sourceColumn: Persona
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Organización que se asocia al calendario de esta persona
+	column Organización
+		dataType: string
+		lineageTag: b6f160ec-b0ad-4a60-82a0-cca105be5332
+		summarizeBy: none
+		sourceColumn: Organización
+
+		annotation SummarizationSetBy = Automatic
+
+	/// El registro de calendario asociado con esta persona
+	column Calendario
+		dataType: string
+		lineageTag: f5365167-7da5-4d37-ab50-897d6bb16a76
+		summarizeBy: none
+		sourceColumn: Calendario
+
+		annotation SummarizationSetBy = Automatic
+
+	/// El registro de turno asociado con esta persona
+	column Turno
+		dataType: string
+		lineageTag: 9c4d9f98-b64f-45aa-9e86-d70b80bdc5f5
+		summarizeBy: none
+		sourceColumn: Turno
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador único
+	column PersonCalid
+		dataType: int64
+		formatString: 0
+		lineageTag: a90fbec8-a526-47c2-9508-3a0f60841ecb
+		summarizeBy: sum
+		sourceColumn: PersonCalid
+
+		annotation SummarizationSetBy = Automatic
+
+	column isprimary
+		dataType: int64
+		formatString: 0
+		lineageTag: 3bde79ab-2506-4519-b463-ac2f26e2dd87
+		summarizeBy: sum
+		sourceColumn: isprimary
+
+		annotation SummarizationSetBy = Automatic
+
+	partition personcal = m
+		mode: import
+		source =
+				let
+				  Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    personcal_Table = dbo_Schema{[Name="personcal",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(personcal_Table,{{"personid", "Persona"}, {"orgid", "Organización"}, {"calnum", "Calendario"}, {"shiftnum", "Turno"}, {"personcalid", "PersonCalid"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

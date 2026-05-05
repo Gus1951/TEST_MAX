@@ -1,0 +1,137 @@
+table craft
+	lineageTag: a6b12d68-7412-4be2-9a08-6ab0892f5840
+
+	/// Identificador del registro de especialidad. Este valor debe ser único dentro de una organización. Cuando guarda un registro de especialidad, este campo se convierte en un campo de sólo lectura.
+	column Especialidad
+		dataType: string
+		lineageTag: 4aa4815d-a3f0-4d87-8281-42214fb2c5e0
+		summarizeBy: none
+		sourceColumn: Especialidad
+
+		annotation SummarizationSetBy = Automatic
+
+	/// El nombre de la organización asociado a este registro de especialidad.
+	column Organización
+		dataType: string
+		lineageTag: 6511bf6e-682d-4352-bbef-7bb0cb82ff40
+		summarizeBy: none
+		sourceColumn: Organización
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Nombre o descripción de la especialidad.
+	column Descripción
+		dataType: string
+		lineageTag: d55bd9d9-2075-4d1d-a786-44f236ee45c2
+		summarizeBy: none
+		sourceColumn: Descripción
+
+		annotation SummarizationSetBy = Automatic
+
+	column craftid
+		dataType: int64
+		formatString: 0
+		lineageTag: b015ce8d-bb8b-4328-b9b7-8b54c4f15e04
+		summarizeBy: none
+		sourceColumn: craftid
+
+		annotation SummarizationSetBy = Automatic
+
+	column langcode
+		dataType: string
+		lineageTag: d617bbd7-2b0c-476b-9013-ed1b497069d3
+		summarizeBy: none
+		sourceColumn: langcode
+
+		annotation SummarizationSetBy = Automatic
+
+	column sendersysid
+		dataType: string
+		lineageTag: c68cfe52-a18c-4ea2-a03f-67f2e080925f
+		summarizeBy: none
+		sourceColumn: sendersysid
+
+		annotation SummarizationSetBy = Automatic
+
+	column sourcesysid
+		dataType: string
+		lineageTag: 40a44499-f784-4943-9fbd-6a4d8c059139
+		summarizeBy: none
+		sourceColumn: sourcesysid
+
+		annotation SummarizationSetBy = Automatic
+
+	column ownersysid
+		dataType: string
+		lineageTag: 516426b3-f930-4a3a-9252-2a63043259a6
+		summarizeBy: none
+		sourceColumn: ownersysid
+
+		annotation SummarizationSetBy = Automatic
+
+	column externalrefid
+		dataType: string
+		lineageTag: 578526d7-18ca-469b-9ba1-5875fcfb2914
+		summarizeBy: none
+		sourceColumn: externalrefid
+
+		annotation SummarizationSetBy = Automatic
+
+	column hasld
+		dataType: int64
+		formatString: 0
+		lineageTag: dc8930b1-36fd-4d24-9e01-098dbf1fdf5b
+		summarizeBy: none
+		sourceColumn: hasld
+
+		annotation SummarizationSetBy = Automatic
+
+	column iscrew
+		dataType: int64
+		formatString: 0
+		lineageTag: 52f9a71b-df9e-4973-beb4-f294dc7376e0
+		summarizeBy: none
+		sourceColumn: iscrew
+
+		annotation SummarizationSetBy = Automatic
+
+	column workzonetype
+		dataType: string
+		lineageTag: 3ac5c817-4a4d-4c5e-a212-faa4e2aace4b
+		summarizeBy: none
+		sourceColumn: workzonetype
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Departamento al que pertenece la especialidad
+	/// 
+	column Tm_clasificacion
+		dataType: string
+		lineageTag: 1976db3b-b4c5-4ea2-8195-baeb27b91792
+		summarizeBy: none
+		sourceColumn: Tm_clasificacion
+
+		annotation SummarizationSetBy = Automatic
+
+	column craft_KEY = craft[Especialidad]&craft[Organización]
+		lineageTag: 3dbb3524-f692-4c8a-81be-1f89ccb65df2
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition craft = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    craft_Table = dbo_Schema{[Name="craft",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(craft_Table,{{"craft", "Especialidad"}, {"orgid", "Organización"}, {"description", "Descripción"}, {"tm_clasificacion", "Tm_clasificacion"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

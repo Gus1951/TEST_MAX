@@ -1,0 +1,406 @@
+table DAX_Metricas
+	lineageTag: 027afa4a-dbd9-454a-9928-9b8688be17cf
+
+	measure Costo_Total = ```
+			
+			
+			SUM(matusetrans[Coste de Línea])
+			
+			```
+		displayFolder: MAXIMO.02
+		lineageTag: 51398f6b-ddcf-49ef-8272-e005ed2414fd
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Cantidad = ```
+			SUM(matusetrans[Cantidad_Abs])
+			
+			```
+		displayFolder: MAXIMO.02
+		lineageTag: edd5908f-641b-47e2-a92c-16ae34fc2fdb
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Coste_Unitario = ```
+			
+			AVERAGE(matusetrans[Coste Unitario])
+			
+			```
+		displayFolder: MAXIMO.02
+		lineageTag: 197dd27c-405f-44be-8264-d5f7ac6e670b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Total_Wonum.MAXIMO.01' = ```
+			
+			CALCULATE(
+			          COUNT( workorder[schedfinish]),
+			          workorder[Estado] IN {"APROB","AT","ENPRG","ATPTE","RCLIMA","REPROG","RMAT","EMAT"}
+			)
+			
+			```
+		formatString: 0
+		displayFolder: MAXIMO.01
+		lineageTag: f535ce7c-6ff8-49a2-a10a-199b287c3cf4
+
+	measure 'Días_Vencidos_MAX.01' = ```
+			
+			VAR _MIN = 
+			CALCULATE(
+			    MIN(workorder[schedfinish]),
+			    ALLSELECTED(workorder[schedfinish])
+			)
+			
+			VAR _MAX =  
+			CALCULATE(
+			    MAX(workorder[schedfinish]),
+			    ALLSELECTED(workorder[schedfinish])
+			)
+			var _Total_Dias = SUMX( FILTER(workorder, 
+			                                  workorder[schedfinish] <= _MAX
+			                                     && workorder[Estado] in {"APROB","AT","ENPRG","ATPTE","RCLIMA","REPROG","RMAT","EMAT"}
+			                                      &&
+			                                      DATEDIFF(workorder[schedfinish],NOW(),DAY)>0
+			                         ),     
+			                         IF( DATEDIFF(workorder[schedfinish], NOW(),DAY) > 0
+			, DATEDIFF(workorder[schedfinish], NOW(),DAY) 
+			,0
+			)
+			)
+			
+			RETURN _Total_Dias
+			
+			```
+		formatString: #,0
+		lineageTag: 9058175f-05da-44c2-a9c6-92e945aac4d5
+
+	measure Total_Wonum_Etiqueta = "Total OT = "  & [Total_Wonum.MAXIMO.01]
+		lineageTag: 8008f886-e200-4e18-a23f-452b3b162440
+
+	measure 'Etiqueta_Periodo_MAX.01' = ```
+			
+			
+			VAR _Fecha_Inicial = 
+			CALCULATE(
+			    MIN(workorder[schedfinish]),
+			    ALLSELECTED(workorder[schedfinish])
+			)
+			VAR _Alias_Sched = 
+			CALCULATE(
+			    MIN(workorder[schedfinish]), REMOVEFILTERS()
+			)
+			VAR _V_Filtro_PAnterior_PActual = 
+			    IF(_Alias_Sched >= _Fecha_Inicial,2,
+			        IF(
+			            _Alias_Sched < _Fecha_Inicial,1)
+			    )
+			VAR _V_Lista_Filtro = 
+			    IF(_V_Filtro_PAnterior_PActual = 2, "Periodo Solicitado","Periodo Lastre")
+			
+			VAR _P_Lastre_P_Solicitado = 
+			SWITCH(
+			    TRUE(),
+			    _V_Filtro_PAnterior_PActual = 1, "Periodo Lastre",
+			    _V_Filtro_PAnterior_PActual = 2, "Periodo Solicitado",
+			    "Periodo Lastre + Periodo Solicitado"
+			)
+			
+			RETURN
+			_P_Lastre_P_Solicitado
+			```
+		lineageTag: 74fe527a-cae2-4a9a-bcf5-694f81663459
+
+	measure 'F Horas Actlabhrs Total' = ```
+			
+			VAR Horas = [Actlabhrs Total]
+			VAR HorasEnteras = TRUNC(Horas, 0)
+			VAR Minutos = ROUND((Horas - HorasEnteras) * 60, 0)
+			VAR TextoHoras = IF(HorasEnteras < 10, "0" & HorasEnteras, FORMAT(HorasEnteras, "0"))
+			VAR TextoMinutos = IF(Minutos < 10, ":0" & Minutos, ":" & Minutos)
+			RETURN
+			IF(Horas=BLANK(),BLANK(),
+			TextoHoras & TextoMinutos & " hrs."
+			)
+			
+			```
+		displayFolder: MAXIMO.03
+		lineageTag: 4f839de7-7102-4933-974b-6f1e6e868787
+
+	measure 'Total_Wonum.MAXIMO.02' =
+			
+			CALCULATE(
+			                    COUNT(workorder[Orden de Trabajo])
+			                )
+		formatString: 0
+		lineageTag: dfeb3e65-8233-42c2-8b9f-37b107f77aa2
+
+	measure 'Costo Total CMyCMO' = SUM(workorder[Coste Real Mano de Obra]) + SUM(workorder[Coste Real de Materiales])
+		displayFolder: MAXIMO.03
+		lineageTag: 7b276d64-7ddf-4065-b2f6-982d308f48aa
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Actlabhrs Total' =
+			
+			VAR _ACT = SUM(workorder[Horas Reales Mano de Obra])
+			RETURN
+			ABS(_ACT)
+		displayFolder: MAXIMO.03
+		lineageTag: c6032404-84a0-4f60-98f8-1637679dceb7
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Coste_Real_Materiales =
+			
+			VAR _COSTE = SUM(workorder[Coste Real de Materiales])
+			RETURN
+			ABS(_COSTE)
+		displayFolder: MAXIMO.03
+		lineageTag: c37bfb9c-dfd7-4a52-bb43-013274b81a19
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Coste_Unitario_Totales = ```
+			SUM(matusetrans[Coste Unitario])
+			
+			```
+		displayFolder: MAXIMO.02
+		lineageTag: cb979bdc-f8fc-46aa-97ae-e54af3a7c248
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Total_Wonum =
+			CALCULATE(COUNT(workorder[Orden de Trabajo]),
+			                        workorder[Estado] IN {"CERR","COMP","APROB","AT","ENPRG","ATPTE","RCLIMA","REPROG","RMAT","EMAT"} &&
+			                        workorder[Es Tarea] = 0
+			)
+		formatString: 0
+		lineageTag: 6d8b4a1b-b2be-43f8-a3f4-cf0d89ad2b1e
+
+	measure Total_Wonum_Cerradas =
+			CALCULATE(COUNT(workorder[Orden de Trabajo]),
+			                        workorder[Estado] IN {"CERR","COMP"} &&
+			                        workorder[Es Tarea] = 0
+			)
+		formatString: #,0
+		lineageTag: 910d5f20-6c70-4155-a2d8-ab34cbcb51c7
+
+	measure Total_Wonum_Abiertas =
+			CALCULATE(COUNT(workorder[Orden de Trabajo]),
+			                        workorder[Estado] IN {"APROB", "AT", "ENPRG", "ATPTE", "RCLIMA",	"REPROG", "RMAT","EMAT"} &&
+			                        workorder[Es Tarea] = 0
+			)
+		formatString: 0
+		lineageTag: ddaaf0f4-a16f-4c19-bf6f-cd0f68248c29
+
+	measure Procentaje = DIVIDE([Total_Wonum_Cerradas],([Total_Wonum_Cerradas] + [Total_Wonum_Abiertas]),0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: efe4b9c4-9861-4e83-8e4e-ea3f984e071e
+
+	measure 'Actlabhrs Total_Cerradas' = ```
+			
+			VAR _ACT = 
+			CALCULATE(
+			    SUM(workorder[Horas Reales Mano de Obra]),
+			    workorder[Estado] IN {"CERR","COMP"} && workorder[Es Tarea] = 0
+			)
+			RETURN
+			ABS(_ACT)
+			```
+		formatString: 0
+		lineageTag: d257d926-028f-4f95-9e11-a12e57891020
+
+	measure 'F Horas Actlabhrs Total _Cerradas' =
+			
+			VAR Horas = [Actlabhrs Total_Cerradas]
+			VAR HorasEnteras = TRUNC(Horas, 0)
+			VAR Minutos = ROUND((Horas - HorasEnteras) * 60, 0)
+			VAR TextoHoras = IF(HorasEnteras < 10, "0" & HorasEnteras, FORMAT(HorasEnteras, "0"))
+			VAR TextoMinutos = IF(Minutos < 10, ":0" & Minutos, ":" & Minutos)
+			RETURN
+			IF(Horas=BLANK(),BLANK(),
+			TextoHoras & TextoMinutos & " hrs."
+			)
+		lineageTag: ce2de3a8-22d6-4333-9802-26afbd14d9cf
+
+	measure OT_Atencion =
+			
+			SUMX(
+			    FILTER(
+			        workorder,
+			        workorder[Estado] IN {"CERR","COMP"} && workorder[Es Tarea] = 0
+			    ),
+			    IF(AND(workorder[Fecha Montaje] <> BLANK(),workorder[Fecha Desmontaje] <> BLANK()),
+			    IF(
+			        workorder[actstart] <= workorder[Fecha Montaje],1
+			    ),
+			    IF(workorder[actstart] <= workorder[schedstart],1)
+			    )
+			)
+		formatString: #,0
+		lineageTag: 2dfb3e8d-ad8c-41ae-8add-49d3bdeea5f8
+
+	measure OT_Solución = ```
+			
+			SUMX(
+			    FILTER(
+			        workorder,
+			        workorder[Estado] IN {"CERR","COMP"} && workorder[Es Tarea] = 0
+			    ),
+			    IF(
+			        AND(
+			            workorder[Fecha Montaje] <> BLANK(),
+			            workorder[Fecha Desmontaje] <> BLANK()
+			        ),
+			        IF(
+			            workorder[actfinish] <> BLANK() && workorder[actstart] <> BLANK(),
+			            IF(
+			                (CONVERT(workorder[actfinish],INTEGER) - CONVERT(workorder[actstart],INTEGER)) <= 
+			                (CONVERT(workorder[Fecha Desmontaje],INTEGER) - CONVERT(workorder[Fecha Montaje],INTEGER)),
+			                1
+			            )
+			        ),
+			        IF(
+			            workorder[actfinish] <> BLANK() && workorder[actstart] <> BLANK() && 
+			            workorder[schedfinish2] <> BLANK() && workorder[schedstart] <> BLANK(),
+			            IF(
+			                (CONVERT(workorder[actfinish],INTEGER) - CONVERT(workorder[actstart],INTEGER)) <= 
+			                (CONVERT(workorder[schedfinish2],INTEGER) - CONVERT(workorder[schedstart],INTEGER)),
+			                1
+			            )
+			        )
+			    )
+			)
+			
+			    
+			```
+		formatString: #,0
+		lineageTag: a55b5f4d-b951-4331-94a6-18358181d0a1
+
+	measure OT_Total = ```
+			
+			SUMX(
+			    FILTER(
+			        workorder,
+			        workorder[Estado] IN {"CERR","COMP"} && workorder[Es Tarea] = 0
+			    ),
+			     IF(AND(workorder[Fecha Montaje] <> BLANK(),workorder[Fecha Desmontaje] <> BLANK()),
+			     IF(
+			        workorder[actstart] <> BLANK() && workorder[actfinish] <> BLANK(),
+			     IF(
+			        AND(
+			            CONVERT(workorder[actstart],INTEGER) <= CONVERT(workorder[Fecha Montaje],INTEGER),
+			            CONVERT(workorder[actfinish],INTEGER) - CONVERT(workorder[actstart],INTEGER) <= CONVERT(workorder[Fecha Desmontaje],INTEGER) - CONVERT(workorder[Fecha Montaje],INTEGER)),
+			            1
+			     )
+			     ),
+			            IF(
+			                AND(
+			                    workorder[actstart] <= workorder[schedstart],
+			                    DATEDIFF(workorder[actstart],workorder[actfinish],MINUTE) <= DATEDIFF(workorder[schedstart],workorder[schedfinish2],MINUTE)
+			                ),
+			                1
+			            )
+			     )
+			     )
+			
+			```
+		formatString: #,0
+		lineageTag: 9ac3e0cd-72d3-45bf-ad5b-0ddb5e522c35
+
+	measure Porcentaje_Atención = DIVIDE([OT_Atencion],[Total_Wonum_Cerradas],0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 51b2aaf5-a612-43b1-b947-2688fb54ae08
+
+	measure Porcentaje_Solución = DIVIDE([OT_Solución],[Total_Wonum_Cerradas],0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 7b3e5357-99a5-476a-9d1b-56eca53bc524
+
+	measure Porcentaje_Cumplimiento = DIVIDE([OT_Total],[Total_Wonum_Cerradas],0)
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: dd93dc40-3ded-4c9a-86ee-94d0ddf8f646
+
+	measure Evento_ =
+			
+			SUMX(
+			    FILTER(
+			    workorder,
+			    workorder[Estado] IN {"CERR","COMP"} && workorder[Es Tarea] = 0
+			    ),
+			    IF(AND(workorder[Fecha Montaje] <> BLANK(),workorder[Fecha Desmontaje] <> BLANK()),1,0)
+			)
+		formatString: 0
+		lineageTag: 8d87bcaa-083d-478f-b4c0-4cc8da554ed7
+
+	measure Costo_Reemplazo = ```
+			
+			
+			
+			
+			    SUM(asset[Coste Reemplazo])
+			   
+			
+			```
+		lineageTag: aa9ca27b-e2c6-463e-b71a-8401d6c19c2f
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure 'Días_A_FAVOR_MAX.01' = ```
+			
+			VAR _Total_Dias = 
+			    SUMX(
+			        FILTER(
+			            workorder, 
+			            workorder[schedfinish] <= DATE(2018,12,31)
+			            && workorder[Estado] IN {"APROB","AT","ENPRG","ATPTE","RCLIMA","REPROG","RMAT","EMAT"}
+			            && DATEDIFF(workorder[schedfinish], NOW(), DAY) < 0
+			        ),
+			        VAR _dias = DATEDIFF(workorder[schedfinish], NOW(), DAY)
+			        RETURN IF(_dias < 0, _dias * -1, 0)
+			    )
+			RETURN COALESCE(_Total_Dias,0)
+			
+			```
+		formatString: 0
+		lineageTag: 360c7e96-3117-409e-95f4-fe69145fdbda
+
+	measure FECHA =
+			
+			CALCULATE(
+			    MAX(workorder[schedfinish]),
+			    ALLSELECTED(workorder[schedfinish])
+			)
+		formatString: General Date
+		lineageTag: 894ff496-233d-48f4-a409-f53feb7678ae
+
+	measure PbDiasTotales = ```
+			
+			SUMX(
+			    TD_Maximo_Cal,
+			    VAR Key = TD_Maximo_Cal[Orgid_cal] & TD_Maximo_Cal[]
+			    RETURN
+			        TD_Maximo_Cal[TD_CalMonday]    * LOOKUPVALUE(Personcal_Shift[PcSpMonday], Personcal_Shift[keyTDPS], Key) +
+			        TD_Maximo_Cal[TD_CalTuesday]   * LOOKUPVALUE(Personcal_Shift[PcSpTuesday], Personcal_Shift[keyTDPS], Key) +
+			        TD_Maximo_Cal[TD_CalWednesday] * LOOKUPVALUE(Personcal_Shift[PcSpWednesday], Personcal_Shift[keyTDPS], Key) +
+			        TD_Maximo_Cal[TD_CalThursday]  * LOOKUPVALUE(Personcal_Shift[PcSpThursday], Personcal_Shift[keyTDPS], Key) +
+			        TD_Maximo_Cal[TD_CalFriday]    * LOOKUPVALUE(Personcal_Shift[PcSpFriday], Personcal_Shift[keyTDPS], Key) +
+			        TD_Maximo_Cal[TD_CalSaturday]  * LOOKUPVALUE(Personcal_Shift[PcSpSaturday], Personcal_Shift[keyTDPS], Key) +
+			        TD_Maximo_Cal[TD_CalSunday]    * LOOKUPVALUE(Personcal_Shift[PcSpSunday], Personcal_Shift[keyTDPS], Key)
+			)
+			
+			
+			```
+		lineageTag: 6ac46330-cd7c-4cee-a067-4e9c3d95a1af
+
+	partition DAX_Metricas = m
+		mode: import
+		source =
+				let
+				    Origen = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Columna1 = _t]),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"Columna1", type text}}),
+				    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado",{"Columna1"})
+				in
+				    #"Columnas quitadas"
+
+	annotation PBI_ResultType = Table
+

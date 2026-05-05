@@ -1,0 +1,56 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "47a186ad85bda2e03a60",
+  "position": {
+    "x": 832.520325203252,
+    "y": 166.5040650406504,
+    "z": 10000,
+    "height": 68.2204155374887,
+    "width": 278.66305329719961,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "visualType": "card",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "Etiqueta_Periodo_MAX.01"
+                }
+              },
+              "queryRef": "DAX_Metricas.Etiqueta_Periodo",
+              "nativeQueryRef": "Etiqueta_Periodo_MAX.01"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DAX_Metricas"
+                  }
+                },
+                "Property": "Etiqueta_Periodo_MAX.01"
+              }
+            },
+            "direction": "Descending"
+          }
+        ],
+        "isDefaultSort": true
+      }
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

@@ -1,0 +1,61 @@
+table Alias_de_jobplan_Reincidencias
+	lineageTag: 08b1e92e-5ef2-4365-9c02-4b69fce6ff22
+
+	column jpnum
+		dataType: string
+		lineageTag: 8452d677-c71d-4bec-8462-c013a91b3749
+		summarizeBy: none
+		sourceColumn: jpnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column orgid
+		dataType: string
+		lineageTag: 15c46db4-0778-47c2-a79b-4f4b82044372
+		summarizeBy: none
+		sourceColumn: orgid
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_clasificacion
+		dataType: string
+		lineageTag: 9b8b9652-8b92-4ae3-839f-c15e79b3b17a
+		summarizeBy: none
+		sourceColumn: tm_clasificacion
+
+		annotation SummarizationSetBy = Automatic
+
+	column description
+		dataType: string
+		lineageTag: c29f4ce8-63a6-4926-a53f-77bdde8c4b21
+		summarizeBy: none
+		sourceColumn: description
+
+		annotation SummarizationSetBy = Automatic
+
+	column AliasJobPlanKey
+		dataType: string
+		lineageTag: c7ae4650-dffe-4204-8a8d-94f7426232fe
+		summarizeBy: none
+		sourceColumn: AliasJobPlanKey
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Alias_de_jobplan_Reincidencias = m
+		mode: import
+		source = ```
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    jobplan_Table = dbo_Schema{[Name="jobplan",Kind="Table"]}[Data],
+				    #"Removed Other Columns" = Table.SelectColumns(jobplan_Table,{ "orgid","jpnum", "tm_clasificacion", "description"}),   
+				    #"Inserted Merged Column" = Table.AddColumn(#"Removed Other Columns", "AliasJobPlanKey", each Text.Combine({[orgid], [jpnum], [tm_clasificacion]}, ":"), type text)
+				in
+				    #"Inserted Merged Column"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

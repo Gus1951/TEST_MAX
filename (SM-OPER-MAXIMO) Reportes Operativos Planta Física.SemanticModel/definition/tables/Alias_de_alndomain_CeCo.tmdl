@@ -1,0 +1,76 @@
+table Alias_de_alndomain_CeCo
+	lineageTag: 1dfd02ae-2d9e-4792-a01e-a6af01a1ce23
+
+	column domainid
+		dataType: string
+		lineageTag: b29afd5b-de4f-467f-af45-0f9fedaabc18
+		summarizeBy: none
+		sourceColumn: domainid
+
+		annotation SummarizationSetBy = Automatic
+
+	column value
+		dataType: string
+		lineageTag: 0ec38447-399b-4127-becc-0dd49e1e86f6
+		summarizeBy: none
+		sourceColumn: value
+
+		annotation SummarizationSetBy = Automatic
+
+	column description
+		dataType: string
+		lineageTag: 4c5d8fbf-fd44-4dad-8cda-3295bdee2d91
+		summarizeBy: none
+		sourceColumn: description
+
+		annotation SummarizationSetBy = Automatic
+
+	column siteid
+		dataType: string
+		lineageTag: 88aa5864-180e-4bf7-b82c-83da0038a725
+		summarizeBy: none
+		sourceColumn: siteid
+
+		annotation SummarizationSetBy = Automatic
+
+	column orgid
+		dataType: string
+		lineageTag: 799ef8d6-96f2-4a9c-9810-f9b9044f9e95
+		summarizeBy: none
+		sourceColumn: orgid
+
+		annotation SummarizationSetBy = Automatic
+
+	column alndomainid
+		dataType: int64
+		formatString: 0
+		lineageTag: 9190b6f1-0786-428d-ac6a-014124e59ec2
+		summarizeBy: none
+		sourceColumn: alndomainid
+
+		annotation SummarizationSetBy = Automatic
+
+	column valueid
+		dataType: string
+		lineageTag: e7946ac3-2905-42e6-bc15-894ad30adc5d
+		summarizeBy: none
+		sourceColumn: valueid
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Alias_de_alndomain_CeCo = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    alndomain_Table = dbo_Schema{[Name="alndomain",Kind="Table"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(alndomain_Table, each ([domainid] = "TM_CTA_DEPTO"))
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

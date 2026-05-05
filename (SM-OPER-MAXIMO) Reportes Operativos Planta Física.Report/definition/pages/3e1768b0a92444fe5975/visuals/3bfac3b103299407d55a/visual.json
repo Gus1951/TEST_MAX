@@ -1,0 +1,226 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "3bfac3b103299407d55a",
+  "position": {
+    "x": 0,
+    "y": 263.2303618711386,
+    "z": 8000,
+    "height": 447.37864077669906,
+    "width": 1214.4748455428066,
+    "tabOrder": 7000
+  },
+  "visual": {
+    "visualType": "tableEx",
+    "query": {
+      "queryState": {
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "M_09"
+                    }
+                  },
+                  "Property": "organizacion"
+                }
+              },
+              "queryRef": "M_09.organizacion",
+              "nativeQueryRef": "organizacion"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "M_09"
+                    }
+                  },
+                  "Property": "Site_Campus"
+                }
+              },
+              "queryRef": "M_09.Site_Campus",
+              "nativeQueryRef": "Site_Campus"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "M_09"
+                    }
+                  },
+                  "Property": "Wo_Ubicación"
+                }
+              },
+              "queryRef": "M_09.Wo_Ubicación",
+              "nativeQueryRef": "Wo_Ubicación"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "M_09"
+                    }
+                  },
+                  "Property": "clasificacion"
+                }
+              },
+              "queryRef": "M_09.clasificacion",
+              "nativeQueryRef": "clasificacion"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "M_09"
+                    }
+                  },
+                  "Property": "Subclasificacion"
+                }
+              },
+              "queryRef": "M_09.Subclasificacion",
+              "nativeQueryRef": "Subclasificacion"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "M_09"
+                    }
+                  },
+                  "Property": "jobplan_description"
+                }
+              },
+              "queryRef": "M_09.jobplan_description",
+              "nativeQueryRef": "jobplan_description"
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "M_09"
+                    }
+                  },
+                  "Property": "Concat_Reincidencia"
+                }
+              },
+              "queryRef": "M_09.Concat_Reincidencia",
+              "nativeQueryRef": "Concat_Reincidencia"
+            },
+            {
+              "field": {
+                "Aggregation": {
+                  "Expression": {
+                    "Column": {
+                      "Expression": {
+                        "SourceRef": {
+                          "Entity": "M_09"
+                        }
+                      },
+                      "Property": "CtaOTCReincidencia"
+                    }
+                  },
+                  "Function": 0
+                }
+              },
+              "queryRef": "Sum(M_09.CtaOTCReincidencia)",
+              "nativeQueryRef": "Reincidencia",
+              "displayName": "Reincidencia"
+            }
+          ]
+        }
+      }
+    },
+    "objects": {
+      "general": [
+        {
+          "properties": {}
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'2'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  },
+  "filterConfig": {
+    "filters": [
+      {
+        "name": "dd9986037078c964d20e",
+        "field": {
+          "Aggregation": {
+            "Expression": {
+              "Column": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "M_09"
+                  }
+                },
+                "Property": "CtaOTCReincidencia"
+              }
+            },
+            "Function": 0
+          }
+        },
+        "type": "Advanced",
+        "filter": {
+          "Version": 2,
+          "From": [
+            {
+              "Name": "m",
+              "Entity": "M_09",
+              "Type": 0
+            }
+          ],
+          "Where": [
+            {
+              "Condition": {
+                "Comparison": {
+                  "ComparisonKind": 1,
+                  "Left": {
+                    "Aggregation": {
+                      "Expression": {
+                        "Column": {
+                          "Expression": {
+                            "SourceRef": {
+                              "Source": "m"
+                            }
+                          },
+                          "Property": "CtaOTCReincidencia"
+                        }
+                      },
+                      "Function": 0
+                    }
+                  },
+                  "Right": {
+                    "Literal": {
+                      "Value": "2L"
+                    }
+                  }
+                }
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,251 @@
+table MAXIMO_10
+	lineageTag: 730bf6cc-0e88-4e9e-bd33-833ff3e3ce89
+
+	column orgid
+		dataType: string
+		lineageTag: f1a549fc-3089-4e3e-920e-ed7e6844a553
+		summarizeBy: none
+		sourceColumn: orgid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_clasificacion
+		dataType: string
+		lineageTag: ef95e57e-c14a-440d-a25d-4fbcf2d96fb0
+		summarizeBy: none
+		sourceColumn: tm_clasificacion
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column siteid
+		dataType: string
+		lineageTag: f8d837bc-1051-45d8-8cf5-9afd81494228
+		summarizeBy: none
+		sourceColumn: siteid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column startdate
+		dataType: dateTime
+		formatString: Short Date
+		lineageTag: 39fb8540-f537-4061-92b8-80d4c8d27ba9
+		summarizeBy: none
+		sourceColumn: startdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	column description
+		dataType: string
+		lineageTag: 0444a34c-65be-48f6-9046-1b78126b43ef
+		summarizeBy: none
+		sourceColumn: description
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column displayname
+		dataType: string
+		lineageTag: 8e028f78-312d-4afa-864f-db4171ad6322
+		summarizeBy: none
+		sourceColumn: displayname
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column personid
+		dataType: string
+		lineageTag: 926ecc17-44df-4d5b-be34-ea0db4adc137
+		summarizeBy: none
+		sourceColumn: personid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Horas_Normales
+		dataType: double
+		lineageTag: 92c3047a-8294-4822-bf12-559c9f94f56f
+		summarizeBy: sum
+		sourceColumn: Horas_Normales
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column KeyL = MAXIMO_10[orgid]&""
+		lineageTag: 83ae70f1-b662-4555-9ddb-30678ece20ae
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column wonum
+		dataType: string
+		lineageTag: cab9f6c6-afc9-454b-9299-105ad23c8dc6
+		summarizeBy: none
+		sourceColumn: wonum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column Desc_Wonum
+		dataType: string
+		lineageTag: a0cb127b-03cc-401f-9fd0-525f73eb2876
+		summarizeBy: none
+		sourceColumn: Desc_Wonum
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column schedstart
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 19e780f4-650c-491b-99d1-2104db1ba085
+		summarizeBy: none
+		sourceColumn: schedstart
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column schedfinish
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: d6cdbe7f-e4a9-4a48-a49d-dae64b397904
+		summarizeBy: none
+		sourceColumn: schedfinish
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column actstart
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3656a06e-5ef6-4d0d-81c4-7bc340c5db7f
+		summarizeBy: none
+		sourceColumn: actstart
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column actfinish
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 225af039-e1b0-413d-817c-58d81dcec912
+		summarizeBy: none
+		sourceColumn: actfinish
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column KeyShift = MAXIMO_10[orgid]&MAXIMO_10[personid]
+		lineageTag: 292f8d48-bd53-43c9-9312-b0ab1bb35622
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition MAXIMO_10 = m
+		mode: import
+		source = ```
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    BaseDatos = Origen{[Name="maxdb76", Kind="Database"]}[Data],
+				
+				    ConsultaSQL = "
+				        SELECT
+				          Alias_de_labor_Rendimiento.orgid,
+				          maxdb76.dbo.labtrans.siteid,
+				          Alias_de_person1_Rendimiento.displayname,
+				          maxdb76.dbo.craft.tm_clasificacion,
+				          maxdb76.dbo.labtrans.startdate,
+				          maxdb76.dbo.craft.description,
+				          Alias_de_labor_Rendimiento.personid,
+				            maxdb76.dbo.workorder.wonum,
+				            maxdb76.dbo.workorder.description AS Desc_Wonum,
+				            maxdb76.dbo.workorder.schedstart,
+				            maxdb76.dbo.workorder.schedfinish,
+				            maxdb76.dbo.workorder.actstart,
+				            maxdb76.dbo.workorder.actfinish,
+				          SUM(maxdb76.dbo.labtrans.regularhrs) AS Horas_Normales
+				        FROM
+				          maxdb76.dbo.person Alias_de_person1_Rendimiento
+				          RIGHT JOIN maxdb76.dbo.labor Alias_de_labor_Rendimiento 
+				            ON Alias_de_labor_Rendimiento.orgid = Alias_de_person1_Rendimiento.locationorg
+				            AND Alias_de_labor_Rendimiento.worksite = Alias_de_person1_Rendimiento.locationsite
+				            AND Alias_de_labor_Rendimiento.personid = Alias_de_person1_Rendimiento.personid
+				          LEFT JOIN maxdb76.dbo.labtrans 
+				            ON labtrans.orgid = Alias_de_labor_Rendimiento.orgid
+				            AND labtrans.siteid = Alias_de_labor_Rendimiento.worksite
+				            AND labtrans.laborcode = Alias_de_labor_Rendimiento.laborcode
+				          RIGHT JOIN maxdb76.dbo.workorder 
+				            ON workorder.orgid = labtrans.orgid
+				            AND workorder.siteid = labtrans.siteid
+				            AND workorder.wonum = labtrans.refwo
+				          LEFT JOIN maxdb76.dbo.labor 
+				            ON workorder.orgid = labor.orgid
+				            AND workorder.tm_asignado = labor.laborcode
+				          LEFT JOIN maxdb76.dbo.person 
+				            ON labor.personid = person.personid
+				            AND labor.orgid = person.locationorg
+				          LEFT JOIN maxdb76.dbo.laborcraftrate 
+				            ON Alias_de_labor_Rendimiento.laborcode = laborcraftrate.laborcode
+				            AND Alias_de_labor_Rendimiento.orgid = laborcraftrate.orgid
+				          LEFT JOIN maxdb76.dbo.craft 
+				            ON laborcraftrate.craft = craft.craft
+				            AND laborcraftrate.orgid = craft.orgid
+				            AND laborcraftrate.defaultcraft = 1
+				        WHERE
+				          labtrans.craft NOT IN ('PCCA','POCA')
+				          AND Alias_de_person1_Rendimiento.status = 'ACTIVO'
+				          AND workorder.istask = 0
+				          AND workorder.status IN ('CERR')
+				        GROUP BY
+				          Alias_de_labor_Rendimiento.orgid,
+				          labtrans.siteid,
+				          Alias_de_person1_Rendimiento.displayname,
+				          craft.tm_clasificacion,
+				          labtrans.startdate,
+				          craft.description,
+				          Alias_de_labor_Rendimiento.personid,
+				           maxdb76.dbo.workorder.wonum,
+				            maxdb76.dbo.workorder.description,
+				            maxdb76.dbo.workorder.schedstart,
+				            maxdb76.dbo.workorder.schedfinish,
+				            maxdb76.dbo.workorder.actstart,
+				            maxdb76.dbo.workorder.actfinish
+				    ",
+				
+				    ConsultaSQLNativa = Value.NativeQuery(BaseDatos, ConsultaSQL),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(ConsultaSQLNativa,{{"startdate", type date}})
+				in
+				    #"Tipo cambiado"
+				```
+
+	changedProperty = IsHidden
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+

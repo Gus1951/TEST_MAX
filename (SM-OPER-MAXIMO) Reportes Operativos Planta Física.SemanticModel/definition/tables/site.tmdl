@@ -1,0 +1,200 @@
+table site
+	lineageTag: 03cacb77-d45c-4f7c-95b5-99df5807b7a3
+
+	/// Identifica la planta con un código abreviado, por ejemplo, TORONTO, para la planta en Toronto, Canadá, de  una empresa. Este valor debe ser único para todas las plantas.
+	column Campus
+		dataType: string
+		lineageTag: 5f54fea2-858a-4ffc-8bf4-614007f23dfa
+		summarizeBy: none
+		sourceColumn: Campus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Describe la planta, por ejemplo, Centro de operaciones de TI de Toronto. Para especificar o ver información adicional, haga clic en el botón Descripción detallada.
+	column Descripción
+		dataType: string
+		lineageTag: e86664f7-6d96-45db-8dbf-1121bc03dece
+		summarizeBy: none
+		sourceColumn: Descripción
+
+		changedProperty = IsHidden
+
+		changedProperty = SortByColumn
+
+		annotation SummarizationSetBy = Automatic
+
+	column enterby
+		dataType: string
+		lineageTag: d1af8c41-28e8-421e-90d7-9c788d99fade
+		summarizeBy: none
+		sourceColumn: enterby
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column enterdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: f38bdb95-304c-48de-939f-8a17c783d88f
+		summarizeBy: none
+		sourceColumn: enterdate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column changeby
+		dataType: string
+		lineageTag: 3589b270-236e-4e31-bbf3-7d3517f84058
+		summarizeBy: none
+		sourceColumn: changeby
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column changedate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 75858d18-24c0-47de-8230-1b82c85d12d8
+		summarizeBy: none
+		sourceColumn: changedate
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador de la organización de esta planta
+	column Organización
+		dataType: string
+		lineageTag: 0ca7a079-e1d8-40e3-8d79-9a5c0cfcae86
+		summarizeBy: none
+		sourceColumn: Organización
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column active
+		dataType: int64
+		formatString: 0
+		lineageTag: d41cd8f7-fb46-4cb5-b54d-dd7cde4aca7b
+		summarizeBy: sum
+		sourceColumn: active
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column siteuid
+		dataType: int64
+		formatString: 0
+		lineageTag: fa0569ae-2983-489d-a4e9-200b18612916
+		summarizeBy: sum
+		sourceColumn: siteuid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column contact
+		dataType: string
+		lineageTag: 92137a6f-a791-45e4-9cdb-1be8ed36d360
+		summarizeBy: none
+		sourceColumn: contact
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column contactgroup
+		dataType: string
+		lineageTag: 3db5a9b1-13c5-4dda-888a-66dde2743faf
+		summarizeBy: none
+		sourceColumn: contactgroup
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column langcode
+		dataType: string
+		lineageTag: 3fb81c14-7ce0-42d9-97ce-d7e464863f4a
+		summarizeBy: none
+		sourceColumn: langcode
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column hasld
+		dataType: int64
+		formatString: 0
+		lineageTag: 7bc07932-8d05-48b3-9e99-102d8f1348fb
+		summarizeBy: sum
+		sourceColumn: hasld
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_ayuda
+		dataType: int64
+		formatString: 0
+		lineageTag: cd73579d-fe55-41f6-803d-e0f510c0faa6
+		summarizeBy: sum
+		sourceColumn: tm_ayuda
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Región a la que pertenece el campus
+	column Tm_region
+		dataType: string
+		lineageTag: a4727587-3f5c-4bc1-b60b-1939fee70e00
+		summarizeBy: none
+		sourceColumn: Tm_region
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column OrgidSiteidKey
+		dataType: string
+		lineageTag: 69b3766e-b1fe-4bf3-862f-f90924931bc9
+		summarizeBy: none
+		sourceColumn: OrgidSiteidKey
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_nomabrev
+		dataType: string
+		lineageTag: e1eb1da1-cace-4024-800c-81ab30a99b30
+		summarizeBy: none
+		sourceColumn: tm_nomabrev
+
+		annotation SummarizationSetBy = Automatic
+
+	partition site = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    site_Table = dbo_Schema{[Name="site",Kind="Table"]}[Data],
+				    #"Inserted Merged Column" = Table.AddColumn(site_Table, "OrgidSiteidKey", each Text.Combine({[orgid], [siteid]}, ":"), type text),
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Merged Column",{{"siteid", "Campus"}, {"description", "Descripción"}, {"orgid", "Organización"}, {"tm_region", "Tm_region"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_ResultType = Table
+
+	annotation PBI_NavigationStepName = Navigation
+

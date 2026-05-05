@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "SemanticModel",
+    "displayName": "(SM-OPER-MAXIMO) Reportes Operativos Planta Física"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "007b322c-279a-9c48-41e4-e671d66c6cf8"
+  }
+}

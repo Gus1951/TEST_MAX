@@ -1,0 +1,74 @@
+expression 'Parámetro de Cadena de Conexión' = "MAXIMO_PLANTAFISICA_DEVL" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 1635216e-46e7-4be1-98f3-74b4a4510bbf
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Text
+
+expression 'Parámetro de Cadena de Conexión Oracle' = "DWH_MISC_DEVL" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 64950205-ca16-4551-af89-7ac320e491f1
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Text
+
+expression DAX_Condicionales =
+		let
+		    Origen = Table.FromRows(Json.Document(Binary.Decompress(Binary.FromText("i44FAA==", BinaryEncoding.Base64), Compression.Deflate)), let _t = ((type nullable text) meta [Serialized.Text = true]) in type table [Columna1 = _t]),
+		    #"Tipo cambiado" = Table.TransformColumnTypes(Origen,{{"Columna1", type text}}),
+		    #"Columnas quitadas" = Table.RemoveColumns(#"Tipo cambiado",{"Columna1"})
+		in
+		    #"Columnas quitadas"
+	lineageTag: 866f3704-9762-4b64-aa56-4ec3bbb16925
+
+	annotation PBI_ResultType = Table
+
+expression Alias_de_asset = ```
+		let
+		    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+		    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+		    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+		    asset_Table = dbo_Schema{[Name="asset",Kind="Table"]}[Data],
+		    #"Renamed Columns" = Table.RenameColumns(asset_Table,{{"assetnum", "Activo"}, 
+		                                                        {"location", "Ubicación"}, 
+		                                                        {"description", "Descripción"}, 
+		                                                        {"replacecost", "Coste Reemplazo"}, 
+		                                                        {"siteid", "Campus"}, 
+		                                                        {"orgid", "Organización"}, 
+		                                                        {"assettype", "Tipo"}, 
+		                                                        {"usage", "Uso"}, 
+		                                                        //{"tm_fecadq", "Fecha Adquisición"}, 
+		                                                        {"tm_vutil", "Vida Útil Años"}}),
+		    #"Tipo cambiado" = Table.TransformColumnTypes(#"Renamed Columns",{{"tm_fecadq", type date}}),
+		    #"Personalizada agregada" = Table.AddColumn(#"Tipo cambiado", "OrgidSiteidLocationKey", each [Organización] & ":" & [Campus] & ":" & [Ubicación]),
+		    #"Personalizada agregada1" = Table.AddColumn(#"Personalizada agregada", "OrgidSiteidKey", each [Organización] & ":" & [Campus]),
+		    #"Tipo cambiado1" = Table.TransformColumnTypes(#"Personalizada agregada1",{{"OrgidSiteidLocationKey", type text}, {"OrgidSiteidKey", type text}}),
+		    #"Poner En Mayúsculas Cada Palabra" = Table.TransformColumns(#"Tipo cambiado1",{{"Uso", Text.Proper, type text}}),
+		    #"Personalizada agregada2" = Table.AddColumn(#"Poner En Mayúsculas Cada Palabra", "Tm_fecadq_VU", each if [tm_fecadq] <> null and [Vida Útil Años] <> null then Date.AddYears([tm_fecadq],[Vida Útil Años])
+		else null),
+		    #"Tipo cambiado2" = Table.TransformColumnTypes(#"Personalizada agregada2",{{"Tm_fecadq_VU", type date}}),
+		    #"Consultas combinadas" = Table.NestedJoin(#"Tipo cambiado2", {"Organización", "Campus", "Ubicación"}, locations, {"Organización", "Campus", "Ubicacion"}, "locations", JoinKind.LeftOuter),
+		    #"Se expandió locations" = Table.ExpandTableColumn(#"Consultas combinadas", "locations", {"Nombre Edificio"}, {"locations.Nombre Edificio"})
+		in
+		    #"Se expandió locations"
+		```
+	lineageTag: 82795479-78a9-468e-86f3-a74889075a29
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = Table
+
+expression RangeStart = #datetime(2018, 7, 19, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: b48d597a-4fb5-4c04-8844-0b9d6fc74a85
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = DateTime
+
+expression RangeEnd = #datetime(2018, 8, 16, 0, 0, 0) meta [IsParameterQuery=true, Type="DateTime", IsParameterQueryRequired=true]
+	lineageTag: cfe7c23a-f570-44bc-ad08-d22bcbef09bd
+
+	annotation PBI_NavigationStepName = Navegación
+
+	annotation PBI_ResultType = DateTime
+

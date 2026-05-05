@@ -1,0 +1,113 @@
+table TD_Modavail
+	lineageTag: 4b7471dc-41b9-4cf6-be46-5da3f7c968d4
+
+	column Fecha
+		formatString: General Date
+		lineageTag: 3eb28384-2328-43b3-b794-dfd5caa7ddb3
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: [Fecha]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Monday
+		formatString: 0
+		lineageTag: fa8c999d-913d-4762-ae4d-0acdba82c951
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Monday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Tuesday
+		formatString: 0
+		lineageTag: ee6f9709-d9f7-42d2-bb2a-13172f081d23
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Tuesday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Wednesday
+		formatString: 0
+		lineageTag: 5fec8ccd-ef46-4911-b93a-9d0be8ac4f5d
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Wednesday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Thursday
+		formatString: 0
+		lineageTag: 1963ee34-10cd-44a9-a3a1-d71b2d54866a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Thursday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Friday
+		formatString: 0
+		lineageTag: 621aa26a-73da-49c9-b2ee-e5888c705c92
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Friday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Saturday
+		formatString: 0
+		lineageTag: a857b4f4-480c-46c0-96b5-4b0070694017
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Saturday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column Sunday
+		formatString: 0
+		lineageTag: 5ac674a0-366a-4ef5-8f95-cc8f62cd360d
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Sunday]
+
+		annotation SummarizationSetBy = Automatic
+
+	column modavail_Persona
+		lineageTag: bdc62cd0-66a5-4973-977a-c18542302789
+		summarizeBy: none
+		isNameInferred
+		sourceColumn: modavail[Persona]
+
+		annotation SummarizationSetBy = Automatic
+
+	column modavail_Horas
+		lineageTag: 585012ae-c86d-4c61-90cd-6d12c947df4a
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: modavail[Horas]
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	partition TD_Modavail = calculated
+		mode: import
+		source = ```
+				
+				
+				SELECTCOLUMNS(modavail, 	modavail[Persona], 
+															modavail[Horas], 
+												"Fecha",	modavail[Fecha de Trabajo],
+												"Monday",		IF(WEEKDAY( modavail[Fecha de Trabajo],2)=1,1,0),
+												"Tuesday",		IF(WEEKDAY( modavail[Fecha de Trabajo],2)=2,1,0),
+												"Wednesday",	IF(WEEKDAY( modavail[Fecha de Trabajo],2)=3,1,0),
+												"Thursday",		IF(WEEKDAY( modavail[Fecha de Trabajo],2)=4,1,0),
+												"Friday",		IF(WEEKDAY( modavail[Fecha de Trabajo],2)=5,1,0),
+												"Saturday",		IF(WEEKDAY( modavail[Fecha de Trabajo],2)=6,1,0),
+												"Sunday",		IF(WEEKDAY( modavail[Fecha de Trabajo],2)=7,1,0)
+												)
+				```
+
+	annotation PBI_Id = 57c3b91be044468aac92a253c1593724
+

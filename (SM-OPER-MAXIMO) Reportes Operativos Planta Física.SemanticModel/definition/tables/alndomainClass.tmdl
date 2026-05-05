@@ -1,0 +1,90 @@
+table alndomainClass
+	lineageTag: d99632dc-cf32-4b6d-b131-bc51d2c210d2
+
+	column domainid
+		dataType: string
+		lineageTag: f28becd1-09ee-4654-b42d-2bd9725cce24
+		summarizeBy: none
+		sourceColumn: domainid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column value
+		dataType: string
+		lineageTag: 15c330da-e8f7-42b1-a52d-5a69f8ddb254
+		summarizeBy: none
+		sourceColumn: value
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column description
+		dataType: string
+		lineageTag: 9a2fdafd-0b9a-4c47-b98a-27fd90e20a11
+		summarizeBy: none
+		sourceColumn: description
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column siteid
+		dataType: string
+		lineageTag: b433a943-3b7b-4084-9ea4-4661c81a426c
+		summarizeBy: none
+		sourceColumn: siteid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column orgid
+		dataType: string
+		lineageTag: f406e806-c258-4910-bd3a-a491008ba873
+		summarizeBy: none
+		sourceColumn: orgid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column alndomainid
+		dataType: int64
+		formatString: 0
+		lineageTag: 69dc0124-f66d-48ef-a448-beb043ba299e
+		summarizeBy: none
+		sourceColumn: alndomainid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column valueid
+		dataType: string
+		lineageTag: 0d2b242b-98ca-42a1-be49-2db65601f09f
+		summarizeBy: none
+		sourceColumn: valueid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition alndomainClass = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    alndomain_Table = dbo_Schema{[Name="alndomain",Kind="Table"]}[Data],
+				    #"Filtered Rows" = Table.SelectRows(alndomain_Table, each [domainid] = "TM_SUBCLASIFICACIO")
+				in
+				    #"Filtered Rows"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

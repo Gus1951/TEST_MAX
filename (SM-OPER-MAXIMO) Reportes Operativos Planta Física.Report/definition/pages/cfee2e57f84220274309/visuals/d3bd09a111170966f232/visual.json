@@ -1,0 +1,295 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "d3bd09a111170966f232",
+  "position": {
+    "x": 38.224374495560937,
+    "y": 175.62550443906375,
+    "z": 2000,
+    "height": 267.57062146892656,
+    "width": 1212.8490718321227
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "workorder"
+                    }
+                  },
+                  "Property": "Organización"
+                }
+              },
+              "queryRef": "workorder.Organización",
+              "nativeQueryRef": "Organización",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "site"
+                    }
+                  },
+                  "Property": "Descripción"
+                }
+              },
+              "queryRef": "site.Descripción",
+              "nativeQueryRef": "Descripción",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "labor"
+                    }
+                  },
+                  "Property": "Displayname"
+                }
+              },
+              "queryRef": "labor.Displayname",
+              "nativeQueryRef": "Displayname",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "alndomain"
+                    }
+                  },
+                  "Property": "Descripción"
+                }
+              },
+              "queryRef": "alndomain.Descripción",
+              "nativeQueryRef": "Descripción1",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "alndomainClass"
+                    }
+                  },
+                  "Property": "description"
+                }
+              },
+              "queryRef": "alndomainClass.description",
+              "nativeQueryRef": "description",
+              "active": true
+            },
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "worktype"
+                    }
+                  },
+                  "Property": "Tipo de OT"
+                }
+              },
+              "queryRef": "worktype.Tipo de OT",
+              "nativeQueryRef": "Tipo de OT",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "Total_Wonum"
+                }
+              },
+              "queryRef": "DAX_Metricas.Total_Wonum",
+              "nativeQueryRef": "Total_Wonum"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "Total_Wonum_Cerradas"
+                }
+              },
+              "queryRef": "DAX_Metricas.Total_Wonum_Cerradas",
+              "nativeQueryRef": "Total_Wonum_Cerradas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "F Horas Actlabhrs Total _Cerradas"
+                }
+              },
+              "queryRef": "DAX_Metricas.F Horas Actlabhrs Total _Cerradas",
+              "nativeQueryRef": "F Horas Actlabhrs Total _Cerradas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "Total_Wonum_Abiertas"
+                }
+              },
+              "queryRef": "DAX_Metricas.Total_Wonum_Abiertas",
+              "nativeQueryRef": "Total_Wonum_Abiertas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "Metricas"
+                    }
+                  },
+                  "Property": "TotalDiasVencidos"
+                }
+              },
+              "queryRef": "Metricas.TotalDiasVencidos",
+              "nativeQueryRef": "TotalDiasVencidos"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "Procentaje"
+                }
+              },
+              "queryRef": "DAX_Metricas.Procentaje",
+              "nativeQueryRef": "Procentaje"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DAX_Metricas"
+                  }
+                },
+                "Property": "Total_Wonum"
+              }
+            },
+            "direction": "Descending"
+          }
+        ]
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "workorder.Organización"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "site.Descripción"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "labor.Displayname"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "alndomain.Descripción"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "alndomainClass.description"
+            ],
+            "isPinned": true
+          },
+          {
+            "queryRefs": [
+              "worktype.Tipo de OT"
+            ],
+            "isCollapsed": true,
+            "isPinned": true
+          }
+        ],
+        "root": {}
+      }
+    ],
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "layout": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Tabular'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "visualContainerObjects": {
+      "title": [
+        {
+          "properties": {
+            "text": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Matriz1'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

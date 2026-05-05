@@ -1,0 +1,215 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/visualContainer/2.3.0/schema.json",
+  "name": "65b1fc1c093fce15c92f",
+  "position": {
+    "x": 90.673316708229422,
+    "y": 221.74563591022442,
+    "z": 0,
+    "height": 263.04239401496261,
+    "width": 852.86783042394006,
+    "tabOrder": 1000
+  },
+  "visual": {
+    "visualType": "pivotTable",
+    "query": {
+      "queryState": {
+        "Rows": {
+          "projections": [
+            {
+              "field": {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "workorder"
+                    }
+                  },
+                  "Property": "Organización"
+                }
+              },
+              "queryRef": "workorder.Organización",
+              "nativeQueryRef": "Organización",
+              "active": true
+            }
+          ]
+        },
+        "Values": {
+          "projections": [
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "Total_Wonum_Cerradas"
+                }
+              },
+              "queryRef": "DAX_Metricas.Total_Wonum_Cerradas",
+              "nativeQueryRef": "Total_Wonum_Cerradas"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "OT_Atencion"
+                }
+              },
+              "queryRef": "DAX_Metricas.OT_Atencion",
+              "nativeQueryRef": "OT_Atencion"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "OT_Solución"
+                }
+              },
+              "queryRef": "DAX_Metricas.OT_Solución",
+              "nativeQueryRef": "OT_Solución"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "OT_Total"
+                }
+              },
+              "queryRef": "DAX_Metricas.OT_Total",
+              "nativeQueryRef": "OT_Total"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "Porcentaje_Atención"
+                }
+              },
+              "queryRef": "DAX_Metricas.Porcentaje_Atención",
+              "nativeQueryRef": "Porcentaje_Atención"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "Porcentaje_Solución"
+                }
+              },
+              "queryRef": "DAX_Metricas.Porcentaje_Solución",
+              "nativeQueryRef": "Porcentaje_Solución"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "Porcentaje_Cumplimiento"
+                }
+              },
+              "queryRef": "DAX_Metricas.Porcentaje_Cumplimiento",
+              "nativeQueryRef": "Porcentaje_Cumplimiento"
+            },
+            {
+              "field": {
+                "Measure": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "DAX_Metricas"
+                    }
+                  },
+                  "Property": "Evento_"
+                }
+              },
+              "queryRef": "DAX_Metricas.Evento_",
+              "nativeQueryRef": "Evento_"
+            }
+          ]
+        }
+      },
+      "sortDefinition": {
+        "sort": [
+          {
+            "field": {
+              "Measure": {
+                "Expression": {
+                  "SourceRef": {
+                    "Entity": "DAX_Metricas"
+                  }
+                },
+                "Property": "Total_Wonum_Cerradas"
+              }
+            },
+            "direction": "Ascending"
+          }
+        ]
+      }
+    },
+    "expansionStates": [
+      {
+        "roles": [
+          "Rows"
+        ],
+        "levels": [
+          {
+            "queryRefs": [
+              "workorder.Organización"
+            ],
+            "identityKeys": [
+              {
+                "Column": {
+                  "Expression": {
+                    "SourceRef": {
+                      "Entity": "workorder"
+                    }
+                  },
+                  "Property": "Organización"
+                }
+              }
+            ],
+            "isPinned": true
+          }
+        ],
+        "root": {}
+      }
+    ],
+    "objects": {
+      "general": [
+        {
+          "properties": {
+            "layout": {
+              "expr": {
+                "Literal": {
+                  "Value": "'Tabular'"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    "drillFilterOtherVisuals": true
+  }
+}

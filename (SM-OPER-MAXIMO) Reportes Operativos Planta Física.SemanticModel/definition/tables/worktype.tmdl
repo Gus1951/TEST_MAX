@@ -1,0 +1,166 @@
+table worktype
+	lineageTag: 9c43cbe4-cff2-4fff-aba8-9060de1ed33b
+
+	/// Define el tipo de la clase seleccionada de orden de trabajo. Por ejemplo, para una actualización, los tipos de trabajo son significativos, mayores o menores. Para un cambio, los tipos de trabajo son delta, completo o paquete. Para una orden de trabajo, los tipos de trabajo son mantenimiento correctivo, proyecto de capital, mantenimiento de emergencia, informe de eventos y mantenimiento preventivo. También puede definir tipos de trabajo para cualquier clase de orden de trabajo. Por cada tipo, puede establecer información de indicación.
+	column TipoTrabajo
+		dataType: string
+		lineageTag: 43306d7c-b6c4-4611-9efd-1944563275c6
+		summarizeBy: none
+		sourceColumn: TipoTrabajo
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Describe el tipo de la orden de trabajo. Para especificar o ver información adicional, haga clic en el botón Descripción detallada.
+	column Descripción
+		dataType: string
+		lineageTag: 4e1b2cc6-b3cf-4095-a188-9bfc2895455f
+		summarizeBy: none
+		sourceColumn: Descripción
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column promptfail
+		dataType: int64
+		formatString: 0
+		lineageTag: 5431f044-5297-4c19-8467-0c5bd25457aa
+		summarizeBy: none
+		sourceColumn: promptfail
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column promptdown
+		dataType: int64
+		formatString: 0
+		lineageTag: 1c95b87f-e291-4167-9c6e-6d72561298e5
+		summarizeBy: none
+		sourceColumn: promptdown
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador de organización
+	/// 
+	column Organización
+		dataType: string
+		lineageTag: 309c1046-2690-4a43-b38f-9b8d2785228d
+		summarizeBy: none
+		sourceColumn: Organización
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column woclass
+		dataType: string
+		lineageTag: 10fd97e8-0be1-477f-bd98-8893a8698f6f
+		summarizeBy: none
+		sourceColumn: woclass
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column worktypeid
+		dataType: int64
+		formatString: 0
+		lineageTag: c09731a0-9f68-4c76-aac6-2d7d321544d9
+		summarizeBy: none
+		sourceColumn: worktypeid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column type
+		dataType: string
+		lineageTag: 275325e6-77b8-4859-a15d-dff566a5cad7
+		summarizeBy: none
+		sourceColumn: type
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column startstatus
+		dataType: string
+		lineageTag: 647f97f1-1a7c-4778-b76e-9f2bcef3de7e
+		summarizeBy: none
+		sourceColumn: startstatus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column completestatus
+		dataType: string
+		lineageTag: a0b47b2a-abcf-4328-adbe-d3ff425e983c
+		summarizeBy: none
+		sourceColumn: completestatus
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column keeptaskstatushist
+		dataType: int64
+		formatString: 0
+		lineageTag: c46ff91b-35df-4a07-ac69-9f7e6a4595ee
+		summarizeBy: none
+		sourceColumn: keeptaskstatushist
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column contentuid
+		dataType: string
+		lineageTag: 734ce808-f5e0-471f-bf47-c062d0d556e0
+		summarizeBy: none
+		sourceColumn: contentuid
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column worktypedesc
+		dataType: string
+		lineageTag: 8575f57c-2b5f-49d9-b8aa-8b996dfa1aa8
+		summarizeBy: none
+		sourceColumn: worktypedesc
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	column 'Tipo de OT' = worktype[TipoTrabajo] & " : " & worktype[Descripción]
+		lineageTag: 979cd805-b792-4f12-a04d-f81d4700c91f
+		summarizeBy: none
+
+		changedProperty = IsHidden
+
+		annotation SummarizationSetBy = Automatic
+
+	partition worktype = m
+		mode: import
+		source =
+				let
+				    Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    worktype_Table = dbo_Schema{[Name="worktype",Kind="Table"]}[Data],
+				    #"Inserted Merged Column" = Table.AddColumn(worktype_Table, "worktypedesc", each Text.Combine({[worktype], [wtypedesc]}, ":"), type text),
+				    #"Renamed Columns" = Table.RenameColumns(#"Inserted Merged Column",{{"worktype", "TipoTrabajo"}, {"wtypedesc", "Descripción"}, {"orgid", "Organización"}})
+				in
+				    #"Renamed Columns"
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

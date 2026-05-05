@@ -1,0 +1,596 @@
+table Metricas
+	lineageTag: 59fd0257-5621-4aa9-8721-7a37701bf311
+
+	measure Total_OT_Cerradas_ = ```
+			
+			
+			/*
+			CALCULATE( COUNT(workorder[wonum]), workorder[status] in {"CERR","COMP"} ) 
+			*/
+			SUMX( FILTER(workorder,workorder[Estado] in {"CERR","COMP"}), workorder[Horas Reales Mano de Obra])
+			```
+		formatString: #,0
+		lineageTag: 33f97988-cc41-48b7-bf53-a21331947aa8
+
+	measure Conteo_OT_Atencion_ = ```
+			SUMX(FILTER(workorder, workorder[Estado] in {"CERR","COMP"}),   IF(     workorder[Fecha Montaje] > 0
+			                      &&  workorder[Fecha Desmontaje] > 0
+			 ,
+			                    
+			                   -- 1, 
+			                   --  IF(workorder[actstart] <= workorder[tm_fechamontaje],1, BLANK() )
+			                    -- ,
+			                    IF(workorder[actstart]>0 && workorder[actstart] <= workorder[Fecha Montaje],1, 0  )
+			                ,
+			
+			                     IF(workorder[actstart]>0 && workorder[actstart] <= workorder[schedstart],1, 0  )
+			                     
+			                    --0
+			                    ) )
+			```
+		formatString: #,0
+		lineageTag: e8b7b3a9-82e1-4d40-a490-ed1227b3a747
+
+	measure Conteo_OT_Solución = ```
+			
+			
+			SUMX(FILTER(workorder, workorder[Estado] in {"CERR","COMP"}),   
+			IF(         workorder[Fecha Montaje] > 0
+			   &&    workorder[Fecha Desmontaje] > 0 
+			   ,
+			
+			   --CONVERT(workorder[actfinish], INTEGER) - CONVERT(workorder[actstart], INTEGER) 
+			 --  CONVERT(workorder[schedfinish], INTEGER) - CONVERT(workorder[schedstart], INTEGER)
+			
+			  if (workorder[actfinish]>0 && workorder[actstart]>0
+			  ,
+			  IF(
+			   CONVERT(workorder[actfinish], INTEGER) - CONVERT(workorder[actstart], INTEGER) 
+			   <=
+			   CONVERT(workorder[Fecha Desmontaje], INTEGER) - CONVERT(workorder[Fecha Montaje], INTEGER)
+			   , 1)
+			  )
+			   ,
+			   if (workorder[actfinish]>0 && workorder[actstart]>0 && workorder[schedfinish]>0 && workorder[schedstart]>0 , 
+			 IF(
+			   CONVERT(workorder[actfinish], INTEGER) - CONVERT(workorder[actstart], INTEGER) 
+			   <=
+			   CONVERT(workorder[schedfinish], INTEGER) - CONVERT(workorder[schedstart], INTEGER)
+			   , 1)
+			)
+			
+			
+			
+			  )  )
+			```
+		formatString: #,0
+		lineageTag: 173d3be7-5bfe-465c-b203-2b286f4b50e4
+
+	measure Cumplimiento_OT_Total = ```
+			
+			
+			SUMX(FILTER(workorder, workorder[Estado] in {"CERR","COMP"}),  
+			
+			 IF(  workorder[Fecha Montaje]> 0 && workorder[Fecha Desmontaje] > 0 
+			    ,
+			     --Parte verdadera del if principal 
+			
+			         IF(    and (CONVERT( workorder[actstart], INTEGER) <= CONVERT( workorder[Fecha Montaje], INTEGER),
+			                     (convert( workorder[actfinish], integer) - convert( workorder[actstart], integer))
+			                      <=
+			                      (convert( workorder[Fecha Desmontaje], integer) - convert(workorder[Fecha Montaje], integer))
+			                    )
+			            , --parte verdader del if 
+			            1,
+			            0
+			           ) -- Fin del if      
+			    , 
+			      -- Parte Falsa del If Principal 
+			            IF(      workorder[actstart] <= workorder[schedstart] 
+			                     , IF(     (workorder[actfinish] - workorder[actstart])
+			                            <= (workorder[schedfinish] - workorder[schedstart] )
+			                            ,1
+			                            ,  IF(     DATEDIFF(workorder[actfinish], workorder[actstart], MINUTE)
+			                                     = DATEDIFF(workorder[schedfinish],workorder[schedstart],MINUTE)
+			                            ,1
+			                            ,0
+			                               )
+			
+			                         )
+			                         
+			                     ,0
+			              ) --fin del if parte falsa            
+			
+			             
+			
+			      
+			             )
+			
+			  ) 
+			
+			```
+		formatString: #,0
+		lineageTag: 09bb7345-81d1-40b2-9738-adf96fe7d87c
+
+	measure 'Porcentaje Atención' = ```
+			DIVIDE([Conteo_OT_Atencion_], [Total_OT_Cerradas_]) 
+			```
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 3bd8566a-b624-4462-bcbc-b6a50961a495
+
+	measure 'Porcentaje Solución' = DIVIDE([Conteo_OT_Solución], [Total_OT_Cerradas_])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: a110214f-b651-4f81-ab54-a7182233e442
+
+	measure 'Porcentaje Cumplimiento' = DIVIDE([Cumplimiento_OT_Total], [Total_OT_Cerradas_])
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 583227ef-ccce-4d20-a855-4825787e8a58
+
+	measure Evento =
+			SUMX(workorder, IF( and(workorder[Fecha Montaje] > 0,
+			                                 workorder[Fecha Desmontaje] >0
+			                                )
+			                                ,1
+			                                ,0
+			                           )
+			              )
+		formatString: 0
+		lineageTag: 049f786d-9a8d-447d-939a-9b00af029bef
+
+	measure TotalDiasVencidos = ```
+			
+			/*
+			SUMX(FILTER(workorder, workorder[status] in {"APROB", "AT", "ENPRG", "ATPTE", "RCLIMA",	"REPROG", "RMAT","EMAT"}),  
+			IF( DATEDIFF(workorder[schedfinish], NOW(),DAY) > 0
+			, DATEDIFF(workorder[schedfinish], NOW(),DAY) 
+			,0
+			)
+			
+			)
+			*/
+			
+			var startDate = DATE(2018,12,01)
+			var endDate   = DATE(2018,12,31)
+			
+			var y = SUMX( FILTER(workorder, (workorder[schedfinish] >= startDate 
+			                                  &&  workorder[schedfinish] <= endDate
+			                                  ||  workorder[schedfinish] < startDate
+			                                      ) && workorder[Estado] in ({"APROB","AT","ENPRG","ATPTE","RCLIMA","REPROG","RMAT","EMAT"})
+			                                      &&
+			                                      DATEDIFF(workorder[schedfinish],NOW(),DAY)>0
+			                         ),     
+			                         IF( DATEDIFF(workorder[schedfinish], NOW(),DAY) > 0
+			, DATEDIFF(workorder[schedfinish], NOW(),DAY) 
+			,0
+			)
+			)
+			
+			
+			RETURN y
+			
+			```
+		formatString: #,0
+		lineageTag: cdc69366-df7f-4f41-8746-4bf95cf4982d
+
+	measure Total_Wonum_04 = ```
+			
+			  
+			COUNTX( FILTER(workorder, workorder[Estado] in {"CERR", "COMP", "APROB", "AT", "ENPRG",	"ATPTE", "RCLIMA","REPROG","RMAT","EMAT"}), workorder[Orden de Trabajo])
+			```
+		formatString: #,0
+		lineageTag: f23ea4a6-e533-4b10-8f6c-68aea154b493
+
+	measure Total_Horas_OT_Cerradas = SUMX( FILTER(workorder, workorder[Estado] IN {"CERR", "COMP"}), workorder[Horas Reales Mano de Obra])
+		lineageTag: 10ac4be4-41f9-4a04-95a0-5efa63ac2383
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Total_OT_Abiertas = COUNTX( FILTER(workorder, workorder[Estado] in {"APROB", "AT", "ENPRG", "ATPTE", "RCLIMA",	"REPROG", "RMAT","EMAT"}), workorder[Orden de Trabajo])
+		formatString: 0
+		lineageTag: 5ce8e0a8-9fe7-41e5-a715-e1081ab7a5b4
+
+	measure Total_Dias_Vencidos = ```
+			SUMX(FILTER(workorder, workorder[Estado] in {"APROB","AT","ENPRG","ATPTE","RCLIMA","REPROG","RMAT","EMAT"}), IF( DATEDIFF(workorder[schedfinish], TODAY(),DAY) > 0 
+			                                        ,DATEDIFF(workorder[schedfinish], TODAY(),DAY)
+			                                        ,0
+			                                      )
+			)
+			
+			```
+		formatString: 0
+		lineageTag: acb0c0cc-2eee-45cc-b19d-8c8679c8e6b6
+
+	measure %OT = DIVIDE( [Total_OT_Cerradas_], ([Total_OT_Cerradas_] + [Total_OT_Abiertas]) )
+		formatString: 0.00%;-0.00%;0.00%
+		lineageTag: 4219f687-bf85-47fb-9858-a9ce66300f7e
+
+	measure Conteo_CtaOTReincidencia = ```
+			
+			
+			var x = COUNTX(MAXIMO_09, (MAXIMO_09[Concat_Reincidencia]) )
+			
+			return IF(x>2,x)
+			
+			
+			
+			
+			
+			
+			/*COUNTX(FILTER(workorder, workorder[status] in {"CERR","APROB","EMAT"} && workorder[worktype] in {"MC-SAI","MC-PROG"}), 
+			                          IF( NOT(ISBLANK( workorder[jpnum])), workorder[jpnum], "S/CodTarea"   )
+			                           & "_" &  IF( NOT( ISBLANK(workorder[location])), workorder[location], "S/Ubicación" )
+			                          
+			                          
+			                          )*/
+			
+			
+			
+			--FILTER(workorder, workorder[status] in {"CERR","COMP"}),
+			--IF( NOT(ISBLANK( workorder[jpnum])), workorder[jpnum], "S/CodTarea"   )
+			-- & "_" &  IF( NOT( ISBLANK(workorder[location])), workorder[location], "S/Ubicación" ))
+			```
+		formatString: 0
+		lineageTag: d8403541-ff7c-4fbb-91bf-03dba89252f1
+
+	measure CntaReincidencia = ```
+			
+			VAR ConteoOT =
+			    CALCULATE (
+			        COUNT ( MAXIMO_09[Concat_Reincidencia] ),
+			        REMOVEFILTERS()        -- quita slicers externos, pero respeta filas de la matriz
+			    )
+			RETURN
+			IF ( ConteoOT > 2, ConteoOT, 0 )
+			
+			
+			
+			/*CALCULATE( COUNT(workorder[MconcatJpnumLocation]), FILTER(workorder, [Conteo_CtaOTReincidencia]>2)) */
+			
+			
+			/*var x = IF( [Conteo_CtaOTReincidencia] > 2, [Conteo_CtaOTReincidencia],0)
+			
+			return x*/
+			
+			 /* var  tr = COUNTX(workorder, IF( NOT(ISBLANK(workorder[jpnum])), 
+			                      workorder[jpnum], "S/CodTarea"   )
+			                           & "_" &  IF( NOT( ISBLANK(workorder[location])), workorder[location], "S/Ubicación" ) )   
+			
+			    return IF(tr>2,tr,0 )*/
+			
+			    
+			                          
+			                          
+			                          
+			
+			
+			--IF( [Conteo_CtaOTReincidencia] > 2, [Conteo_CtaOTReincidencia],0)
+			```
+		formatString: #,0
+		lineageTag: 96d17ce3-1f83-4f6e-8099-549f6b772535
+
+	measure formula = ```
+			
+			
+			COUNTX(FILTER(workorder, workorder[Estado] in {"CERR","APROB","EMAT"} && workorder[Tipo de Trabajo] in {"MC-SAI","MC-PROG"}), 
+			                          IF( NOT(ISBLANK( workorder[Plan de Trabajo])), workorder[Plan de Trabajo], "S/CodTarea"   )
+			                           & "_" &  IF( NOT( ISBLANK(workorder[Ubicación])), workorder[Ubicación], "S/Ubicación" )
+			                          
+			                          
+			                          ) 
+			    
+			
+			 
+			                           
+			
+			```
+		formatString: 0
+		lineageTag: fbc84632-dfec-4006-8fd2-b6dd8a6d7ed7
+
+	measure Cantidad2 = SUMX(matusetrans, IF( NOT(ISBLANK(matusetrans[Cantidad])), ABS(matusetrans[Cantidad]),0))
+		lineageTag: e6fc706a-8e0b-431f-8381-5490c9b0896b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Linecost_Total = SUM(matusetrans[Coste de Línea])
+		lineageTag: 003318d0-72a8-4931-912a-d4ed3dc78199
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure TotalWonum03 = COUNTX( FILTER(workorder,workorder[Estado] in {"CERR","COMP"}),  workorder[Orden de Trabajo] )
+		formatString: 0
+		lineageTag: 2cb50fac-ab09-4503-8683-5801600c92f3
+
+	measure Actlabcosto_Total =
+			SUMX(matusetrans, ABS(matusetrans[workorder.Coste Real Mano de Obra]))
+			
+			//Actlabcosto_Total = SUMX(matusetrans, ABS(matusetrans[workorder.actlabcost]))
+		lineageTag: 64d741f5-5eb2-45dc-8738-1f5fd1002a4b
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure AggCostoTotal = [Linecost_Total] + [Actlabcosto_Total]
+		lineageTag: 7bb96d29-cae8-4822-93a2-818036859edf
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure CantidadOT03 = ```
+			
+			                CALCULATE(
+			                    COUNT(workorder[Orden de Trabajo])
+			                )
+			```
+		formatString: 0
+		lineageTag: 5ea435e8-7e77-4bf3-afa1-cba63f9f02cf
+
+	measure NumeroHoras = ABS(SUM(workorder[Horas Reales Mano de Obra]))
+		lineageTag: 2ea8a0bf-389b-4a96-b2e5-36400f60aaf8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure Actmatcost_Total = SUMX(workorder, ABS(workorder[Coste Real de Materiales]))
+		lineageTag: 7a046230-e93f-4a4d-a5e7-00309ef2d9c0
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure CostoTotalCMyCMO = SUMX(workorder, workorder[Coste Real Mano de Obra] + workorder[Coste Real de Materiales])
+		lineageTag: becc6113-8bb4-4cb3-9eb4-67a3a33cf3a8
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure fechaActual = ```
+			--FORMAT(MAX( workorder[AliasSchedfinish]), "dd/mm/yyyy")
+			
+			--FORMAT(MAX( workorder[schedfinish]), "dd/mm/yyyy")
+			
+			--FORMAT( DATE(2018,12,01), "dd/mm/yyyy")
+			
+			--FORMAT(TODAY(),"dd/mm/yyyy")
+			
+			--DATE(2018,12,01)
+			--DATEVALUE("20/11/2018")
+			
+			--FORMAT(DATEVALUE("10/12/2018"), "dd/mm/yyyy")
+			
+			
+			WEEKDAY(TODAY())
+			
+			
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: da79a56b-b794-4519-9e0a-c8fbf9dacac8
+
+	measure rpt08_TOTMPAtendidoTiempo_2 = ```
+			
+			CALCULATE(
+			    COUNTROWS('workorder'),
+			    'workorder'[Tipo de Trabajo] = "MP",
+			    'workorder'[Estado] = "CERR",
+			    'workorder'[actfinish] <= 'workorder'[schedfinish],
+			    'workorder'[schedfinish] >= DATE(2022,1,1),
+			    'workorder'[schedfinish] <= DATE(2022,12,31)
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 390dcac2-d2bb-4730-9b63-5a813fdd25d3
+
+	measure ConteoFechas = ```
+			
+			var startDate = DATE(2018,12,01)
+			var endDate   = DATE(2018,12,31)
+			
+			/*
+			var x =  COUNTX( FILTER(workorder, FORMAT(workorder[schedfinish],"dd/mm/yyyy") >= 
+			                                   FORMAT(DATE(2018,12,10),"dd/mm/yyyy" ) || 
+			                                   FORMAT(workorder[schedfinish],"dd/mm/yyyy") <= 
+			                                   FORMAT(DATE(2018,12,11),"dd/mm/yyyy" )
+			                                    
+			                                    ),1) 
+			                                    */
+			/*
+			         var x =  COUNTX( FILTER(workorder, FORMAT(workorder[schedfinish],"dd/mm/yyyy") >= 
+			                                   DATE(2018,12,10)&& 
+			                                   FORMAT(workorder[schedfinish],"dd/mm/yyyy") <= 
+			                                   DATE(2018,12,11)
+			                                    
+			                                    ),1)                            
+			
+			RETURN x
+			*/
+			
+			
+			
+			var x =
+			CALCULATE( COUNT( workorder[schedfinish]),
+			                    FILTER(workorder, (workorder[schedfinish] >= startDate 
+			                                  &&  workorder[schedfinish] <= endDate
+			                                  ||  workorder[schedfinish] < startDate
+			                                      ) && workorder[Estado] in ({"APROB","AT","ENPRG","ATPTE","RCLIMA","REPROG","RMAT","EMAT"})
+			                         ) 
+			        )
+			
+			
+			
+			RETURN x 
+			
+			```
+		formatString: 0
+		lineageTag: d429df10-9c80-4a3a-ad0f-0b1d7c634ff1
+
+	measure ConteFechas2 = ```
+			
+			
+			CALCULATE( COUNT(workorder[Orden de Trabajo]), workorder[Estado] in {"CERR","COMP"} ) 
+			
+			/*
+			 SUMX( 
+			       FILTER(workorder, workorder[status] in {"APROB", "AT", "ENPRG", "ATPTE", "RCLIMA",	"REPROG", "RMAT","EMAT"}
+			             ),  
+			IF( DATEDIFF(workorder[schedfinish], NOW(),DAY) > 0
+			, DATEDIFF(workorder[schedfinish], NOW(),DAY) 
+			,0
+			)
+			
+			)
+			*/
+			
+			/*
+			var startDate = DATE(2018,12,10)
+			var endDate   = DATE(2018,12,11)
+			
+			
+			var x =
+			CALCULATE(  DATEDIFF(max(workorder[schedfinish]),NOW(),DAY)  ,
+			                    FILTER(workorder, (workorder[schedfinish].[Date] >= startDate 
+			                                  &&  workorder[schedfinish].[Date] <= endDate
+			                                  ||  workorder[schedfinish].[Date] < startDate
+			                                      ) && workorder[status] in ({"APROB","AT","ENPRG","ATPTE","RCLIMA","REPROG","RMAT","EMAT"})
+			                                      &&
+			                                      DATEDIFF(workorder[schedfinish],NOW(),DAY)>0
+			                         ) 
+			        )
+			
+			var y = SUMX( FILTER(workorder, (workorder[schedfinish].[Date] >= startDate 
+			                                  &&  workorder[schedfinish].[Date] <= endDate
+			                                  ||  workorder[schedfinish].[Date] < startDate
+			                                      ) && workorder[status] in ({"APROB","AT","ENPRG","ATPTE","RCLIMA","REPROG","RMAT","EMAT"})
+			                                      &&
+			                                      DATEDIFF(workorder[schedfinish],NOW(),DAY)>0
+			                         ),     
+			                         IF( DATEDIFF(workorder[schedfinish], NOW(),DAY) > 0
+			, DATEDIFF(workorder[schedfinish], NOW(),DAY) 
+			,0
+			)
+			)
+			
+			
+			RETURN y
+			*/
+			```
+		formatString: 0
+		lineageTag: a53d7a7a-94fd-4d1b-bc5b-ee192cb55c13
+
+	measure HorasTotales = SUMX(Rpt10tmp,Rpt10tmp[AGHrsDisponibles]-Rpt10tmp[HorasNoDisponibles2])
+		lineageTag: ee5c5a51-ef99-4852-8ad5-efeaca0c69ea
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	measure HDisponibles = ```
+			SUMX(Rpt10tmp, Rpt10tmp[PbDiasTotales]- Rpt10tmp[HorasNoDisponibles2]) 
+			
+			--CALCULATE( SUM(Rpt10[PbDiasTotales]) - SUM(Rpt10[HorasNoDisponibles2]) ) 
+			
+			--SUMX(Rpt10, Rpt10[PbDiasTotales]- Rpt10[HorasNoDisponibles2])
+			
+			
+			```
+		formatString: 0
+		lineageTag: 150277b6-8512-4b5a-bcfa-45cd8103fc69
+
+	measure rpt10HrsTotales2 =
+			
+			
+			
+			--var x = SUMMARIZE( Rpt10tmp, Rpt10tmp[site_description], Rpt10tmp[person_displayname], Rpt10tmp[PbDiasTotales])
+			
+			var x = SUMMARIZE( Rpt10tmp, Rpt10tmp[site_Descripción], Rpt10tmp[tblAlias_de_person1_Rendimiento.displayname], Rpt10tmp[PbDiasTotales])
+			
+			RETURN 1
+			
+			
+			
+			
+			
+			--SUMMARIZECOLUMNS( Rpt10[PbDiasTotales]), Rpt10[PbDiasTotales])
+			--CALCULATE( SUM(Rpt10[PbDiasTotales]), ALLEXCEPT(Rpt10,Rpt10[person_displayname]))
+		formatString: 0
+		lineageTag: 9432398d-213c-458e-a167-ba16e61300bd
+
+	measure today = TODAY()
+		formatString: General Date
+		lineageTag: 5f8ef586-2e4e-4256-b8fe-e4a9a16cc42f
+
+	measure 'Suma CntaReincidencia' = ```
+			
+			VAR _Conteo1 =
+			    CALCULATE(
+			        COUNT(MAXIMO_09[Concat_Reincidencia])
+			        -- aquí pon TODOS los filtros adicionales que en BO definen una “reincidencia”
+			        -- por ejemplo: sólo ciertos estados, tipos de trabajo, fechas, etc.
+			    )
+			RETURN
+			IF(_Conteo1 > 2, _Conteo1, 0)
+			
+			```
+		formatString: 0
+		lineageTag: a4e19040-9f78-4d2d-aa01-f6e9cb8036b2
+
+	measure 'Test Campus' =
+			
+			SUMX(
+			    VALUES(MAXIMO_09[Wo_Campus]),
+			    VAR _CntaCampus = [Suma CntaReincidencia]   -- la medida anterior
+			    RETURN
+			        IF(_CntaCampus <> 0, _CntaCampus, 0)
+			)
+		formatString: 0
+		lineageTag: 7d8e129e-05b7-44a2-8f6e-e13461691314
+
+	measure 'Cantidad OT Reincidencia' = ```
+			
+			VAR TblCampusClave =
+			    SUMMARIZE(
+			        MAXIMO_09,
+			        MAXIMO_09[Wo_Campus],              -- ParaCada([Campus])
+			        MAXIMO_09[Concat_Reincidencia],    -- En([CReincidencia])
+			        "CntaReincidencia",
+			            COUNTROWS ( MAXIMO_09 )        -- conteo de OT por clave y Campus
+			    )
+			VAR TblFiltrada =
+			    FILTER(
+			        TblCampusClave,
+			        [CntaReincidencia] <> 0           -- Donde([CntaReincidencia] <> 0)
+			    )
+			RETURN
+			SUMX(
+			    TblFiltrada,
+			    [CntaReincidencia]                   -- Suma([CntaReincidencia])
+			)
+			
+			
+			
+			```
+		formatString: 0
+		lineageTag: 8197bdd6-f8c6-40e1-926b-debee3487f85
+
+	measure CtaOTCReincidencia = ```
+			
+			CALCULATE (
+			    COUNT ( MAXIMO_09[Concat_Reincidencia] ),
+			    REMOVEFILTERS()
+			)
+			
+			```
+		formatString: 0
+		lineageTag: 8e56bf36-1a09-48ab-b69d-f42f84907fc7
+
+	column Nombre
+		formatString: 0
+		lineageTag: 4847a3aa-6aaa-4da4-a9bf-77c1055dfb98
+		summarizeBy: sum
+		isNameInferred
+		sourceColumn: [Nombre]
+
+		annotation SummarizationSetBy = Automatic
+
+	partition Metricas = calculated
+		mode: import
+		source = Row("Nombre", BLANK())
+
+	annotation PBI_Id = 16f594e3d6d2441ea293e7afaaa59a85
+
+	annotation 436ba87b-9c83-4389-a31b-ebd06a36be98 = {"Expression":""}
+

@@ -1,0 +1,626 @@
+table labtrans
+	lineageTag: 09c32f74-ca5c-49be-b024-651ca3529c40
+
+	refreshPolicy
+		policyType: basic
+		rollingWindowGranularity: year
+		rollingWindowPeriods: 20
+		incrementalGranularity: month
+		incrementalPeriods: 12
+		sourceExpression = ```
+			let
+			    RangeStartText = DateTime.ToText(RangeStart, "yyyy-MM-dd HH:mm:ss"),
+			    RangeEndText   = DateTime.ToText(RangeEnd,   "yyyy-MM-dd HH:mm:ss"),
+			
+			    SQL = 
+			        "SELECT *
+			         FROM dbo.labtrans
+			         WHERE enterdate >= '" & RangeStartText & "'
+			           AND enterdate <  '" & RangeEndText   & "'",
+			
+			    Origen = Odbc.Query(
+			        "dsn=" & #"Parámetro de Cadena de Conexión",
+			        SQL
+			    ),
+			
+			
+			
+			    //Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+			    //maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+			    //dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+			    //labtrans_Table = dbo_Schema{[Name="labtrans",Kind="Table"]}[Data],
+			    #"Renamed Columns" = Table.RenameColumns(Origen,{{"transdate", "Fecha Transacción"}, {"laborcode", "Mano de Obra"}, {"craft", "Especialidad"}, {"regularhrs", "Horas Normales"}, {"startdate", "Fecha Inicio"}, {"starttime", "Hora Inicio"}, {"finishdate", "Fecha Finalización"}, {"finishtime", "Hora Finalización"}, {"orgid", "Organización"}, {"siteid", "Planta"}, {"refwo", "Actividad"}}),
+			    #"Tipo cambiado" = Table.TransformColumnTypes(#"Renamed Columns",{{"Fecha Inicio", type date}})
+			in
+			    #"Tipo cambiado"
+			```
+
+	/// Timestamp - Clave para tabla
+	column 'Fecha Transacción'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 46285b68-ce43-4af2-9103-ba31e50691b5
+		summarizeBy: none
+		sourceColumn: Fecha Transacción
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identifica a la persona o especialidad que realiza el trabajo
+	column 'Mano de Obra'
+		dataType: string
+		lineageTag: f6948030-2ea0-4ead-a1e6-e789ec3f4ced
+		summarizeBy: none
+		sourceColumn: Mano de Obra
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identifica la especialidad. Si el campo Mano de obra/Especialidad contiene una especialidad, este campo será de sólo lectura. Si este campo se modifica, los campos Tarifa y Código de paga extra se actualizan automáticamente.
+	column Especialidad
+		dataType: string
+		lineageTag: 31cb2d8b-6f0d-46f6-b92e-7b047e09be58
+		summarizeBy: none
+		sourceColumn: Especialidad
+
+		annotation SummarizationSetBy = Automatic
+
+	column payrate
+		dataType: double
+		lineageTag: 1e0db488-c3e3-454e-937a-d589b31950da
+		summarizeBy: sum
+		sourceColumn: payrate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column assetnum
+		dataType: string
+		lineageTag: c2c25c59-7542-494c-ab41-302f82917631
+		summarizeBy: none
+		sourceColumn: assetnum
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Cantidad de horas normales (salvo horas extras, vacaciones, fines de semana, etc.) trabajadas
+	column 'Horas Normales'
+		dataType: double
+		lineageTag: 70b7847a-4327-4966-80bb-add1438f4833
+		summarizeBy: sum
+		sourceColumn: Horas Normales
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column enterby
+		dataType: string
+		lineageTag: f9def6d9-632c-4c0e-a0d1-28ce4892b502
+		summarizeBy: none
+		sourceColumn: enterby
+
+		annotation SummarizationSetBy = Automatic
+
+	column enterdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 73735f9c-3422-49ef-af16-9f083d34d704
+		summarizeBy: none
+		sourceColumn: enterdate
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Fecha en la cual comenzó el trabajo informado.
+	column 'Fecha Inicio'
+		dataType: dateTime
+		formatString: Long Date
+		lineageTag: 5e18ad90-cc87-4109-8beb-2e3bff629336
+		summarizeBy: none
+		sourceColumn: Fecha Inicio
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation UnderlyingDateTimeDataType = Date
+
+	/// Hora en la que comenzó el trabajo. Si especifica una hora de inicio y una hora de finalización, Maximo calcula valores para el campo Horas pero no sobrescribe un valor ya especificado en el campo. Sólo puede especificar un valor si la orden de trabajo tiene el estado de Aprobada. Se puede modificar el campo hasta que se guarde el registro
+	column 'Hora Inicio'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: e63aa329-c1c2-4c0c-95a7-8c057ef8b546
+		summarizeBy: none
+		sourceColumn: Hora Inicio
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Fecha en que la mano de obra finalizó el trabajo. Si ha especificado una fecha de inicio, una hora de inicio y una hora de finalización, Maximo calcula un valor para el campo Fecha de finalización utilizando esta fórmula: (hora de inicio) + (hora de finalización - hora de inicio. La orden de trabajo debe estar aprobada para poder insertar un valor. Se puede modificar el campo hasta que se guarde el registro. A continuación, Máximo actualiza el campo Coste de línea
+	column 'Fecha Finalización'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2af96a35-8865-4f68-8005-ac47731e293e
+		summarizeBy: none
+		sourceColumn: Fecha Finalización
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Hora en que se finalizó el trabajo
+	column 'Hora Finalización'
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 885c4ace-898a-4b06-8210-939901fda200
+		summarizeBy: none
+		sourceColumn: Hora Finalización
+
+		annotation SummarizationSetBy = Automatic
+
+	column transtype
+		dataType: string
+		lineageTag: a4365ba2-d1d1-4a76-9f4f-097cb95629fb
+		summarizeBy: none
+		sourceColumn: transtype
+
+		annotation SummarizationSetBy = Automatic
+
+	column outside
+		dataType: int64
+		formatString: 0
+		lineageTag: b5422271-861f-42ae-a4c7-5b747c9e1775
+		summarizeBy: sum
+		sourceColumn: outside
+
+		annotation SummarizationSetBy = Automatic
+
+	column memo
+		dataType: string
+		lineageTag: c42d41e0-491c-40d8-b402-de3ae11dd942
+		summarizeBy: none
+		sourceColumn: memo
+
+		annotation SummarizationSetBy = Automatic
+
+	column rollup
+		dataType: int64
+		formatString: 0
+		lineageTag: daeeffc2-aed2-43d2-898b-d56b7f7fa1c9
+		summarizeBy: sum
+		sourceColumn: rollup
+
+		annotation SummarizationSetBy = Automatic
+
+	column gldebitacct
+		dataType: string
+		lineageTag: 9bd6db98-920e-4279-8a57-caf404a491f1
+		summarizeBy: none
+		sourceColumn: gldebitacct
+
+		annotation SummarizationSetBy = Automatic
+
+	column linecost
+		dataType: double
+		lineageTag: 589dfeb3-9f22-4c32-aee5-8353f29e9715
+		summarizeBy: sum
+		sourceColumn: linecost
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column glcreditacct
+		dataType: string
+		lineageTag: 88affed5-8a6a-4d30-acff-968de758e1da
+		summarizeBy: none
+		sourceColumn: glcreditacct
+
+		annotation SummarizationSetBy = Automatic
+
+	column financialperiod
+		dataType: string
+		lineageTag: a2647b13-44b3-4d76-9e1b-0011e9a13147
+		summarizeBy: none
+		sourceColumn: financialperiod
+
+		annotation SummarizationSetBy = Automatic
+
+	column ponum
+		dataType: string
+		lineageTag: 9302f85c-7b69-4f7a-9249-0e75e3ffb110
+		summarizeBy: none
+		sourceColumn: ponum
+
+		annotation SummarizationSetBy = Automatic
+
+	column polinenum
+		dataType: int64
+		formatString: 0
+		lineageTag: 89c73372-6af1-452c-be7d-9e7fd53830da
+		summarizeBy: sum
+		sourceColumn: polinenum
+
+		annotation SummarizationSetBy = Automatic
+
+	column location
+		dataType: string
+		lineageTag: 92dc15f6-0bd3-4c5c-8d41-edb34c7c5019
+		summarizeBy: none
+		sourceColumn: location
+
+		annotation SummarizationSetBy = Automatic
+
+	column genapprservreceipt
+		dataType: int64
+		formatString: 0
+		lineageTag: e7abb14f-ffe5-4107-8c54-89f64a6e863a
+		summarizeBy: sum
+		sourceColumn: genapprservreceipt
+
+		annotation SummarizationSetBy = Automatic
+
+	column paymenttransdate
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 811ca4cb-7d3f-4d6e-9456-03baeaa469e5
+		summarizeBy: none
+		sourceColumn: paymenttransdate
+
+		annotation SummarizationSetBy = Automatic
+
+	column exchangerate2
+		dataType: double
+		lineageTag: 2a678a4a-2ce5-41e3-a027-521df72c5664
+		summarizeBy: sum
+		sourceColumn: exchangerate2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column linecost2
+		dataType: double
+		lineageTag: 6066cae1-994c-4c4a-a620-d691de4ad6a4
+		summarizeBy: sum
+		sourceColumn: linecost2
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column labtransid
+		dataType: int64
+		formatString: 0
+		lineageTag: 8efa083d-94d6-4f07-8887-6f306a6e6402
+		summarizeBy: sum
+		sourceColumn: labtransid
+
+		annotation SummarizationSetBy = Automatic
+
+	column servrectransid
+		dataType: int64
+		formatString: 0
+		lineageTag: 6af724e7-ec5d-44fc-8973-e0bc548a76c9
+		summarizeBy: sum
+		sourceColumn: servrectransid
+
+		annotation SummarizationSetBy = Automatic
+
+	column sourcesysid
+		dataType: string
+		lineageTag: a3edf56e-8d1c-40a9-a7a1-b1d7dada4bff
+		summarizeBy: none
+		sourceColumn: sourcesysid
+
+		annotation SummarizationSetBy = Automatic
+
+	column ownersysid
+		dataType: string
+		lineageTag: 1e8a7132-6671-40b0-971b-6f42ad78124a
+		summarizeBy: none
+		sourceColumn: ownersysid
+
+		annotation SummarizationSetBy = Automatic
+
+	column externalrefid
+		dataType: string
+		lineageTag: d30e8063-58c8-41de-a814-23208603b45c
+		summarizeBy: none
+		sourceColumn: externalrefid
+
+		annotation SummarizationSetBy = Automatic
+
+	column sendersysid
+		dataType: string
+		lineageTag: b8ee6780-3d9f-4830-8282-d5f52ba5643e
+		summarizeBy: none
+		sourceColumn: sendersysid
+
+		annotation SummarizationSetBy = Automatic
+
+	column fincntrlid
+		dataType: string
+		lineageTag: af3077b9-5188-4b3f-ad79-d9a232cc2814
+		summarizeBy: none
+		sourceColumn: fincntrlid
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador de organización
+	column Organización
+		dataType: string
+		lineageTag: 04741d13-7b83-40f0-98ad-1ffe56892432
+		summarizeBy: none
+		sourceColumn: Organización
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Identificador de planta
+	column Planta
+		dataType: string
+		lineageTag: 037500e7-7076-41c0-b841-790cfe057c4f
+		summarizeBy: none
+		sourceColumn: Planta
+
+		annotation SummarizationSetBy = Automatic
+
+	/// Orden de trabajo referida
+	column Actividad
+		dataType: string
+		lineageTag: 2f12eb56-a7b5-43eb-9472-f14002ce30ed
+		summarizeBy: none
+		sourceColumn: Actividad
+
+		annotation SummarizationSetBy = Automatic
+
+	column enteredastask
+		dataType: int64
+		formatString: 0
+		lineageTag: fd8fb442-753b-4aa9-bc82-bd1bfdc9a270
+		summarizeBy: sum
+		sourceColumn: enteredastask
+
+		annotation SummarizationSetBy = Automatic
+
+	column ticketid
+		dataType: string
+		lineageTag: ff826d5d-9280-4350-aca4-e4066c556b3d
+		summarizeBy: none
+		sourceColumn: ticketid
+
+		annotation SummarizationSetBy = Automatic
+
+	column ticketclass
+		dataType: string
+		lineageTag: da79b9ad-bbbe-4380-a524-7c70f2afe895
+		summarizeBy: none
+		sourceColumn: ticketclass
+
+		annotation SummarizationSetBy = Automatic
+
+	column contractnum
+		dataType: string
+		lineageTag: 38adaa56-5989-41c9-b3ee-470431be8da4
+		summarizeBy: none
+		sourceColumn: contractnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column skilllevel
+		dataType: string
+		lineageTag: 2175e9bb-6953-45ed-aa1a-00f8af693e03
+		summarizeBy: none
+		sourceColumn: skilllevel
+
+		annotation SummarizationSetBy = Automatic
+
+	column timerstatus
+		dataType: string
+		lineageTag: 689bb84a-cddb-4836-9d7c-5fb156447a99
+		summarizeBy: none
+		sourceColumn: timerstatus
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoicenum
+		dataType: string
+		lineageTag: 9858c0e3-db9e-46b7-b847-56e43daa8115
+		summarizeBy: none
+		sourceColumn: invoicenum
+
+		annotation SummarizationSetBy = Automatic
+
+	column invoicelinenum
+		dataType: int64
+		formatString: 0
+		lineageTag: e63989fa-8696-4569-bd00-260eea67c733
+		summarizeBy: sum
+		sourceColumn: invoicelinenum
+
+		annotation SummarizationSetBy = Automatic
+
+	column revisionnum
+		dataType: int64
+		formatString: 0
+		lineageTag: a619abbf-301e-4792-8b73-f6669bba228f
+		summarizeBy: sum
+		sourceColumn: revisionnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column premiumpaycode
+		dataType: string
+		lineageTag: b6e27dd7-e1bd-441b-a304-6224cdb3ef36
+		summarizeBy: none
+		sourceColumn: premiumpaycode
+
+		annotation SummarizationSetBy = Automatic
+
+	column premiumpayhours
+		dataType: double
+		lineageTag: 989e0ea0-7a55-4ffa-875f-914103be68e5
+		summarizeBy: sum
+		sourceColumn: premiumpayhours
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column premiumpayrate
+		dataType: double
+		lineageTag: 4cd99a2f-d2e9-4bf3-8bf4-e1edd8d52ab2
+		summarizeBy: sum
+		sourceColumn: premiumpayrate
+
+		annotation SummarizationSetBy = Automatic
+
+		annotation PBI_FormatHint = {"isGeneralNumber":true}
+
+	column vendor
+		dataType: string
+		lineageTag: 306d5eba-4431-4218-ba71-7f2e75efbcbd
+		summarizeBy: none
+		sourceColumn: vendor
+
+		annotation SummarizationSetBy = Automatic
+
+	column premiumpayratetype
+		dataType: string
+		lineageTag: 6ad923a0-5c2d-41f4-9c06-1ce93b92f21c
+		summarizeBy: none
+		sourceColumn: premiumpayratetype
+
+		annotation SummarizationSetBy = Automatic
+
+	column porevisionnum
+		dataType: int64
+		formatString: 0
+		lineageTag: 6ac4e36f-b7a3-4e37-a405-bc9e96a5e241
+		summarizeBy: sum
+		sourceColumn: porevisionnum
+
+		annotation SummarizationSetBy = Automatic
+
+	column startdatetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 2fa0d885-5a81-4761-8220-1542e83a9703
+		summarizeBy: none
+		sourceColumn: startdatetime
+
+		annotation SummarizationSetBy = Automatic
+
+	column finishdatetime
+		dataType: dateTime
+		formatString: General Date
+		lineageTag: 3b65e0f4-3703-4d37-9e86-02e678bd035b
+		summarizeBy: none
+		sourceColumn: finishdatetime
+
+		annotation SummarizationSetBy = Automatic
+
+	column crewworkgroup
+		dataType: string
+		lineageTag: fad9448b-f05c-4974-b576-445916fe3aa5
+		summarizeBy: none
+		sourceColumn: crewworkgroup
+
+		annotation SummarizationSetBy = Automatic
+
+	column amcrew
+		dataType: string
+		lineageTag: 41a0d180-b8f6-48ad-9582-db0350b0ce53
+		summarizeBy: none
+		sourceColumn: amcrew
+
+		annotation SummarizationSetBy = Automatic
+
+	column amcrewtype
+		dataType: string
+		lineageTag: 4a57d64c-6b53-4205-a115-327d043a6c6f
+		summarizeBy: none
+		sourceColumn: amcrewtype
+
+		annotation SummarizationSetBy = Automatic
+
+	column position
+		dataType: string
+		lineageTag: 931177dc-15e6-4744-be4e-d4d5f01bf3dd
+		summarizeBy: none
+		sourceColumn: position
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_tipo
+		dataType: string
+		lineageTag: 7f104306-13e7-4067-957b-bd7b0460fb59
+		summarizeBy: none
+		sourceColumn: tm_tipo
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_textra
+		dataType: string
+		lineageTag: 25692e4b-67b5-4af0-a2f3-bccbabbfb5cb
+		summarizeBy: none
+		sourceColumn: tm_textra
+
+		annotation SummarizationSetBy = Automatic
+
+	column tm_turno
+		dataType: string
+		lineageTag: 31350da4-e2a7-47c3-9af7-fa9b400e035b
+		summarizeBy: none
+		sourceColumn: tm_turno
+
+		annotation SummarizationSetBy = Automatic
+
+	column anywhererefid
+		dataType: int64
+		formatString: 0
+		lineageTag: c6ae864c-c68c-444c-adad-f475aebfef1d
+		summarizeBy: sum
+		sourceColumn: anywhererefid
+
+		annotation SummarizationSetBy = Automatic
+
+	column Work_Lab_key = labtrans[Organización]&labtrans[Planta]&labtrans[Actividad]
+		lineageTag: 36cde38f-54ce-4793-bc50-56824fe39772
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	column Labtrans_Labcraf_KEY = labtrans[Mano de Obra]&labtrans[Organización]
+		lineageTag: 1756f627-fd34-40fb-af69-456543561839
+		summarizeBy: none
+
+		annotation SummarizationSetBy = Automatic
+
+	partition labtrans = m
+		mode: import
+		source = ```
+				let
+				    RangeStartText = DateTime.ToText(RangeStart, "yyyy-MM-dd HH:mm:ss"),
+				    RangeEndText   = DateTime.ToText(RangeEnd,   "yyyy-MM-dd HH:mm:ss"),
+				
+				    SQL = 
+				        "SELECT *
+				         FROM dbo.labtrans
+				         WHERE enterdate >= '" & RangeStartText & "'
+				           AND enterdate <  '" & RangeEndText   & "'",
+				
+				    Origen = Odbc.Query(
+				        "dsn=" & #"Parámetro de Cadena de Conexión",
+				        SQL
+				    ),
+				
+				
+				
+				    //Origen = Odbc.DataSource("dsn=" & #"Parámetro de Cadena de Conexión", [HierarchicalNavigation=true]),
+				    //maxdb76_Database = Origen{[Name="maxdb76",Kind="Database"]}[Data],
+				    //dbo_Schema = maxdb76_Database{[Name="dbo",Kind="Schema"]}[Data],
+				    //labtrans_Table = dbo_Schema{[Name="labtrans",Kind="Table"]}[Data],
+				    #"Renamed Columns" = Table.RenameColumns(Origen,{{"transdate", "Fecha Transacción"}, {"laborcode", "Mano de Obra"}, {"craft", "Especialidad"}, {"regularhrs", "Horas Normales"}, {"startdate", "Fecha Inicio"}, {"starttime", "Hora Inicio"}, {"finishdate", "Fecha Finalización"}, {"finishtime", "Hora Finalización"}, {"orgid", "Organización"}, {"siteid", "Planta"}, {"refwo", "Actividad"}}),
+				    #"Tipo cambiado" = Table.TransformColumnTypes(#"Renamed Columns",{{"Fecha Inicio", type date}})
+				in
+				    #"Tipo cambiado"
+				```
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
