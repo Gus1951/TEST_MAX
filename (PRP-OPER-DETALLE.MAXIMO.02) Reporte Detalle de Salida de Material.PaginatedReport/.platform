@@ -1,0 +1,11 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/gitIntegration/platformProperties/2.0.0/schema.json",
+  "metadata": {
+    "type": "PaginatedReport",
+    "displayName": "(PRP-OPER-DETALLE.MAXIMO.02) Reporte Detalle de Salida de Material"
+  },
+  "config": {
+    "version": "2.0",
+    "logicalId": "473ba645-cbdc-9559-493a-27707c6a65e1"
+  }
+}
